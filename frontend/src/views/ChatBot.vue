@@ -58,12 +58,14 @@
 <script>
 import axios from "axios";
 import { marked } from "marked";
+// 🔥 Đổi icon mới (PNG/SVG trong assets)
+import chatbotIcon from "@/assets/Chatbot.png";
 
 export default {
   name: "ChatBot",
   data() {
     return {
-      messengerIcon: "https://cdn-icons-png.flaticon.com/512/733/733547.png",
+      messengerIcon: chatbotIcon,
       showChat: false,
       bubblePos: { x: 0, y: 0 },
       chatPos: { x: 0, y: -100 },
@@ -161,7 +163,6 @@ export default {
     async sendMessage() {
       if (!this.userMessage.trim()) return;
 
-      // Push user msg
       this.messages.push({ sender: "user", html: this.userMessage });
       const msg = this.userMessage;
       this.userMessage = "";
@@ -192,16 +193,25 @@ export default {
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: #0084ff;
+  background: transparent; /* ✅ bỏ nền xanh */
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  box-shadow: none; /* ✅ bỏ bóng nền */
   cursor: grab;
   z-index: 9999;
 }
 .chat-bubble img {
-  width: 32px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: white; /* ✅ tạo nền trắng nếu icon trong suốt */
+  padding: 5px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+  transition: transform 0.2s;
+}
+.chat-bubble img:hover {
+  transform: scale(1.1); /* ✅ hiệu ứng hover */
 }
 
 /* 💬 Window */
