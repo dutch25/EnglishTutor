@@ -3,9 +3,9 @@
     <!-- Header -->
     <div class="header-section">
       <div class="title-container">
-        <img :src="logoUrl" alt="Dynonary Logo" class="logo" />
+        <img :src="logoUrl" alt="English Tutor" class="logo" />
         <div class="text-title">
-          <h1 class="title">Dynonary English</h1>
+          <h1 class="title">English Tutor</h1>
         </div>
       </div>
     </div>
