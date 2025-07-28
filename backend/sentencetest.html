@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Sentence Listening Test</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 30px;
+      max-width: 600px;
+      margin: auto;
+    }
+    h1 {
+      margin-bottom: 20px;
+    }
+    button {
+      padding: 10px 20px;
+      margin: 10px 0;
+    }
+    input[type="text"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 10px;
+    }
+    #result {
+      margin-top: 15px;
+      font-weight: bold;
+    }
+    #volumeControl {
+      width: 100%;
+      margin-top: 10px;
+    }
+  </style>
+</head>
+<body>
+  <h1>Sentence Listening Test</h1>
+
+  <!-- Back button -->
+  <div>
+    <button onclick="goHome()"> Back to Homepage</button>
+  </div>
+
+  <!-- Play and new sentence buttons -->
+  <div>
+    <button onclick="playSentence()"> Play Again</button>
+    <button onclick="getNewSentence()"> New Sentence</button>
+  </div>    
+
+  <!-- Volume control -->
+  <label for="volumeControl"> Volume:</label>
+  <input type="range" id="volumeControl" min="0" max="1" step="0.01" value="1">
+
+  <!-- User input -->
+  <div>
+    <label for="userInput">What did you hear?</label><br>
+    <input type="text" id="userInput" placeholder="Type the sentence here..." />
+  </div>
+
+  <!-- Check answer -->
+  <div>
+    <button onclick="checkAnswer()">Check</button>
+    <button onclick="showAnswer()">Show Answer</button>
+  </div>
+
+  <!-- Result display -->
+  <div id="result"></div>
+
+  <script>
+    const sentences = [
+      "The cat is sleeping on the sofa",
+      "I like to eat pizza on Fridays",
+      "She is reading a book under the tree",
+      "The weather is nice today",
+      "He walks to school every morning",
+      "I have a red bicycle",
+      "My dog loves to play fetch",
+      "We are going to the park",
+      "It is raining outside",
+      "She drinks coffee every morning",
+      "They are watching a movie",
+      "He is writing a letter",
+      "The baby is sleeping quietly",
+      "I enjoy listening to music",
+      "She has a big smile",
+      "He runs fast in the race",
+      "We live near the mountains",
+      "The kids are playing in the yard",
+      "I wake up at seven o'clock",
+      "The sun is shining brightly",
+      "She is baking a chocolate cake",
+      "He is fixing his bike",
+      "They are studying for the test",
+      "We eat lunch at noon",
+      "The bird is flying in the sky",
+      "I am reading a newspaper",
+      "She plays the piano beautifully",
+      "The flowers are blooming in spring",
+      "He likes to swim in the pool",
+      "I see a rainbow in the sky",
+      "The phone is ringing loudly",
+      "She wears a yellow dress",
+      "He is painting a picture",
+      "We are cleaning the house",
+      "They are building a sandcastle",
+      "The tree is very tall",
+      "She is talking on the phone",
+      "I walk my dog every day",
+      "The coffee smells good",
+      "He is opening the window",
+      "The baby is laughing",
+      "We are planting a tree",
+      "She is combing her hair",
+      "He is brushing his teeth",
+      "The clock is ticking",
+      "The car is parked outside",
+      "She is learning to dance",
+      "He is playing the guitar",
+      "They are having a picnic",
+      "I hear music from next door"
+    ];
+
+    let currentSentence = "";
+    const audio = new Audio();
+
+    // Volume control
+    document.getElementById("volumeControl").addEventListener("input", function () {
+      audio.volume = this.value;
+    });
+
+    function goHome() {
+      window.location.href = "index.html";
+    }
+
+    function getNewSentence() {
+      const randomIndex = Math.floor(Math.random() * sentences.length);
+      currentSentence = sentences[randomIndex];
+      document.getElementById("userInput").value = "";
+      document.getElementById("result").innerHTML = "Sentence loaded. Click Play to play again.";
+      playSentence();
+    }
+
+    function playSentence() {
+      if (!currentSentence) {
+        document.getElementById("result").innerHTML = "Click New Sentence first.";
+        return;
+      }
+
+      fetch(`http://127.0.0.1:8000/audio/${encodeURIComponent(currentSentence)}`)
+        .then(response => response.blob())
+        .then(blob => {
+          audio.src = URL.createObjectURL(blob);
+          audio.volume = document.getElementById("volumeControl").value;
+          audio.play();
+        })
+        .catch(err => {
+          console.error("Error playing sentence:", err);
+          document.getElementById("result").textContent = "Failed to load sentence.";
+        });
+    }
+
+    function checkAnswer() {
+      const input = document.getElementById("userInput").value.trim().toLowerCase();
+      const result = document.getElementById("result");
+
+      if (!currentSentence) {
+        result.textContent = "Please play a sentence first.";
+        return;
+      }
+
+      const cleanedInput = input.replace(/[.,!?]/g, "");
+      const cleanedSentence = currentSentence.toLowerCase().replace(/[.,!?]/g, "");
+
+      if (cleanedInput === cleanedSentence) {
+        result.innerHTML = `Correct!<br> The sentence was: <strong>${currentSentence}</strong>`;
+        currentSentence = ""; // Clear sentence so new one is required next time
+      } else {
+        result.innerHTML = "Incorrect. Try again.";
+      }
+    }
+
+    function showAnswer() {
+        if (!currentSentence) {
+            document.getElementById("result").textContent = "Please play a sentence first.";
+            return;
+        }
+        document.getElementById("result").innerHTML = "The correct sentence was:<br><strong>" + currentSentence + "</strong>";
+    }
+
+    // Trigger checkAnswer when Enter is pressed
+    document.getElementById("userInput").addEventListener("keydown", function (event) {
+        if (event.key === "Enter") {
+            event.preventDefault(); // Prevent form submission or other default behavior
+            checkAnswer();  
+        }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Listening Test</title>
+  <style>
+    body { font-family: Arial; padding: 20px; max-width: 600px; margin: auto; }
+    button, input { padding: 10px; margin: 10px 0; font-size: 16px; }
+    #result { font-weight: bold; font-size: 18px; margin-top: 10px; }
+  </style>
+</head>
+<body>
+    <button onclick="goHome()" style="background-color: #ccc; font-size: 14px; padding: 8px 16px; margin-bottom: 20px;">
+  ⬅️ Back to Homepage
+    </button>
+
+  <h1>🎧 Listening Test</h1>
+  <p id="themeTitle"></p>
+
+  <button onclick="playAudio()">▶️ Play Word</button><br>
+  <input type="text" id="userInput" placeholder="Type what you hear" />
+  <button onclick="checkAnswer()">Check</button>
+
+  <p id="result"></p>
+
+  <script>
+    const themes = {
+      animals: ["cat", "dog", "elephant", "lion"],
+      colors: ["red", "blue", "green", "yellow"],
+      numbers: ["one", "two", "three", "four"]
+    };
+
+    let currentWord = "";
+    let currentAudioUrl = "";
+    let selectedTheme = "";
+
+    window.onload = function () {
+      const params = new URLSearchParams(window.location.search);
+      selectedTheme = params.get("theme");
+
+      if (!selectedTheme || !themes[selectedTheme]) {
+        document.body.innerHTML = "<h2>Invalid theme selected. Go back to homepage.</h2>";
+        return;
+      }
+
+      document.getElementById("themeTitle").textContent = "Theme: " + selectedTheme.charAt(0).toUpperCase() + selectedTheme.slice(1);
+      setWord(); // pick first word
+    };
+
+    function setWord() {
+      const words = themes[selectedTheme];
+      const randomIndex = Math.floor(Math.random() * words.length);
+      currentWord = words[randomIndex];
+      currentAudioUrl = `http://127.0.0.1:8000/audio/${currentWord}`;
+      console.log("🎯 Word:", currentWord);
+    }
+
+    function playAudio() {
+      if (!currentAudioUrl) {
+        alert("No word selected.");
+        return;
+      }
+      const audio = new Audio(currentAudioUrl);
+      audio.play().catch(err => {
+        console.error("Audio Error:", err);
+      });
+    }
+
+    function checkAnswer() {
+      const input = document.getElementById("userInput").value.trim().toLowerCase();
+      const result = document.getElementById("result");
+
+      if (input === currentWord) {
+        result.innerHTML = "✅ Correct!";
+      } else {
+        result.innerHTML = `❌ Incorrect. The correct word was "<strong>${currentWord}</strong>".`;
+      }
+
+      document.getElementById("userInput").value = "";
+
+      setTimeout(() => {
+        setWord();
+        result.innerHTML += "<br>🔁 New word loaded. Click Play again.";
+      }, 1000);
+    }
+
+    function goHome() {
+  window.location.href = "index.html";
+    }
+
+  </script>
+</body>
+</html>
