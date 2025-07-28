@@ -67,6 +67,7 @@ export default {
           icon: "verb.png",
           title: "Động từ bất quy tắc",
           description: "Tất cả những động từ bất quy tắc trong tiếng Anh",
+          route: "/verb",
         },
         {
           icon: "grammar.png",
