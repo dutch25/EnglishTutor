@@ -13,12 +13,13 @@ import dns.resolver
 import re
 from sqlalchemy.orm import Session
 from fastapi import Depends 
-from backend.database import get_db
-from backend.models import User
+from database import get_db
+from models import User
 from datetime import datetime
-from backend.schemas import UserRegister
-from backend.schemas import UserLogin
+from schemas import UserRegister
+from schemas import UserLogin
 import bcrypt
+from jose import JWTError, jwt
 
 app = FastAPI()
 
@@ -35,8 +36,27 @@ app.add_middleware(
 load_dotenv()
 
 
+
 ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
 VOICE_ID = "tnSpp4vdxKPjI9w0GnoV"  # Replace this with your voice ID , jerry voice id: 1t1EeRixsJrKbiF1zwM6 / adam voice s3TPKV1kjDlVtZbl4Ksh
+SECRET_KEY = "b7e2c3a4e8f9d1c2a3b4c5d6e7f8a9b0c1d2e3f4a5b6c7d8e9f0a1b2c3d4e5f6"  # Đổi thành chuỗi bí mật của bạn
+ALGORITHM = "HS256"
+
+# Tạo token truy cập
+def create_access_token(data: dict):
+    from datetime import timedelta
+    to_encode = data.copy()
+    expire = datetime.utcnow() + timedelta(hours=1)
+    to_encode.update({"exp": expire})
+    encoded_jwt = jwt.encode(to_encode, SECRET_KEY, algorithm=ALGORITHM)
+    return encoded_jwt
+
+def verify_token(token: str):
+    try:
+        payload = jwt.decode(token, SECRET_KEY, algorithms=[ALGORITHM])
+        return payload
+    except JWTError:
+        return None
 
 @app.get("/")
 def read_root():

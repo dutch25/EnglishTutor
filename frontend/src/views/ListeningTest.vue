@@ -145,7 +145,7 @@ export default {
       this.userInput = "";
     },
     goHome() {
-      this.$router.push("/");
+      this.$router.push("/home");
     }
   }
 };

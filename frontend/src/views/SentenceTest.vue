@@ -51,7 +51,7 @@ export default {
   },
   methods: {
     goHome() {
-      this.$router.push("/");
+      this.$router.push("/home");
     },
     getNewSentence() {
       const randomIndex = Math.floor(Math.random() * this.sentences.length);
