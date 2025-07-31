@@ -44,13 +44,26 @@ export default {
     filteredVerbs() {
       const s = this.search.trim().toLowerCase();
       if (!s) return this.verbs;
-      return this.verbs.filter(
-        v =>
+      const filtered = this.verbs.filter(v => {
+        // Tìm chính xác từng từ trong nghĩa
+        const meaningWords = v.meaning.toLowerCase().split(/[\s,.;/]+/);
+        return (
           v.base.toLowerCase() === s ||
           v.past.toLowerCase() === s ||
           v.pastParticiple.toLowerCase() === s ||
-          v.meaning.toLowerCase() === s
-      );
+          meaningWords.includes(s)
+        );
+      });
+      // Loại bỏ trùng lặp theo base
+      const unique = [];
+      const seen = new Set();
+      for (const verb of filtered) {
+        if (!seen.has(verb.base)) {
+          unique.push(verb);
+          seen.add(verb.base);
+        }
+      }
+      return unique;
     },
   },
   methods: {
