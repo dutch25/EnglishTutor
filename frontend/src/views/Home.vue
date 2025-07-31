@@ -48,9 +48,10 @@ export default {
         },
         {
           icon: "communicate.png",
-          title: "1000+ câu giao tiếp",
+          title: "Học câu giao tiếp thông dụng",
           description:
-            "Luyện nghe, nói câu tiếng Anh giao tiếp hằng ngày cùng Dyno",
+            "Luyện nghe, nói câu tiếng Anh giao tiếp hằng ngày",
+          route: "/conversation",
         },
         {
           icon: "flashcard.png",

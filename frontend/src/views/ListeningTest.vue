@@ -114,7 +114,7 @@ export default {
       const words = this.themes[this.selectedTheme];
       const randomIndex = Math.floor(Math.random() * words.length);
       this.currentWord = words[randomIndex];
-      this.currentAudioUrl = `http://127.0.0.1:8000/audio/${this.currentWord}`;
+      this.currentAudioUrl = `http://127.0.0.1:8000/audio/${this.currentWord}?speed=0.7`;
       this.userInput = "";
     },
     playAudio() {
