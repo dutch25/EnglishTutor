@@ -85,6 +85,7 @@ async def chat(data: dict):
 db = mysql.connector.connect(
     host="localhost",
     user="root",
+    port=3306,
     password="",
     database="english_tutor",
 )
