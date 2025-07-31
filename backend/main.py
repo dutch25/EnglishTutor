@@ -1,4 +1,5 @@
 from fastapi import FastAPI
+from fastapi import Header
 from fastapi.responses import StreamingResponse
 from fastapi import FastAPI, HTTPException, Form
 from fastapi import APIRouter
@@ -9,6 +10,17 @@ import os
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
+import dns.resolver
+import re
+from sqlalchemy.orm import Session
+from fastapi import Depends 
+from database import get_db
+from models import User
+from datetime import datetime
+from schemas import UserRegister
+from schemas import UserLogin
+import bcrypt
+from jose import JWTError, jwt
 
 app = FastAPI()
 
