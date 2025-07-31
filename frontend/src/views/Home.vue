@@ -74,6 +74,18 @@ export default {
           title: "Ngữ pháp",
           description: "Danh sách tổng hợp những cấu trúc câu trong tiếng Anh",
         },
+        {
+          icon: "grammar.png",
+          title: "Listen",
+          description: "Test Listening của bạn",
+          route: "/listening",
+        },
+        {
+          icon: "grammar.png",
+          title: "Sentence",
+          description: "Test Sentence của bạn",
+          route: "/sentence",
+        },
       ],
     };
   },
