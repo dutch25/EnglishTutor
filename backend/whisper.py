@@ -1,5 +1,4 @@
-from fastapi import FastAPI, File, UploadFile, Form
-from fastapi.middleware.cors import CORSMiddleware
+from fastapi import APIRouter, File, UploadFile, Form
 import shutil, os, json, subprocess, requests, difflib, re
 from pydub import AudioSegment, effects
 from dotenv import load_dotenv
@@ -10,12 +9,7 @@ OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
 if not OPENAI_API_KEY:
     raise ValueError("❌ Thiếu OPENAI_API_KEY trong .env")
 
-# 🚀 Init App
-app = FastAPI()
-app.add_middleware(
-    CORSMiddleware,
-    allow_origins=["*"], allow_credentials=True, allow_methods=["*"], allow_headers=["*"],
-)
+router = APIRouter()
 
 UPLOAD_FOLDER = "./uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
@@ -77,7 +71,7 @@ def transcribe_audio(file_path):
     return res.json().get("text", "").strip() if res.status_code == 200 else ""
 
 # ======== 📥 API UPLOAD ========
-@app.post("/api/upload/")
+@router.post("/api/upload/")
 async def upload_audio(file: UploadFile = File(...), original_text: str = Form(...)):
     path = os.path.join(UPLOAD_FOLDER, file.filename)
     with open(path, "wb") as buffer:
@@ -120,17 +114,17 @@ def load_sentences(topic: str = None):
             })
     return result
 
-@app.get("/api/sentences")
+@router.get("/api/sentences")
 def get_sentences(topic: str = None):
     return {"sentences": load_sentences(topic)}
 
 # ======== 📥 API LẤY IPA ========
-@app.post("/api/get_ipa")
+@router.post("/api/get_ipa")
 def api_get_ipa(body: dict):
     return {"ipa": get_ipa(body.get("text", ""))}
 
 # ======== 🧠 API NHẬN XÉT GPT ========
-@app.post("/api/feedback")
+@router.post("/api/feedback")
 def feedback(body: dict):
     transcript = body.get("transcript", "")
     target = body.get("target", "")
@@ -166,4 +160,4 @@ Hãy trả lời NGẮN GỌN, dễ hiểu với cấu trúc:
             return {"feedback": "⚠️ AI không trả lời, thử lại sau."}
     except Exception as e:
         print("❌ Lỗi gọi GPT API:", e)
-        return {"feedback": "⚠️ Không kết nối được đến AI, thử lại sau."}
+        return {"feedback": "⚠️ Không kết nối được AI."}

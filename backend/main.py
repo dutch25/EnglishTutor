@@ -9,18 +9,6 @@ import os
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
-import whisper
-import dns.resolver
-import re
-from sqlalchemy.orm import Session
-from fastapi import Depends 
-from database import get_db
-from models import User
-from datetime import datetime
-from schemas import UserRegister
-from schemas import UserLogin
-import bcrypt
-from jose import JWTError, jwt
 
 app = FastAPI()
 
@@ -77,7 +65,6 @@ def get_audio(word: str, speed: float = 0.75):
             "stability": 0.75,
             "speed": speed,
             "similarity_boost": 0.75
-            
         }
     }
 
