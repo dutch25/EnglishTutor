@@ -3,3 +3,10 @@ uvicorn
 python-dotenv
 requests
 google-genai
+mysql-connector-python
+dnspython
+sqlalchemy 
+pymysql
+sqlalchemy 
+sqlalchemy-utils 
+passlib[bcrypt]
