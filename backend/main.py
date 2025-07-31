@@ -9,29 +9,6 @@ import os
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
-from whisper import router  # Import router từ whisper.py
-
-# Load biến môi trường
-load_dotenv()
-
-ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
-VOICE_ID = "tnSpp4vdxKPjI9w0GnoV"  # Thay bằng voice ID của bạn
-
-app = FastAPI()
-
-# CORS cho phép frontend truy cập API
-import whisper
-import dns.resolver
-import re
-from sqlalchemy.orm import Session
-from fastapi import Depends 
-from database import get_db
-from models import User
-from datetime import datetime
-from schemas import UserRegister
-from schemas import UserLogin
-import bcrypt
-from jose import JWTError, jwt
 
 app = FastAPI()
 
@@ -44,8 +21,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Đưa toàn bộ API từ whisper.py vào app
-app.include_router(router)
 
 load_dotenv()
 
