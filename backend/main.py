@@ -20,7 +20,8 @@ from datetime import datetime
 from schemas import UserRegister
 from schemas import UserLogin
 import bcrypt
-from jose import JWTError, jwt
+from whisper import router  # Import router từ whisper.py
+
 
 app = FastAPI()
 
@@ -32,6 +33,9 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
+app.include_router(router)
+
 
 
 load_dotenv()
