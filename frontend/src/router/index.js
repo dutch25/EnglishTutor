@@ -5,6 +5,8 @@ import Verb from '../views/Verb.vue';
 import Listening from '../views/ListeningTest.vue';
 import Sentence from '../views/SentenceTest.vue';
 import Conversation from '../views/ConversationPractice.vue';
+import Whisper from '../views/Whisper.vue';
+
 
 
 const routes = [
@@ -13,7 +15,9 @@ const routes = [
   { path: '/verb', name: 'Verb', component: Verb },
   { path: '/listening', name: 'Listening', component: Listening },
   { path: '/sentence', name: 'Sentence', component: Sentence },
-  { path: '/conversation', name: 'Conversation', component: Conversation }
+  { path: '/conversation', name: 'Conversation', component: Conversation },
+  { path: '/Whisper', name: 'Whisper', component: Whisper }
+
 ];
 
 const router = createRouter({
