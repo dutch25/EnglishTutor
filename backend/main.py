@@ -36,14 +36,14 @@ load_dotenv()
 
 
 ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
-VOICE_ID = "1t1EeRixsJrKbiF1zwM6"  # Replace this with your voice ID , jerry voice id: 1t1EeRixsJrKbiF1zwM6 / adam voice s3TPKV1kjDlVtZbl4Ksh
+VOICE_ID = "tnSpp4vdxKPjI9w0GnoV"  # Replace this with your voice ID , jerry voice id: 1t1EeRixsJrKbiF1zwM6 / adam voice s3TPKV1kjDlVtZbl4Ksh
 
 @app.get("/")
 def read_root():
     return {"message": "Welcome to the English Tutor API"}
 
 @app.get("/audio/{word}")
-def get_audio(word: str):
+def get_audio(word: str, speed: float = 0.75):
     url = f"https://api.elevenlabs.io/v1/text-to-speech/{VOICE_ID}"
     headers = {
         "xi-api-key": ELEVENLABS_API_KEY,
@@ -54,7 +54,7 @@ def get_audio(word: str):
         "model_id": "eleven_monolingual_v1",
         "voice_settings": {
             "stability": 0.75,
-            "speed": 0.75,
+            "speed": speed,
             "similarity_boost": 0.75
             
         }

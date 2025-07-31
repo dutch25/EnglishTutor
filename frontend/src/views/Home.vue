@@ -3,9 +3,9 @@
     <!-- Header -->
     <div class="header-section">
       <div class="title-container">
-        <img :src="logoUrl" alt="Dynonary Logo" class="logo" />
+        <img :src="logoUrl" alt="English Tutor" class="logo" />
         <div class="text-title">
-          <h1 class="title">Dynonary English</h1>
+          <h1 class="title">English Tutor</h1>
         </div>
       </div>
     </div>
@@ -48,9 +48,10 @@ export default {
         },
         {
           icon: "communicate.png",
-          title: "1000+ câu giao tiếp",
+          title: "Học câu giao tiếp thông dụng",
           description:
-            "Luyện nghe, nói câu tiếng Anh giao tiếp hằng ngày cùng Dyno",
+            "Luyện nghe, nói câu tiếng Anh giao tiếp hằng ngày",
+          route: "/conversation",
         },
         {
           icon: "flashcard.png",
@@ -73,6 +74,18 @@ export default {
           icon: "grammar.png",
           title: "Ngữ pháp",
           description: "Danh sách tổng hợp những cấu trúc câu trong tiếng Anh",
+        },
+        {
+          icon: "grammar.png",
+          title: "Listen",
+          description: "Test Listening của bạn",
+          route: "/listening",
+        },
+        {
+          icon: "grammar.png",
+          title: "Sentence",
+          description: "Test Sentence của bạn",
+          route: "/sentence",
         },
       ],
     };

@@ -1,0 +1,498 @@
+{
+  "greetings": {
+    "title": "Chào hỏi",
+    "icon": "👋",
+    "sentences": [
+      {
+        "english": "Hello, how are you?",
+        "vietnamese": "Xin chào, bạn khỏe không?",
+        "pronunciation": "/həˈloʊ, haʊ ɑːr juː/"
+      },
+      {
+        "english": "Nice to meet you",
+        "vietnamese": "Rất vui được gặp bạn",
+        "pronunciation": "/naɪs tuː miːt juː/"
+      },
+      {
+        "english": "Good morning!",
+        "vietnamese": "Chào buổi sáng!",
+        "pronunciation": "/ɡʊd ˈmɔːrnɪŋ/"
+      },
+      {
+        "english": "How's it going?",
+        "vietnamese": "Mọi thứ thế nào?",
+        "pronunciation": "/haʊz ɪt ˈɡoʊɪŋ/"
+      },
+      {
+        "english": "See you later!",
+        "vietnamese": "Hẹn gặp lại!",
+        "pronunciation": "/siː juː ˈleɪtər/"
+      }
+    ]
+  },
+  "shopping": {
+    "title": "Mua sắm",
+    "icon": "🛒",
+    "sentences": [
+      {
+        "english": "How much does this cost?",
+        "vietnamese": "Cái này giá bao nhiêu?",
+        "pronunciation": "/haʊ mʌtʃ dʌz ðɪs kɔːst/"
+      },
+      {
+        "english": "Do you have this in a smaller size?",
+        "vietnamese": "Bạn có cái này cỡ nhỏ hơn không?",
+        "pronunciation": "/duː juː hæv ðɪs ɪn ə ˈsmɔːlər saɪz/"
+      },
+      {
+        "english": "Can I try this on?",
+        "vietnamese": "Tôi có thể thử cái này không?",
+        "pronunciation": "/kæn aɪ traɪ ðɪs ɑːn/"
+      },
+      {
+        "english": "Is there a discount on this?",
+        "vietnamese": "Cái này có giảm giá không?",
+        "pronunciation": "/ɪz ðɛər ə ˈdɪskaʊnt ɑːn ðɪs/"
+      },
+      {
+        "english": "Where is the fitting room?",
+        "vietnamese": "Phòng thử đồ ở đâu?",
+        "pronunciation": "/wɛər ɪz ðə ˈfɪtɪŋ ruːm/"
+      }
+    ]
+  },
+  "restaurant": {
+    "title": "Nhà hàng",
+    "icon": "🍽️",
+    "sentences": [
+      {
+        "english": "Can I have the menu, please?",
+        "vietnamese": "Cho tôi xem thực đơn được không?",
+        "pronunciation": "/kæn aɪ hæv ðə ˈmenjuː, pliːz/"
+      },
+      {
+        "english": "Can you make it quick?",
+        "vietnamese": "Bạn có thể làm nhanh được không?",
+        "pronunciation": "/kæn juː meɪk ɪt kwɪk/"
+      },
+      {
+        "english": "Is this dish spicy?",
+        "vietnamese": "Món này có cay không?",
+        "pronunciation": "/ɪz ðɪs dɪʃ ˈspaɪsi/"
+      },
+      {
+        "english": "Can I have a glass of water?",
+        "vietnamese": "Cho tôi một ly nước được không?",
+        "pronunciation": "/kæn aɪ hæv ə ɡlæs əv ˈwɔːtər/"
+      },
+      {
+        "english": "Can you recommend a dish?",
+        "vietnamese": "Bạn có thể gợi ý một món ăn không?",
+        "pronunciation": "/kæn juː ˌrɛkəˈmɛnd ə dɪʃ/"
+      }
+    ]
+  },
+  "travel": {
+    "title": "Du lịch",
+    "icon": "✈️",
+    "sentences": [
+      {
+        "english": "Where is the nearest airport?",
+        "vietnamese": "Sân bay gần nhất ở đâu?",
+        "pronunciation": "/wɛər ɪz ðə ˈnɪrɪst ˈɛərpɔːrt/"
+      },
+      {
+        "english": "Can you help me with my luggage?",
+        "vietnamese": "Bạn có thể giúp tôi với hành lý không?",
+        "pronunciation": "/kæn juː hɛlp miː wɪð maɪ ˈlʌɡɪdʒ/"
+      },
+      {
+        "english": "How far is the hotel from here?",
+        "vietnamese": "Khách sạn cách đây bao xa?",
+        "pronunciation": "/haʊ fɑːr ɪz ðə hoʊˈtɛl frəm hɪr/"
+      },
+      {
+        "english": "Is there a bus to the city center?",
+        "vietnamese": "Có xe buýt đến trung tâm thành phố không?",
+        "pronunciation": "/ɪz ðɛər ə bʌs tuː ðə ˈsɪti ˈsɛntər/"
+      },
+      {
+        "english": "Can I have a map, please?",
+        "vietnamese": "Cho tôi một bản đồ được không?",
+        "pronunciation": "/kæn aɪ hæv ə mæp, pliːz/"
+      }
+    ]
+  },
+  "emergency": {
+    "title": "Khẩn cấp",
+    "icon": "🚨",
+    "sentences": [
+      {
+        "english": "I need help immediately!",
+        "vietnamese": "Tôi cần giúp đỡ ngay lập tức!",
+        "pronunciation": "/aɪ niːd hɛlp ɪˈmiːdiətli/"
+      },
+      {
+        "english": "Where is the hospital?",
+        "vietnamese": "Bệnh viện ở đâu?",
+        "pronunciation": "/wɛər ɪz ðə ˈhɑːspɪtl/"
+      },
+      {
+        "english": "Please call an ambulance!",
+        "vietnamese": "Hãy gọi xe cứu thương!",
+        "pronunciation": "/pliːz kɔːl ən ˈæmbjələns/"
+      },
+      {
+        "english": "Is there a doctor here?",
+        "vietnamese": "Có bác sĩ ở đây không?",
+        "pronunciation": "/ɪz ðɛər ə ˈdɑːktər hɪr/"
+      },
+      {
+        "english": "I lost my passport!",
+        "vietnamese": "Tôi mất hộ chiếu rồi!",
+        "pronunciation": "/aɪ lɔːst maɪ ˈpæspɔːrt/"
+      }
+    ]
+  },
+  "work": {
+    "title": "Công việc",
+    "icon": "💼",
+    "sentences": [
+      {
+        "english": "Can we schedule a meeting?",
+        "vietnamese": "Chúng ta có thể sắp xếp một cuộc họp không?",
+        "pronunciation": "/kæn wiː ˈskɛdʒuːl ə ˈmiːtɪŋ/"
+      },
+      {
+        "english": "Where is the office located?",
+        "vietnamese": "Văn phòng nằm ở đâu?",
+        "pronunciation": "/wɛər ɪz ðə ˈɔːfɪs loʊˈkeɪtɪd/"
+      },
+      {
+        "english": "I need to send an email.",
+        "vietnamese": "Tôi cần gửi một email.",
+        "pronunciation": "/aɪ niːd tuː sɛnd ən ˈiːmeɪl/"
+      },
+      {
+        "english": "What time does the meeting start?",
+        "vietnamese": "Cuộc họp bắt đầu lúc mấy giờ?",
+        "pronunciation": "/wʌt taɪm dʌz ðə ˈmiːtɪŋ stɑːrt/"
+      },
+      {
+        "english": "Can you share the report?",
+        "vietnamese": "Bạn có thể chia sẻ báo cáo không?",
+        "pronunciation": "/kæn juː ʃɛər ðə rɪˈpɔːrt/"
+      }
+    ]
+  },
+  "weather": {
+    "title": "Thời tiết",
+    "icon": "☀️",
+    "sentences": [
+      {
+        "english": "What's the weather like today?",
+        "vietnamese": "Thời tiết hôm nay thế nào?",
+        "pronunciation": "/wʌts ðə ˈwɛðər laɪk təˈdeɪ/"
+      },
+      {
+        "english": "Is it going to rain?",
+        "vietnamese": "Trời có mưa không?",
+        "pronunciation": "/ɪz ɪt ˈɡoʊɪŋ tuː reɪn/"
+      },
+      {
+        "english": "It's very cold today.",
+        "vietnamese": "Hôm nay trời rất lạnh.",
+        "pronunciation": "/ɪts ˈvɛri koʊld təˈdeɪ/"
+      },
+      {
+        "english": "Do I need an umbrella?",
+        "vietnamese": "Tôi có cần ô không?",
+        "pronunciation": "/duː aɪ niːd ən ʌmˈbrɛlə/"
+      },
+      {
+        "english": "How hot is it outside?",
+        "vietnamese": "Ngoài trời nóng bao nhiêu?",
+        "pronunciation": "/haʊ hɑːt ɪz ɪt ˌaʊtˈsaɪd/"
+      }
+    ]
+  },
+  "directions": {
+    "title": "Hỏi đường",
+    "icon": "🗺️",
+    "sentences": [
+      {
+        "english": "How do I get to the station?",
+        "vietnamese": "Làm sao để đến ga?",
+        "pronunciation": "/haʊ duː aɪ ɡɛt tuː ðə ˈsteɪʃn/"
+      },
+      {
+        "english": "Is this the right way?",
+        "vietnamese": "Đây có phải đường đúng không?",
+        "pronunciation": "/ɪz ðɪs ðə raɪt weɪ/"
+      },
+      {
+        "english": "Turn left at the next corner.",
+        "vietnamese": "Rẽ trái ở góc tiếp theo.",
+        "pronunciation": "/tɜːrn lɛft æt ðə nɛkst ˈkɔːrnər/"
+      },
+      {
+        "english": "How far is it from here?",
+        "vietnamese": "Nó cách đây bao xa?",
+        "pronunciation": "/haʊ fɑːr ɪz ɪt frəm hɪr/"
+      },
+      {
+        "english": "Is there a shortcut?",
+        "vietnamese": "Có đường tắt nào không?",
+        "pronunciation": "/ɪz ðɛər ə ˈʃɔːrtkʌt/"
+      }
+    ]
+  },
+  "school": {
+    "title": "Trường học",
+    "icon": "📚",
+    "sentences": [
+      {
+        "english": "Where is the classroom?",
+        "vietnamese": "Phòng học ở đâu?",
+        "pronunciation": "/wɛər ɪz ðə ˈklæsruːm/"
+      },
+      {
+        "english": "What time does the class start?",
+        "vietnamese": "Lớp học bắt đầu lúc mấy giờ?",
+        "pronunciation": "/wʌt taɪm dʌz ðə klæs stɑːrt/"
+      },
+      {
+        "english": "Can I borrow a pen?",
+        "vietnamese": "Tôi có thể mượn bút không?",
+        "pronunciation": "/kæn aɪ ˈbɑːroʊ ə pɛn/"
+      },
+      {
+        "english": "Who is the teacher?",
+        "vietnamese": "Giáo viên là ai?",
+        "pronunciation": "/huː ɪz ðə ˈtiːtʃər/"
+      },
+      {
+        "english": "I need help with my homework.",
+        "vietnamese": "Tôi cần giúp đỡ với bài tập về nhà.",
+        "pronunciation": "/aɪ niːd hɛlp wɪð maɪ ˈhoʊmwɜːrk/"
+      }
+    ]
+  },
+  "health": {
+    "title": "Sức khỏe",
+    "icon": "🏥",
+    "sentences": [
+      {
+        "english": "I feel sick.",
+        "vietnamese": "Tôi cảm thấy ốm.",
+        "pronunciation": "/aɪ fiːl sɪk/"
+      },
+      {
+        "english": "Do you have any medicine?",
+        "vietnamese": "Bạn có thuốc nào không?",
+        "pronunciation": "/duː juː hæv ˈɛni ˈmɛdɪsɪn/"
+      },
+      {
+        "english": "I have a headache.",
+        "vietnamese": "Tôi bị đau đầu.",
+        "pronunciation": "/aɪ hæv ə ˈhɛdeɪk/"
+      },
+      {
+        "english": "Can I see a doctor?",
+        "vietnamese": "Tôi có thể gặp bác sĩ không?",
+        "pronunciation": "/kæn aɪ siː ə ˈdɑːktər/"
+      },
+      {
+        "english": "Where is the pharmacy?",
+        "vietnamese": "Nhà thuốc ở đâu?",
+        "pronunciation": "/wɛər ɪz ðə ˈfɑːrməsi/"
+      }
+    ]
+  },
+  "socializing": {
+    "title": "Giao lưu",
+    "icon": "🎉",
+    "sentences": [
+      {
+        "english": "What do you do for fun?",
+        "vietnamese": "Bạn làm gì để vui chơi?",
+        "pronunciation": "/wʌt duː juː duː fər fʌn/"
+      },
+      {
+        "english": "Do you want to hang out?",
+        "vietnamese": "Bạn muốn đi chơi không?",
+        "pronunciation": "/duː juː wɑːnt tuː hæŋ aʊt/"
+      },
+      {
+        "english": "I like your style!",
+        "vietnamese": "Tôi thích phong cách của bạn!",
+        "pronunciation": "/aɪ laɪk jər staɪl/"
+      },
+      {
+        "english": "Can I join you?",
+        "vietnamese": "Tôi có thể tham gia không?",
+        "pronunciation": "/kæn aɪ dʒɔɪn juː/"
+      },
+      {
+        "english": "Let's stay in touch!",
+        "vietnamese": "Hãy giữ liên lạc nhé!",
+        "pronunciation": "/lɛts steɪ ɪn tʌtʃ/"
+      }
+    ]
+  },
+  "transportation": {
+    "title": "Giao thông",
+    "icon": "🚗",
+    "sentences": [
+      {
+        "english": "When does the next bus leave?",
+        "vietnamese": "Xe buýt tiếp theo khởi hành khi nào?",
+        "pronunciation": "/wɛn dʌz ðə nɛkst bʌs liːv/"
+      },
+      {
+        "english": "How much is the train ticket?",
+        "vietnamese": "Vé tàu giá bao nhiêu?",
+        "pronunciation": "/haʊ mʌtʃ ɪz ðə treɪn ˈtɪkɪt/"
+      },
+      {
+        "english": "Can you call a taxi for me?",
+        "vietnamese": "Bạn có thể gọi taxi cho tôi không?",
+        "pronunciation": "/kæn juː kɔːl ə ˈtæksi fər miː/"
+      },
+      {
+        "english": "Is this the right platform?",
+        "vietnamese": "Đây có phải sân ga đúng không?",
+        "pronunciation": "/ɪz ðɪs ðə raɪt ˈplætfɔːrm/"
+      },
+      {
+        "english": "Where can I park my car?",
+        "vietnamese": "Tôi có thể đậu xe ở đâu?",
+        "pronunciation": "/wɛər kæn aɪ pɑːrk maɪ kɑːr/"
+      }
+    ]
+  },
+  "accommodation": {
+    "title": "Chỗ ở",
+    "icon": "🏨",
+    "sentences": [
+      {
+        "english": "Do you have any rooms available?",
+        "vietnamese": "Bạn có phòng trống không?",
+        "pronunciation": "/duː juː hæv ˈɛni ruːmz əˈveɪləbl/"
+      },
+      {
+        "english": "How much is it per night?",
+        "vietnamese": "Giá bao nhiêu một đêm?",
+        "pronunciation": "/haʊ mʌtʃ ɪz ɪt pər naɪt/"
+      },
+      {
+        "english": "Is breakfast included?",
+        "vietnamese": "Bữa sáng có được bao gồm không?",
+        "pronunciation": "/ɪz ˈbrɛkfəst ɪnˈkluːdɪd/"
+      },
+      {
+        "english": "Can I check in early?",
+        "vietnamese": "Tôi có thể nhận phòng sớm không?",
+        "pronunciation": "/kæn aɪ tʃɛk ɪn ˈɜːrli/"
+      },
+      {
+        "english": "Where is the elevator?",
+        "vietnamese": "Thang máy ở đâu?",
+        "pronunciation": "/wɛər ɪz ðə ˈɛlɪveɪtər/"
+      }
+    ]
+  },
+  "daily_activities": {
+    "title": "Hoạt động hàng ngày",
+    "icon": "🕒",
+    "sentences": [
+      {
+        "english": "What time do you wake up?",
+        "vietnamese": "Bạn thức dậy lúc mấy giờ?",
+        "pronunciation": "/wʌt taɪm duː juː weɪk ʌp/"
+      },
+      {
+        "english": "I need to go to the gym.",
+        "vietnamese": "Tôi cần đến phòng gym.",
+        "pronunciation": "/aɪ niːd tuː ɡoʊ tuː ðə dʒɪm/"
+      },
+      {
+        "english": "Do you cook dinner every day?",
+        "vietnamese": "Bạn có nấu bữa tối mỗi ngày không?",
+        "pronunciation": "/duː juː kʊk ˈdɪnər ˈɛvri deɪ/"
+      },
+      {
+        "english": "I usually read before bed.",
+        "vietnamese": "Tôi thường đọc sách trước khi đi ngủ.",
+        "pronunciation": "/aɪ ˈjuːʒəli riːd bɪˈfɔːr bɛd/"
+      },
+      {
+        "english": "Can you walk the dog?",
+        "vietnamese": "Bạn có thể dắt chó đi dạo không?",
+        "pronunciation": "/kæn juː wɔːk ðə dɔːɡ/"
+      }
+    ]
+  },
+  "technology": {
+    "title": "Công nghệ",
+    "icon": "💻",
+    "sentences": [
+      {
+        "english": "Is your phone fully charged?",
+        "vietnamese": "Điện thoại của bạn đã sạc đầy chưa?",
+        "pronunciation": "/ɪz jər foʊn ˈfʊli tʃɑːrdʒd/"
+      },
+      {
+        "english": "Can you fix my computer?",
+        "vietnamese": "Bạn có thể sửa máy tính của tôi không?",
+        "pronunciation": "/kæn juː fɪks maɪ kəmˈpjuːtər/"
+      },
+      {
+        "english": "I forgot my password.",
+        "vietnamese": "Tôi quên mật khẩu rồi.",
+        "pronunciation": "/aɪ fərˈɡɑːt maɪ ˈpæswɜːrd/"
+      },
+      {
+        "english": "Is the Wi-Fi working?",
+        "vietnamese": "Wi-Fi có hoạt động không?",
+        "pronunciation": "/ɪz ðə ˈwaɪ faɪ ˈwɜːrkɪŋ/"
+      },
+      {
+        "english": "How do I update this app?",
+        "vietnamese": "Làm sao để cập nhật ứng dụng này?",
+        "pronunciation": "/haʊ duː aɪ ʌpˈdeɪt ðɪs æp/"
+      }
+    ]
+  },
+  "hobbies": {
+    "title": "Sở thích",
+    "icon": "🎨",
+    "sentences": [
+      {
+        "english": "Do you like to paint?",
+        "vietnamese": "Bạn có thích vẽ tranh không?",
+        "pronunciation": "/duː juː laɪk tuː peɪnt/"
+      },
+      {
+        "english": "I enjoy playing soccer.",
+        "vietnamese": "Tôi thích chơi bóng đá.",
+        "pronunciation": "/aɪ ɪnˈdʒɔɪ ˈpleɪɪŋ ˈsɑːkər/"
+      },
+      {
+        "english": "What music do you listen to?",
+        "vietnamese": "Bạn nghe loại nhạc gì?",
+        "pronunciation": "/wʌt ˈmjuːzɪk duː juː ˈlɪsn tuː/"
+      },
+      {
+        "english": "Have you ever tried hiking?",
+        "vietnamese": "Bạn đã từng đi bộ đường dài chưa?",
+        "pronunciation": "/hæv juː ˈɛvər traɪd ˈhaɪkɪŋ/"
+      },
+      {
+        "english": "I love watching movies.",
+        "vietnamese": "Tôi yêu thích xem phim.",
+        "pronunciation": "/aɪ lʌv ˈwɑːtʃɪŋ ˈmuːviz/"
+      }
+    ]
+  }
+}
