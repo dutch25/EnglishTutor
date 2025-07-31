@@ -1,17 +1,32 @@
 from fastapi import FastAPI
 from fastapi.responses import StreamingResponse
+from fastapi import FastAPI, HTTPException, Form
+from fastapi import APIRouter
 from fastapi.middleware.cors import CORSMiddleware
+import mysql.connector
 import requests
 import os
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
+import dns.resolver
+import re
+from sqlalchemy.orm import Session
+from fastapi import Depends 
+from backend.database import get_db
+from backend.models import User
+from datetime import datetime
+from backend.schemas import UserRegister
+from backend.schemas import UserLogin
+import bcrypt
 
 app = FastAPI()
+
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
+    allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
@@ -22,6 +37,10 @@ load_dotenv()
 
 ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
 VOICE_ID = "1t1EeRixsJrKbiF1zwM6"  # Replace this with your voice ID , jerry voice id: 1t1EeRixsJrKbiF1zwM6 / adam voice s3TPKV1kjDlVtZbl4Ksh
+
+@app.get("/")
+def read_root():
+    return {"message": "Welcome to the English Tutor API"}
 
 @app.get("/audio/{word}")
 def get_audio(word: str):
@@ -62,3 +81,75 @@ async def chat(data: dict):
         ),
     )
     return {"reply": response.text}
+
+db = mysql.connector.connect(
+    host="localhost",
+    user="root",
+    password="",
+    database="english_tutor",
+)
+cursor = db.cursor()
+
+def is_valid_email(email: str) -> bool:
+    # Regex kiểm tra định dạng email hợp lệ
+    pattern = r"^[\w\.-]+@[\w\.-]+\.\w+$"
+    return re.match(pattern, email)
+
+def check_email_exists(email: str) -> bool:
+    # Kiểm tra domain có tồn tại mail server không (DNS MX record)
+    domain = email.split('@')[-1]
+    try:
+        answers = dns.resolver.resolve(domain, 'MX')
+        return True if answers else False
+    except Exception:
+        return False
+    
+@app.post("/register")
+async def register(user: UserRegister, db: Session = Depends(get_db)):
+    if not is_valid_email(user.email):
+        raise HTTPException(status_code=400, detail="Email không hợp lệ.")
+
+    if not check_email_exists(user.email):
+        raise HTTPException(status_code=400, detail="Email không tồn tại trên hệ thống toàn cầu.")
+
+    if db.query(User).filter(User.email == user.email).first():
+        raise HTTPException(status_code=400, detail="Email đã được sử dụng.")
+    
+    if db.query(User).filter(User.username == user.username).first():
+        raise HTTPException(status_code=400, detail="Tên đăng nhập đã tồn tại.")
+
+    if user.password != user.confirm_password:
+        raise HTTPException(status_code=400, detail="Passwords do not match.")
+
+    hashed_password = bcrypt.hashpw(user.password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+
+    new_user = User(
+        username=user.username,
+        email=user.email,
+        password=hashed_password,
+        created_at=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
+        updated_at=None
+    )
+    db.add(new_user)
+    db.commit()
+    db.refresh(new_user)
+
+    return {"message": "Đăng ký thành công"}
+
+@app.post("/login")
+def login(user: UserLogin, db: Session = Depends(get_db)):
+    existing_user = db.query(User).filter(
+        (User.username == user.login_input) | (User.email == user.login_input)
+    ).first()
+
+    if not existing_user:
+        raise HTTPException(status_code=401, detail="Tên đăng nhập hoặc email không tồn tại")
+
+    if not bcrypt.checkpw(user.password.encode('utf-8'), existing_user.password.encode('utf-8')):
+        raise HTTPException(status_code=401, detail="Mật khẩu không chính xác")
+
+    return {
+        "message": "Đăng nhập thành công",
+        "username": existing_user.username
+    }
+
