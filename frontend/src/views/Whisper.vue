@@ -1,49 +1,55 @@
 <template>
-  <div class="practice-container">
-    <div class="practice-header">
-      <h2>🎤 Luyện phát âm IPA</h2>
-      <div class="topic-select">
-        <label for="topic"><strong>Chủ đề:</strong></label>
-        <select id="topic" v-model="selectedTopic" @change="changeTopic">
-          <option value="">-- Tất cả --</option>
-          <option v-for="t in topics" :key="t.key" :value="t.key">
-            {{ t.title }}
-          </option>
-        </select>
+  <div class="whisper-page">
+    <template v-if="!selectedTopic">
+      <h2 class="whisper-title">🎤 Luyện phát âm IPA</h2>
+      <div class="topic-grid">
+        <div
+          v-for="t in topics"
+          :key="t.key"
+          class="topic-card"
+          @click="selectTopic(t.key)"
+        >
+          <span class="topic-icon">{{ t.icon || "🔤" }}</span>
+          <span class="topic-title">{{ t.title }}</span>
+        </div>
       </div>
-    </div>
-
-    <div class="sentence-block">
-      <div class="sentence-main">
-        <span class="sentence-english">{{
-          currentSentenceObj.english || "Loading..."
-        }}</span>
-        <span
-          class="sentence-ipa"
-          v-html="
-            `<strong>IPA:</strong> <code>${
-              currentSentenceObj.pronunciation || currentIPA
-            }</code>`
-          "
-        ></span>
+    </template>
+    <template v-else>
+      <div class="whisper-card">
+        <div class="practice-header">
+          <button @click="resetTopic" class="main-btn" style="margin-bottom:12px;">⬅️ Chọn chủ đề khác</button>
+          <h2>Chủ đề: {{ getTopicTitle(selectedTopic) }}</h2>
+        </div>
+        <div class="sentence-block">
+          <div class="sentence-main">
+            <span class="sentence-english">{{
+              currentSentenceObj.english || "Loading..."
+            }}</span>
+            <span
+              class="sentence-ipa"
+              v-html="
+                `<strong>IPA:</strong> <code>${
+                  currentSentenceObj.pronunciation || currentIPA
+                }</code>`"
+            ></span>
+          </div>
+          <div class="sentence-vn" v-if="currentSentenceObj.vietnamese">
+            <span>🇻🇳 {{ currentSentenceObj.vietnamese }}</span>
+          </div>
+        </div>
+        <div class="practice-actions">
+          <button @click="playAudio" class="main-btn">🔊 Nghe</button>
+          <button @click="startRecording" class="main-btn">🎙️ Ghi âm</button>
+          <button @click="fetchSentences(selectedTopic)" class="main-btn">🔄 Câu khác</button>
+        </div>
+        <div class="practice-status">{{ status }}</div>
+        <div
+          class="practice-result"
+          v-if="transcriptResult"
+          v-html="transcriptResult"
+        ></div>
       </div>
-      <div class="sentence-vn" v-if="currentSentenceObj.vietnamese">
-        <span>🇻🇳 {{ currentSentenceObj.vietnamese }}</span>
-      </div>
-    </div>
-
-    <div class="practice-actions">
-      <button @click="startRecording">🎙️ Ghi âm</button>
-      <button @click="fetchSentences(selectedTopic)">🔄 Câu khác</button>
-    </div>
-
-    <div class="practice-status">{{ status }}</div>
-
-    <div
-      class="practice-result"
-      v-if="transcriptResult"
-      v-html="transcriptResult"
-    ></div>
+    </template>
   </div>
 </template>
 
@@ -64,7 +70,6 @@ export default {
   },
   async mounted() {
     await this.fetchTopics();
-    await this.fetchSentences();
   },
   methods: {
     async fetchTopics() {
@@ -75,16 +80,18 @@ export default {
         const topicMap = {};
         all.forEach((s) => {
           if (!topicMap[s.topic]) {
-            topicMap[s.topic] = s.icon
-              ? `${s.icon} ${
-                  s.topic.charAt(0).toUpperCase() + s.topic.slice(1)
-                }`
-              : s.topic.charAt(0).toUpperCase() + s.topic.slice(1);
+            topicMap[s.topic] = {
+              title: s.icon
+                ? `${s.icon} ${s.topic.charAt(0).toUpperCase() + s.topic.slice(1)}`
+                : s.topic.charAt(0).toUpperCase() + s.topic.slice(1),
+              icon: s.icon || "🔤",
+            };
           }
         });
         this.topics = Object.keys(topicMap).map((key) => ({
           key,
-          title: topicMap[key],
+          title: topicMap[key].title,
+          icon: topicMap[key].icon,
         }));
       } catch (e) {
         this.topics = [];
@@ -120,11 +127,21 @@ export default {
         console.error(e);
       }
     },
-
-    changeTopic() {
-      this.fetchSentences(this.selectedTopic);
+    selectTopic(topic) {
+      this.selectedTopic = topic;
+      this.fetchSentences(topic);
     },
-
+    resetTopic() {
+      this.selectedTopic = "";
+      this.currentSentenceObj = {};
+      this.currentIPA = "";
+      this.status = "";
+      this.transcriptResult = "";
+    },
+    getTopicTitle(topicKey) {
+      const found = this.topics.find(t => t.key === topicKey);
+      return found ? found.title : topicKey;
+    },
     async startRecording() {
       this.status = "🎙️ Đang ghi âm...";
       this.transcriptResult = "";
@@ -220,100 +237,182 @@ export default {
         )
         .join("");
     },
+    playAudio() {
+      if (!this.currentSentenceObj.english) return;
+      const audio = new Audio(`http://127.0.0.1:8000/audio/${encodeURIComponent(this.currentSentenceObj.english)}`);
+      audio.play();
+    },
   },
 };
 </script>
 
 <style scoped>
-.practice-container {
-  background: #fff;
-  max-width: 650px;
-  margin: 40px auto;
-  padding: 30px 24px;
-  border-radius: 12px;
-  box-shadow: 0 0 12px rgba(0, 0, 0, 0.08);
-  font-family: Arial, sans-serif;
+.whisper-page {
+  background-color: #1a1a2e;
+  color: #fff;
+  min-height: 100vh;
+  padding: 40px 20px;
+  font-family: "Segoe UI", Arial, sans-serif;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
+
+.whisper-title {
+  font-size: 28px;
+  color: #ffd166;
+  margin-bottom: 32px;
+  text-align: center;
+}
+
+.topic-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 40px;
+}
+
+.topic-card {
+  background-color: #23234b;
+  border-radius: 16px;
+  padding: 32px 0 24px 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  cursor: pointer;
+  transition: box-shadow 0.2s, transform 0.2s;
+  box-shadow: 0 4px 12px rgba(255,255,255,0.05);
+  font-size: 20px;
+}
+
+.topic-card:hover {
+  box-shadow: 0 8px 24px rgba(255,255,255,0.12);
+  transform: translateY(-6px) scale(1.03);
+  background-color: #2a2a3d;
+}
+
+.topic-icon {
+  font-size: 40px;
+  margin-bottom: 16px;
+}
+
+.topic-title {
+  font-size: 20px;
+  font-weight: bold;
+  color: #4fc3f7;
+}
+
+.whisper-card {
+  background: #23234b;
+  border-radius: 20px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  padding: 32px;
+  width: 100%;
+  max-width: 600px;
+  text-align: center;
+}
+
 .practice-header {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
   margin-bottom: 18px;
 }
-.topic-select label {
-  margin-right: 8px;
-}
-.topic-select select {
-  padding: 6px 12px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-}
+
 .sentence-block {
   margin: 18px 0 10px 0;
   padding: 16px 0;
-  border-bottom: 1px solid #eee;
+  border-bottom: 1px solid #4fc3f7;
 }
+
 .sentence-main {
   font-size: 1.2em;
   margin-bottom: 6px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
 }
+
 .sentence-english {
   font-weight: bold;
-  margin-right: 12px;
+  color: #4fc3f7;
+  margin-bottom: 8px;
+  font-size: 22px;
 }
+
 .sentence-ipa {
   font-family: monospace;
-  color: #555;
+  color: #06d6a0;
+  margin-bottom: 6px;
+  font-size: 17px;
 }
+
 .sentence-vn {
   margin-top: 6px;
-  color: #444;
-  font-size: 1em;
+  color: #ffd166;
+  font-size: 18px;
 }
+
 .practice-actions {
   margin: 18px 0;
+  display: flex;
+  gap: 16px;
+  justify-content: center;
 }
-.practice-actions button {
-  margin: 0 8px;
-  padding: 8px 18px;
-  border-radius: 6px;
+
+.main-btn {
+  padding: 10px 20px;
+  border-radius: 10px;
   border: none;
-  background: #007bff;
+  background: linear-gradient(90deg, #06d6a0 0%, #4fc3f7 100%);
   color: #fff;
   font-weight: bold;
   cursor: pointer;
-  transition: background 0.2s;
+  transition: all 0.2s;
+  font-size: 15px;
 }
-.practice-actions button:hover {
-  background: #0056b3;
+
+.main-btn:hover {
+  transform: translateY(-2px);
+  background: linear-gradient(90deg, #4fc3f7 0%, #06d6a0 100%);
 }
+
 .practice-status {
   margin: 10px 0 0 0;
-  color: #007bff;
+  color: #ffd166;
   font-weight: bold;
+  font-size: 16px;
 }
+
 .practice-result {
-  background: #f9f9f9;
+  background: #23234b;
   padding: 16px;
   border-radius: 8px;
-  border-left: 5px solid #007bff;
+  border-left: 5px solid #06d6a0;
   margin-top: 22px;
   text-align: left;
   font-size: 1em;
+  color: #fff;
 }
+
 .result-block code {
-  background: #eef6ff;
+  background: #1a1a2e;
   padding: 2px 6px;
   border-radius: 4px;
   font-family: monospace;
+  color: #ffd166;
 }
+
 #feedback {
-  background: #eef6ff;
-  border: 1px solid #007bff;
+  background: #23234b;
+  border: 1px solid #4fc3f7;
   padding: 10px;
   border-radius: 6px;
   margin-top: 15px;
   font-style: italic;
-  color: #004085;
+  color: #4fc3f7;
 }
 </style>
