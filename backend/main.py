@@ -6,10 +6,17 @@ import os
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
-import whisper
+from whisper import router  # Import router từ whisper.py
+
+# Load biến môi trường
+load_dotenv()
+
+ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
+VOICE_ID = "tnSpp4vdxKPjI9w0GnoV"  # Thay bằng voice ID của bạn
 
 app = FastAPI()
 
+# CORS cho phép frontend truy cập API
 app.add_middleware(
     CORSMiddleware,
     allow_origins=["*"],
@@ -17,12 +24,8 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-
-load_dotenv()
-
-
-ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
-VOICE_ID = "tnSpp4vdxKPjI9w0GnoV"  # Replace this with your voice ID , jerry voice id: 1t1EeRixsJrKbiF1zwM6 / adam voice s3TPKV1kjDlVtZbl4Ksh
+# Đưa toàn bộ API từ whisper.py vào app
+app.include_router(router)
 
 @app.get("/audio/{word}")
 def get_audio(word: str, speed: float = 0.75):
@@ -38,7 +41,6 @@ def get_audio(word: str, speed: float = 0.75):
             "stability": 0.75,
             "speed": speed,
             "similarity_boost": 0.75
-            
         }
     }
 
