@@ -96,6 +96,7 @@ export default {
     };
   },
   methods: {
+    
     getIconPath(filename) {
       return new URL(`../assets/icons/${filename}`, import.meta.url).href;
     },
@@ -107,6 +108,30 @@ export default {
       }
     },
   },
+  mounted() {
+    const token = localStorage.getItem("access_token");
+    if (!token) {
+      this.$router.push("/");
+      return;
+    }
+    fetch("http://localhost:8000/home", {
+      headers: {
+        "Authorization": "Bearer " + token
+      }
+    })
+    .then(res => {
+      if (res.status === 401) {
+        // Chưa đăng nhập hoặc token hết hạn
+        this.$router.push("/");
+        return;
+      }
+      return res.json();
+    })
+    .then(data => {
+      // Hiển thị nội dung home
+      console.log(data.message);
+    });
+  }
 };
 </script>
 

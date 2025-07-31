@@ -70,6 +70,15 @@ export default {
             login_input: this.username,
             password: this.password
           })
+          .then(res => res.json())
+          .then(data => {
+            if(data.access_token) {
+              localStorage.setItem('access_token', data.access_token);
+              this.$router.push('/home');
+            } else {
+              this.errors.username = data.message || 'Đăng nhập thất bại';
+            }
+          })
         });
 
         if (!res.ok) {
