@@ -49,8 +49,7 @@ export default {
         {
           icon: "communicate.png",
           title: "Học câu giao tiếp thông dụng",
-          description:
-            "Luyện nghe, nói câu tiếng Anh giao tiếp hằng ngày",
+          description: "Luyện nghe, nói câu tiếng Anh giao tiếp hằng ngày",
           route: "/conversation",
         },
         {
@@ -86,6 +85,12 @@ export default {
           title: "Sentence",
           description: "Test Sentence của bạn",
           route: "/sentence",
+        },
+        {
+          icon: "grammar.png",
+          title: "danh gia phat am test",
+          description: "Test Sentence của bạn",
+          route: "/Whisper",
         },
       ],
     };

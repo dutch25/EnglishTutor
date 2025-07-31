@@ -9,15 +9,16 @@ import os
 from dotenv import load_dotenv
 from google import genai
 from google.genai import types
+import whisper
 import dns.resolver
 import re
 from sqlalchemy.orm import Session
 from fastapi import Depends 
-from backend.database import get_db
-from backend.models import User
+from database import get_db
+from models import User
 from datetime import datetime
-from backend.schemas import UserRegister
-from backend.schemas import UserLogin
+from schemas import UserRegister
+from schemas import UserLogin
 import bcrypt
 
 app = FastAPI()
