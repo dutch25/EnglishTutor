@@ -38,17 +38,17 @@ export default {
   data() {
     return {
       logoUrl,
+      username: "",
       features: [
         {
           icon: "ipa.png",
           title: "Bảng phiên âm (IPA)",
-          description:
-            "Luyện nghe, phát âm chuẩn với 44 âm trong bảng phiên âm quốc tế IPA",
+          description: "Luyện nghe, phát âm chuẩn với 44 âm IPA",
           route: "/ipa",
         },
         {
           icon: "communicate.png",
-          title: "Học câu giao tiếp thông dụng",
+          title: "Học câu giao tiếp",
           description: "Luyện nghe, nói câu tiếng Anh giao tiếp hằng ngày",
           route: "/conversation",
         },
@@ -56,11 +56,11 @@ export default {
           icon: "flashcard.png",
           title: "Từ vựng với Flashcard",
           description:
-            "Phương pháp học từ vựng nổi tiếng. Nay hoàn toàn miễn phí trên Dynonary",
+            "Phương pháp học từ vựng nổi tiếng, miễn phí trên Dynonary",
         },
         {
           icon: "favorite.png",
-          title: "Từ vựng yêu thích của bạn",
+          title: "Từ vựng yêu thích",
           description: "Danh sách từ vựng yêu thích mà bạn đã lưu",
         },
         {
@@ -76,27 +76,26 @@ export default {
         },
         {
           icon: "grammar.png",
-          title: "Listen",
-          description: "Test Listening của bạn",
+          title: "Listening Test",
+          description: "Kiểm tra khả năng nghe của bạn",
           route: "/listening",
         },
         {
           icon: "grammar.png",
-          title: "Sentence",
-          description: "Test Sentence của bạn",
+          title: "Sentence Test",
+          description: "Luyện tập câu tiếng Anh",
           route: "/sentence",
         },
         {
           icon: "grammar.png",
-          title: "danh gia phat am test",
-          description: "Test Sentence của bạn",
+          title: "Đánh giá phát âm",
+          description: "Thử tính năng Whisper đánh giá phát âm",
           route: "/Whisper",
         },
       ],
     };
   },
   methods: {
-    
     getIconPath(filename) {
       return new URL(`../assets/icons/${filename}`, import.meta.url).href;
     },
@@ -104,34 +103,25 @@ export default {
       if (item.route) {
         this.$router.push(item.route);
       } else {
-        alert(`Tính năng "${item.title}" đang được phát triển!`);
+        alert(`Tính năng "${item.title}" đang phát triển!`);
       }
+    },
+    logout() {
+      localStorage.removeItem("username");
+      this.$router.push("/");
     },
   },
   mounted() {
-    const token = localStorage.getItem("access_token");
-    if (!token) {
+    // ✅ Kiểm tra username thay vì token
+    const user = localStorage.getItem("username");
+    if (!user) {
+      console.warn("⚠️ Chưa đăng nhập, quay lại trang Login");
       this.$router.push("/");
-      return;
+    } else {
+      this.username = user;
+      console.log("✅ Đăng nhập với username:", user);
     }
-    fetch("http://localhost:8000/home", {
-      headers: {
-        "Authorization": "Bearer " + token
-      }
-    })
-    .then(res => {
-      if (res.status === 401) {
-        // Chưa đăng nhập hoặc token hết hạn
-        this.$router.push("/");
-        return;
-      }
-      return res.json();
-    })
-    .then(data => {
-      // Hiển thị nội dung home
-      console.log(data.message);
-    });
-  }
+  },
 };
 </script>
 
