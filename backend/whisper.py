@@ -1,21 +1,26 @@
 from fastapi import APIRouter, File, UploadFile, Form
-import shutil, os, json, subprocess, requests, difflib, re
+import shutil, os, json, subprocess, re, difflib, wave, json as js, requests
 from pydub import AudioSegment, effects
+from vosk import Model, KaldiRecognizer
 from dotenv import load_dotenv
 
-# 📥 Load API Key
-load_dotenv()
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-if not OPENAI_API_KEY:
-    raise ValueError("❌ Thiếu OPENAI_API_KEY trong .env")
-
+# ====== 🔧 Cấu hình ======
 router = APIRouter()
-
 UPLOAD_FOLDER = "./uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
+MODEL_PATH = "./models/vosk-en"
 ESPEAK_PATH = r"C:\Program Files\eSpeak NG\espeak-ng.exe"
 
-# ======== 🔤 XỬ LÝ IPA ========
+# ====== 🔑 Load API Key GPT ======
+load_dotenv()
+OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+
+# ====== 🚀 Load model Vosk ======
+if not os.path.exists(MODEL_PATH):
+    raise RuntimeError("❌ Không tìm thấy model Vosk! Giải nén model vào ./models/vosk-en")
+vosk_model = Model(MODEL_PATH)
+
+# ====== 🔤 Xử lý IPA ======
 def get_ipa(text: str) -> str:
     if not text.strip():
         return ""
@@ -27,7 +32,7 @@ def get_ipa(text: str) -> str:
         print("❌ Lỗi IPA:", e)
         return ""
 
-def split_ipa(ipa: str): 
+def split_ipa(ipa: str):
     return re.findall(r"[ˈˌ]?[a-zɑɔæəɪʊeʌθðŋʃʒʔɡɾ̃ː]+|[.,!?;]", ipa.strip())
 
 def compare_ipa_colored(target_ipa: str, user_ipa: str):
@@ -51,26 +56,49 @@ def compare_text_colored(original, spoken):
         res += f'<span style="color:{"green" if o == s else "red"}">{o}</span>'
     return res
 
-# ======== 🔊 XỬ LÝ ÂM THANH ========
+# ====== 🎧 Xử lý âm thanh ======
 def preprocess_audio(input_path, output_path):
-    audio = AudioSegment.from_file(input_path)
-    audio = effects.normalize(audio).set_channels(1).set_frame_rate(16000)
-    audio.export(output_path, format="wav")
+    try:
+        audio = AudioSegment.from_file(input_path)
+        audio = effects.normalize(audio).set_channels(1).set_frame_rate(16000)
+        audio.export(output_path, format="wav", codec="pcm_s16le")
+        print(f"✅ Đã convert {input_path} → {output_path}, size={os.path.getsize(output_path)} bytes")
+    except Exception as e:
+        print("❌ Lỗi khi xử lý audio:", e)
 
 def transcribe_audio(file_path):
     clean_path = file_path.replace(".webm", "_clean.wav")
     preprocess_audio(file_path, clean_path)
 
-    url = "https://api.openai.com/v1/audio/transcriptions"
-    headers = {"Authorization": f"Bearer {OPENAI_API_KEY}"}
-    with open(clean_path, "rb") as f:
-        files = {"file": (os.path.basename(clean_path), f, "audio/wav")}
-        data = {"model": "whisper-1", "language": "en"}
-        res = requests.post(url, headers=headers, files=files, data=data)
+    if not os.path.exists(clean_path) or os.path.getsize(clean_path) < 1000:
+        print("⚠️ File WAV trống hoặc quá nhỏ!")
+        return ""
 
-    return res.json().get("text", "").strip() if res.status_code == 200 else ""
+    print(f"🎧 Bắt đầu nhận dạng với Vosk: {clean_path}")
+    wf = wave.open(clean_path, "rb")
+    rec = KaldiRecognizer(vosk_model, wf.getframerate())
+    rec.SetWords(True)
 
-# ======== 📥 API UPLOAD ========
+    text = ""
+    while True:
+        data = wf.readframes(4000)
+        if len(data) == 0:
+            break
+        if rec.AcceptWaveform(data):
+            res = js.loads(rec.Result())
+            print("👉 Partial:", res.get("text", ""))
+            text += " " + res.get("text", "")
+    res = js.loads(rec.FinalResult())
+    print("👉 Final:", res.get("text", ""))
+    text += " " + res.get("text", "")
+    wf.close()
+
+    text = text.strip()
+    if not text:
+        print("⚠️ Không nhận dạng được giọng nói!")
+    return text
+
+# ====== 📥 API Upload ======
 @router.post("/api/upload/")
 async def upload_audio(file: UploadFile = File(...), original_text: str = Form(...)):
     path = os.path.join(UPLOAD_FOLDER, file.filename)
@@ -78,6 +106,9 @@ async def upload_audio(file: UploadFile = File(...), original_text: str = Form(.
         shutil.copyfileobj(file.file, buffer)
 
     transcript = transcribe_audio(path)
+    if not transcript:
+        return {"error": "⚠️ Không nhận dạng được giọng nói!", "transcript": ""}
+
     original_ipa = get_ipa(original_text)
     user_ipa = get_ipa(transcript)
     ipa_score, ipa_html = compare_ipa_colored(original_ipa, user_ipa)
@@ -91,7 +122,7 @@ async def upload_audio(file: UploadFile = File(...), original_text: str = Form(.
         "ipa_score": ipa_score
     }
 
-# ======== 📚 API LẤY CÂU TỪ JSON ========
+# ====== 📚 API Lấy câu từ JSON ======
 JSON_PATH = os.path.abspath(
     os.path.join(os.path.dirname(__file__), "../frontend/src/assets/data/conversations.json")
 )
@@ -99,7 +130,6 @@ JSON_PATH = os.path.abspath(
 def load_sentences(topic: str = None):
     with open(JSON_PATH, "r", encoding="utf-8") as f:
         data = json.load(f)
-
     result = []
     for key, value in data.items():
         if topic and key.lower() != topic.lower():
@@ -118,36 +148,40 @@ def load_sentences(topic: str = None):
 def get_sentences(topic: str = None):
     return {"sentences": load_sentences(topic)}
 
-# ======== 📥 API LẤY IPA ========
+# ====== 📥 API Lấy IPA ======
 @router.post("/api/get_ipa")
 def api_get_ipa(body: dict):
     return {"ipa": get_ipa(body.get("text", ""))}
 
-# ======== 🧠 API NHẬN XÉT GPT ========
+# ====== 🤖 API Feedback GPT (phân tích điểm mạnh/điểm yếu) ======
 @router.post("/api/feedback")
 def feedback(body: dict):
     transcript = body.get("transcript", "")
     target = body.get("target", "")
 
-    prompt = f"""Bạn là giáo viên tiếng Anh cho người Việt. 
-Học viên muốn nói: "{target}" 
-AI nghe được: "{transcript}" 
+    if not OPENAI_API_KEY:
+        return {"feedback": "⚠️ Không tìm thấy OpenAI API Key."}
 
-Hãy trả lời NGẮN GỌN, dễ hiểu với cấu trúc:
-🌟 Nhận xét chung
-❌ Từ sai → ✅ Cách nói đúng
-💡 Mẹo luyện tập
-🔥 Câu khích lệ"""
+    prompt = f"""
+Bạn là giáo viên phát âm tiếng Anh cho người Việt. 
+Học viên muốn nói: "{target}"
+AI nghe được: "{transcript}"
 
-    headers = {
-        "Authorization": f"Bearer {OPENAI_API_KEY}",
-        "Content-Type": "application/json"
-    }
+Hãy:
+1. ✅ Nêu **điểm mạnh** trong phát âm.
+2. ❌ Chỉ ra **điểm yếu** cụ thể (âm sai, thiếu nhấn, ngữ điệu).
+3. 💡 Đưa ra **mẹo cải thiện chi tiết**.
+4. 🔥 Kết thúc bằng **câu khích lệ ngắn gọn**.
+
+Trả lời ngắn gọn, rõ ràng, dễ hiểu.
+"""
+
+    headers = {"Authorization": f"Bearer {OPENAI_API_KEY}", "Content-Type": "application/json"}
     payload = {
         "model": "gpt-4o-mini",
         "messages": [{"role": "user", "content": prompt}],
         "temperature": 0.6,
-        "max_tokens": 180
+        "max_tokens": 220
     }
 
     try:
