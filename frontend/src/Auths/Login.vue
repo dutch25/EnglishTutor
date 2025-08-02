@@ -48,6 +48,7 @@
     </div>
   </div>
 </template>
+
 <script>
 export default {
   data() {
@@ -67,13 +68,12 @@ export default {
       console.clear();
       console.log("🔹 [DEBUG] Bắt đầu login...");
 
-      // Kiểm tra độ dài email (tối thiểu 5 ký tự)
+      // ✅ Validate input
       if (this.username.length < 5) {
         this.showToast("Email phải có ít nhất 5 ký tự!", "error");
         return;
       }
 
-      // Kiểm tra độ dài mật khẩu (tối thiểu 8 ký tự)
       if (this.password.length < 8) {
         this.showToast("Mật khẩu phải có ít nhất 8 ký tự!", "error");
         return;
@@ -93,26 +93,20 @@ export default {
         console.log("🔹 [DEBUG] Response từ server:", data);
 
         if (!res.ok) {
-          // ✅ Parse lỗi trả về từ FastAPI
-          let msg = "Sai tài khoản hoặc mật khẩu!";
-          if (Array.isArray(data) && data[0]?.msg) {
-            msg = data[0].msg;
-          } else if (data?.detail) {
-            msg = data.detail;
-          } else if (data?.msg) {
-            msg = data.msg;
-          }
-
+          let msg = data?.detail || data?.msg || "Sai tài khoản hoặc mật khẩu!";
           this.showToast(msg, "error");
           return;
         }
 
+        // ✅ Lưu session và localStorage
         if (data.username) {
           localStorage.setItem("username", data.username);
+          sessionStorage.setItem("sessionUser", data.username);
         }
 
         this.showToast("✅ Đăng nhập thành công!", "success");
 
+        // ✅ Chuyển sang Home sau 1s
         setTimeout(() => {
           this.$router.push("/home");
         }, 1000);
@@ -133,7 +127,7 @@ export default {
 </script>
 
 <style scoped>
-/* Header */
+/* 🔹 Header */
 .top-header {
   background-color: #62676b;
   padding: 16px 24px;
@@ -157,7 +151,7 @@ export default {
   color: #ffffff;
 }
 
-/* Form */
+/* 🔹 Form */
 .auth-wrapper {
   display: flex;
   justify-content: center;
@@ -212,11 +206,11 @@ button:hover {
   margin-top: 16px;
 }
 
-/* ✅ Toast */
+/* 🔹 Toast Notification */
 .toast {
   position: fixed;
-  top: 20px; /* Giữ ở góc phải trên cùng */
-  right: 20px; /* Giữ ở góc phải trên cùng */
+  top: 20px;
+  right: 20px;
   background: #333;
   color: #fff;
   padding: 12px 20px;
@@ -226,10 +220,10 @@ button:hover {
   animation: fadeIn 0.3s ease;
 }
 .toast.success {
-  background: #4caf50; /* Khôi phục màu xanh lá cho "Đăng nhập thành công" */
+  background: #4caf50;
 }
 .toast.error {
-  background: #e53935; /* Giữ màu đỏ cho lỗi */
+  background: #e53935;
 }
 @keyframes fadeIn {
   from {
