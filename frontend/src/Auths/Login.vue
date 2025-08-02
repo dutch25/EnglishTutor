@@ -73,7 +73,6 @@ export default {
         this.showToast("Email phải có ít nhất 5 ký tự!", "error");
         return;
       }
-
       if (this.password.length < 8) {
         this.showToast("Mật khẩu phải có ít nhất 8 ký tự!", "error");
         return;
@@ -98,10 +97,12 @@ export default {
           return;
         }
 
-        // ✅ Lưu session và localStorage
+        // ✅ Lưu session, username và token
         if (data.username) {
           localStorage.setItem("username", data.username);
           sessionStorage.setItem("sessionUser", data.username);
+          // 🔥 Lưu token để router guard nhận diện
+          localStorage.setItem("token", data.token || "dummy-token");
         }
 
         this.showToast("✅ Đăng nhập thành công!", "success");
