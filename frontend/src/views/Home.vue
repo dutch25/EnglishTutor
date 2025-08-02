@@ -100,6 +100,12 @@ export default {
           description: "Thử tính năng Whisper đánh giá phát âm",
           route: "/Whisper",
         },
+        {
+          icon: "dictionary.png",
+          title: "Từ điển",
+          description: "Tra cứu nghĩa từ tiếng Anh nhanh chóng",
+          route: "/dictionary",
+        },
       ],
     };
   },
