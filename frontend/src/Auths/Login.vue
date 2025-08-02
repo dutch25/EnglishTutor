@@ -103,6 +103,7 @@ export default {
           sessionStorage.setItem("sessionUser", data.username);
           // 🔥 Lưu token để router guard nhận diện
           localStorage.setItem("token", data.token || "dummy-token");
+          localStorage.setItem("user_id", data.id); // hoặc data.user_id, tuỳ backend trả về
         }
 
         this.showToast("✅ Đăng nhập thành công!", "success");

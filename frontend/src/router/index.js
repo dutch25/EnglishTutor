@@ -9,6 +9,7 @@ import Sentence from "../views/SentenceTest.vue";
 import Conversation from "../views/ConversationPractice.vue";
 import Whisper from "../views/Whisper.vue";
 import Dictionary from '../views/Dictionary.vue';
+import Saved from '../views/Saved.vue';
 
 const routes = [
   { path: "/", name: "Login", component: Login },
@@ -58,6 +59,12 @@ const routes = [
     component: Dictionary,
     meta: { requiresAuth: true },
   },
+  {
+    path: "/saved",
+    name: "Saved",
+    component: Saved,
+    meta: { requiresAuth: true },
+  }
 ];
 
 const router = createRouter({

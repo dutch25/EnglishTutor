@@ -29,6 +29,14 @@
           </li>
         </ul>
       </div>
+      <button
+        v-if="result && result.word"
+        class="main-btn"
+        style="margin: 18px 0 0 0;"
+        @click="saveWord"
+      >
+        💾 Lưu từ này
+      </button>
     </div>
   </div>
 </template>
@@ -101,7 +109,7 @@ export default {
               const vi = await this.translateToVietnamese(def.definition);
               const arr = [...this.viMeanings[idx]];
               arr[i] = vi;
-              this.$set(this.viMeanings, idx, arr);
+              this.viMeanings[idx] = arr;
             }
           });
         });
@@ -144,6 +152,29 @@ export default {
         modal: "Động từ khuyết thiếu"
       };
       return map[pos?.toLowerCase()] || pos;
+    },
+    async saveWord() {
+      if (!this.result || !this.result.word) return;
+      const userId = Number(localStorage.getItem("user_id"));
+      if (!userId) {
+        alert("Bạn cần đăng nhập lại!");
+        return;
+      }
+      try {
+        const res = await fetch("http://localhost:8000/api/save_word", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user_id: userId,
+            word: this.result.word,
+            note: "",
+          }),
+        });
+        if (!res.ok) throw new Error("Lưu từ thất bại!");
+        alert("Đã lưu từ!");
+      } catch (e) {
+        alert(e.message);
+      }
     },
   },
 };
