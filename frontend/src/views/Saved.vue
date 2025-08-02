@@ -6,9 +6,21 @@
     <div v-if="error" class="error">{{ error }}</div>
     <div v-if="!loading && savedWords.length === 0" class="empty">Chưa có từ nào được lưu.</div>
     <div v-for="item in savedWords" :key="item.id" class="saved-card">
-      <div class="word">{{ item.word }}</div>
-      <div class="note" v-if="item.note">Ghi chú: {{ item.note }}</div>
-      <button class="delete-btn" @click="deleteWord(item.id)">Xoá</button>
+      <div class="saved-row">
+        <div class="cell word">
+          <b>{{ item.word }}</b>
+          <button class="speak-btn" @click="speak(item.word)" title="Nghe phát âm">
+            🔊
+          </button>
+        </div>
+        <div class="cell phonetic" v-if="item.phonetic">/ {{ item.phonetic }} /</div>
+        <div class="cell meaning">{{ item.meaning }}</div>
+        <div class="cell date">{{ item.created_at }}</div>
+        <div class="cell action">
+          <button class="delete-btn" @click="deleteWord(item.id)">Xoá</button>
+        </div>
+      </div>
+      <div v-if="item.note" class="note">Ghi chú: {{ item.note }}</div>
     </div>
   </div>
 </template>
@@ -20,7 +32,6 @@ export default {
       savedWords: [],
       loading: false,
       error: "",
-      userId: 1, // tuỳ chỉnh theo hệ thống đăng nhập của bạn
     };
   },
   mounted() {
@@ -54,7 +65,13 @@ export default {
       } catch (e) {
         this.error = e.message;
       }
-    }
+    },
+    speak(text) {
+      if (!text) return;
+      const utter = new window.SpeechSynthesisUtterance(text);
+      utter.lang = "en-US";
+      window.speechSynthesis.speak(utter);
+    },
   }
 };
 </script>
@@ -89,20 +106,34 @@ h1 {
   padding: 18px 24px;
   margin-bottom: 18px;
   width: 100%;
-  max-width: 400px;
+  max-width: 700px;
   box-shadow: 0 4px 16px rgba(0,0,0,0.12);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
 }
-.word {
-  font-size: 22px;
-  color: #4fc3f7;
-  font-weight: bold;
+.saved-row {
+  display: flex;
+  width: 100%;
+  align-items: center;
+  margin-bottom: 6px;
 }
+.cell {
+  padding: 0 8px;
+  font-size: 16px;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.word { flex: 1.2; color: #4fc3f7; font-weight: bold; font-size: 20px; }
+.phonetic { flex: 1; color: #ffd166; font-size: 16px; }
+.meaning { flex: 2; color: #fff; }
+.date { flex: 1.2; color: #aaa; font-size: 13px; }
+.action { flex: 0.7; }
 .note {
   color: #ffd166;
-  margin: 8px 0;
+  margin: 8px 0 0 0;
+  font-size: 15px;
 }
 .delete-btn {
   background: #ef476f;
@@ -120,4 +151,17 @@ h1 {
 }
 .error { color: #ef476f; }
 .empty { color: #ffd166; }
+.speak-btn {
+  background: none;
+  border: none;
+  color: #ffd166;
+  font-size: 20px;
+  margin-left: 8px;
+  cursor: pointer;
+  vertical-align: middle;
+  transition: color 0.2s;
+}
+.speak-btn:hover {
+  color: #4fc3f7;
+}
 </style>

@@ -17,7 +17,9 @@ class Saved(Base):
     id = Column(Integer, primary_key=True, index=True)
     user_id = Column(Integer, ForeignKey("users.id"), nullable=False)
     word = Column(String(100), nullable=False)
-    note = Column(String(255), nullable=True)  # nếu muốn lưu ghi chú
+    meaning = Column(String(255), nullable=True)      # Thêm trường nghĩa
+    phonetic = Column(String(100), nullable=True)     # Thêm trường phiên âm
+    note = Column(String(255), nullable=True)
     created_at = Column(String(50), nullable=True)
 
     user = relationship("User", backref="saved_words")
