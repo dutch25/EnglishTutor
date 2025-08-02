@@ -168,12 +168,13 @@ Học viên muốn nói: "{target}"
 AI nghe được: "{transcript}"
 
 Hãy:
-1. ✅ Nêu **điểm mạnh** trong phát âm.
-2. ❌ Chỉ ra **điểm yếu** cụ thể (âm sai, thiếu nhấn, ngữ điệu).
-3. 💡 Đưa ra **mẹo cải thiện chi tiết**.
-4. 🔥 Kết thúc bằng **câu khích lệ ngắn gọn**.
+1. ✅ Nêu Điểm mạnh trong phát âm.
+2. ❌ Chỉ ra Điểm yếu cụ thể (âm sai, thiếu nhấn, ngữ điệu).
+3. 💡 Đưa ra mẹo cải thiện chi tiết.
 
-Trả lời ngắn gọn, rõ ràng, dễ hiểu.
+
+Phải có 3 mục rõ ràng điểm mạnh, điểm yếu và mẹo cải thiện
+Trả lời ngắn gọn, rõ ràng, dễ hiểu và không thêm các dấu ** ở đầu câu.
 """
 
     headers = {"Authorization": f"Bearer {OPENAI_API_KEY}", "Content-Type": "application/json"}

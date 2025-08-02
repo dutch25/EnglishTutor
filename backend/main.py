@@ -64,13 +64,21 @@ def get_audio(word: str, speed: float = 0.75):
     return StreamingResponse(response.raw, media_type="audio/mpeg")
 
 # ✅ API Chat với Gemini
+# ✅ API Chat với Gemini
 @app.post("/chat")
 async def chat(data: dict):
     user_message = data.get("message", "")
+
+    # ✅ Prompt hướng dẫn thêm
+    system_prompt = (
+        "Bạn là một gia sư tiếng Anh chuyên giúp người Việt luyện nghe và nói. "
+        "Hãy trả lời ngắn gọn, dễ hiểu, và phù hợp cho mọi trình độ."
+    )
+
     client = genai.Client()
     response = client.models.generate_content(
         model="gemini-2.5-flash",
-        contents=user_message,
+        contents=f"{system_prompt}\nNgười học: {user_message}",
         config=types.GenerateContentConfig(
             thinking_config=types.ThinkingConfig(thinking_budget=0)
         ),

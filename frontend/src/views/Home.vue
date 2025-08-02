@@ -1,6 +1,6 @@
 <template>
   <div class="app-wrapper">
-    <!-- Header -->
+    <!-- 🔹 Header -->
     <div class="header-section">
       <div class="title-container">
         <img :src="logoUrl" alt="English Tutor" class="logo" />
@@ -8,9 +8,16 @@
           <h1 class="title">English Tutor</h1>
         </div>
       </div>
+
+      <!-- ✅ Góc phải: Username + Avatar -->
+      <div class="user-info">
+        <img :src="avatarUrl" alt="User Avatar" class="user-avatar" />
+        <span class="user-name">{{ username }}</span>
+        <button @click="logout" class="logout-btn">⏏ Logout</button>
+      </div>
     </div>
 
-    <!-- Grid Features -->
+    <!-- 🔹 Grid Features -->
     <div class="feature-grid">
       <div
         v-for="item in features"
@@ -38,6 +45,8 @@ export default {
   data() {
     return {
       logoUrl,
+      // ✅ Avatar default (Fix lỗi require)
+      avatarUrl: new URL("@/assets/logo.png", import.meta.url).href,
       username: "",
       features: [
         {
@@ -100,26 +109,24 @@ export default {
       return new URL(`../assets/icons/${filename}`, import.meta.url).href;
     },
     handleFeatureClick(item) {
-      if (item.route) {
-        this.$router.push(item.route);
-      } else {
-        alert(`Tính năng "${item.title}" đang phát triển!`);
-      }
+      if (item.route) this.$router.push(item.route);
+      else alert(`Tính năng "${item.title}" đang phát triển!`);
     },
     logout() {
       localStorage.removeItem("username");
+      sessionStorage.removeItem("sessionUser");
       this.$router.push("/");
     },
   },
   mounted() {
-    // ✅ Kiểm tra username thay vì token
-    const user = localStorage.getItem("username");
+    // ✅ Đọc session từ sessionStorage hoặc localStorage
+    const user =
+      sessionStorage.getItem("sessionUser") || localStorage.getItem("username");
     if (!user) {
-      console.warn("⚠️ Chưa đăng nhập, quay lại trang Login");
+      console.warn("⚠️ Chưa đăng nhập, quay lại Login");
       this.$router.push("/");
     } else {
       this.username = user;
-      console.log("✅ Đăng nhập với username:", user);
     }
   },
 };
@@ -138,21 +145,20 @@ export default {
   align-items: center;
 }
 
+/* 🔹 Header */
 .header-section {
   display: flex;
-  flex-direction: column;
+  justify-content: space-between;
   align-items: center;
-  margin-bottom: 48px;
   width: 100%;
+  max-width: 1100px;
+  margin-bottom: 48px;
+  position: relative;
 }
 
 .title-container {
   display: flex;
   align-items: center;
-  justify-content: flex-start;
-  width: 100%;
-  max-width: 1100px;
-  margin-bottom: 8px;
 }
 
 .logo {
@@ -172,6 +178,42 @@ export default {
   color: #ffffff;
 }
 
+/* ✅ Góc phải Username */
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  position: absolute;
+  right: 10px;
+  top: 10px;
+}
+
+.user-avatar {
+  width: 38px;
+  height: 38px;
+  border-radius: 50%;
+  border: 2px solid #fff;
+}
+
+.user-name {
+  font-size: 16px;
+  font-weight: 600;
+}
+
+.logout-btn {
+  background: #ff5252;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+}
+.logout-btn:hover {
+  background: #ff3030;
+}
+
+/* 🔹 Feature Grid */
 .feature-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -189,7 +231,6 @@ export default {
   box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
   cursor: pointer;
 }
-
 .feature-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
