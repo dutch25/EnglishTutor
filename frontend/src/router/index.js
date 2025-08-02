@@ -54,7 +54,7 @@ const routes = [
   },
   {
     path: "/dictionary",
-    name: "Whisper",
+    name: "Dictionary",
     component: Dictionary,
     meta: { requiresAuth: true },
   },
