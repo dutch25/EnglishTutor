@@ -9,6 +9,7 @@ from google import genai
 from google.genai import types
 from whisper import router as whisper_router   # ✅ router của whisper
 from auth_routes import router as auth_router  # ✅ router login/register
+from save import router as save_router
 
 # ✅ Khởi tạo FastAPI
 app = FastAPI()
@@ -29,7 +30,8 @@ VOICE_ID = "tnSpp4vdxKPjI9w0GnoV"  # Replace with your voice ID
 
 # ✅ Import router whisper & auth
 app.include_router(whisper_router)  # API liên quan đến Whisper
-app.include_router(auth_router)     # API đăng nhập & đăng ký
+app.include_router(auth_router)      # API đăng nhập & đăng ký
+app.include_router(save_router)      # API lưu từ
 
 # ✅ API Root
 @app.get("/")
