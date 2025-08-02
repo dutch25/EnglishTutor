@@ -107,11 +107,28 @@ async def upload_audio(file: UploadFile = File(...), original_text: str = Form(.
 
     transcript = transcribe_audio(path)
     if not transcript:
+        # ✅ Xóa file khi không nhận dạng được
+        if os.path.exists(path):
+            os.remove(path)
+        clean_path = path.replace(".webm", "_clean.wav")
+        if os.path.exists(clean_path):
+            os.remove(clean_path)
         return {"error": "⚠️ Không nhận dạng được giọng nói!", "transcript": ""}
 
     original_ipa = get_ipa(original_text)
     user_ipa = get_ipa(transcript)
     ipa_score, ipa_html = compare_ipa_colored(original_ipa, user_ipa)
+
+    # ✅ Xóa file gốc & file wav sạch sau khi xử lý
+    try:
+        if os.path.exists(path):
+            os.remove(path)
+        clean_path = path.replace(".webm", "_clean.wav")
+        if os.path.exists(clean_path):
+            os.remove(clean_path)
+        print(f"🗑️ Đã xóa file tạm: {path} và {clean_path}")
+    except Exception as e:
+        print(f"⚠️ Không thể xóa file: {e}")
 
     return {
         "transcript": transcript,
@@ -172,8 +189,7 @@ Hãy:
 2. ❌ Chỉ ra Điểm yếu cụ thể (âm sai, thiếu nhấn, ngữ điệu).
 3. 💡 Đưa ra mẹo cải thiện chi tiết.
 
-
-Phải có 3 mục rõ ràng điểm mạnh, điểm yếu và mẹo cải thiện
+Phải có 3 mục rõ ràng điểm mạnh, điểm yếu và mẹo cải thiện.
 Trả lời ngắn gọn, rõ ràng, dễ hiểu và không thêm các dấu ** ở đầu câu.
 """
 
