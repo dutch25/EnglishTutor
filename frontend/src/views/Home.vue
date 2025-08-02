@@ -45,7 +45,6 @@ export default {
   data() {
     return {
       logoUrl,
-      // ✅ Avatar default (Fix lỗi require)
       avatarUrl: new URL("@/assets/logo.png", import.meta.url).href,
       username: "",
       features: [
@@ -120,20 +119,26 @@ export default {
     },
     logout() {
       localStorage.removeItem("username");
+      localStorage.removeItem("token"); // ✅ xóa token luôn
       sessionStorage.removeItem("sessionUser");
       this.$router.push("/");
     },
+    checkAuth() {
+      const user =
+        sessionStorage.getItem("sessionUser") ||
+        localStorage.getItem("username");
+      const token = localStorage.getItem("token");
+
+      if (!user || !token) {
+        console.warn("⚠️ Token hoặc User không hợp lệ → quay về Login");
+        this.logout(); // ✅ gọi logout để clear toàn bộ
+      } else {
+        this.username = user;
+      }
+    },
   },
   mounted() {
-    // ✅ Đọc session từ sessionStorage hoặc localStorage
-    const user =
-      sessionStorage.getItem("sessionUser") || localStorage.getItem("username");
-    if (!user) {
-      console.warn("⚠️ Chưa đăng nhập, quay lại Login");
-      this.$router.push("/");
-    } else {
-      this.username = user;
-    }
+    this.checkAuth(); // ✅ kiểm tra auth ngay khi load trang
   },
 };
 </script>
