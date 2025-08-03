@@ -119,6 +119,11 @@ export default {
     };
   },
   methods: {
+    syncUsername(event) {
+    if (event.key === "username") {
+      this.username = event.newValue;
+    }
+  },
     toggleMenu() {
       this.showMenu = !this.showMenu;
     },
@@ -157,10 +162,14 @@ export default {
   },
   mounted() {
     const user = localStorage.getItem("username");
+    this.checkAuth();
+    window.addEventListener("storage", this.syncUsername);
     if (user) {
       this.username = user;
-    }
-    this.checkAuth(); // ✅ kiểm tra auth ngay khi load trang
+    }    
+  },
+  beforeUnmount() {
+    window.removeEventListener("storage", this.syncUsername);
   },
 };
 </script>

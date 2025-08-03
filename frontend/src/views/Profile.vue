@@ -144,10 +144,11 @@ export default {
             this.showToast(data.detail, "error");
           } else {
             this.showToast("Đổi mật khẩu thành công! Vui lòng đăng nhập lại.", "success");
+            localStorage.removeItem("token");
             localStorage.removeItem("username");
             setTimeout(() => {
               this.$router.push("/");
-            }, 2000);
+            }, 1500);
           }
         })
         .catch((error) => {
