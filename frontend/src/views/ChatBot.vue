@@ -5,6 +5,7 @@
       class="chat-bubble"
       :style="{ transform: `translate(${bubblePos.x}px, ${bubblePos.y}px)` }"
       @mousedown="handleBubbleMouseDown"
+      @click="toggleChat"
     >
       <img :src="messengerIcon" alt="Chat" />
     </div>
@@ -70,6 +71,8 @@ export default {
       bubblePos: { x: 0, y: 0 },
       chatPos: { x: 0, y: -100 },
       chatSize: { width: 320, height: 400 },
+      isDragging: false,
+      isAnimating: false,
       userMessage: "",
       messages: [
         { sender: "bot", html: "Xin chào! Hãy chat với DynoBot nhé 🚀" },
@@ -82,6 +85,7 @@ export default {
   },
   mounted() {
     this.showChat = localStorage.getItem("chat_open") === "true";
+    this.bubblePos = { x: 0, y: 0 };  // Khởi đầu không cần set toạ độ tuyệt đối.
   },
   methods: {
     closeChat() {
@@ -94,32 +98,61 @@ export default {
     },
 
     handleBubbleMouseDown(e) {
-      e.stopPropagation();
-      this.isDragging = false;
-      const startX = e.clientX,
-        startY = e.clientY;
-      this.drag.offsetX = e.clientX - this.bubblePos.x;
-      this.drag.offsetY = e.clientY - this.bubblePos.y;
+  if (this.isAnimating) return;
+  e.preventDefault();
+  this.isDragging = true;
+  this.drag.offsetX = e.clientX - this.bubblePos.x;
+  this.drag.offsetY = e.clientY - this.bubblePos.y;
 
-      const moveHandler = (ev) => {
-        if (
-          Math.abs(ev.clientX - startX) > 5 ||
-          Math.abs(ev.clientY - startY) > 5
-        )
-          this.isDragging = true;
-        this.bubblePos.x = ev.clientX - this.drag.offsetX;
-        this.bubblePos.y = ev.clientY - this.drag.offsetY;
-      };
+  const onMouseMove = (ev) => {
+    if (!this.isDragging) return;
+    this.bubblePos.x = ev.clientX - this.drag.offsetX;
+    this.bubblePos.y = ev.clientY - this.drag.offsetY;
+  };
 
-      const upHandler = () => {
-        document.removeEventListener("mousemove", moveHandler);
-        document.removeEventListener("mouseup", upHandler);
-        if (!this.isDragging) this.toggleChat();
-      };
+  const onMouseUp = () => {
+    if (!this.isDragging) return;
+    this.isDragging = false;
+    document.removeEventListener("mousemove", onMouseMove);
+    document.removeEventListener("mouseup", onMouseUp);
+    this.snapBubbleToEdge();
+  };
 
-      document.addEventListener("mousemove", moveHandler);
-      document.addEventListener("mouseup", upHandler);
-    },
+  document.addEventListener("mousemove", onMouseMove);
+  document.addEventListener("mouseup", onMouseUp);
+},
+
+    snapBubbleToEdge() {
+  const screenWidth = window.innerWidth;
+  const screenHeight = window.innerHeight;
+  const bubbleWidth = 60;
+  const bubbleHeight = 60;
+  const edgeMargin = 20;
+
+  // Tính toạ độ hiện tại (translate)
+  const currentLeft = 20 + this.bubblePos.x + bubbleWidth / 2;
+
+  // Xác định snap sang trái hay phải
+  const snapToRight = currentLeft >= screenWidth / 2;
+
+  const targetX = snapToRight
+    ? screenWidth - bubbleWidth - edgeMargin * 2 - 20 - 20 // Cân chỉnh chuẩn lề phải
+    : 0;
+
+  // Y tính như cũ
+  let targetY = this.bubblePos.y;
+  const minY = -(screenHeight - bubbleHeight - edgeMargin * 2);
+  const maxY = 0;
+  targetY = Math.min(Math.max(targetY, minY), maxY);
+
+  // Snap
+  this.isAnimating = true;
+  this.bubblePos = { x: targetX, y: targetY };
+
+  setTimeout(() => {
+    this.isAnimating = false;
+  }, 300);
+},
 
     startWindowDrag(e) {
       e.stopPropagation();
@@ -188,19 +221,20 @@ export default {
 /* 🔵 Bubble */
 .chat-bubble {
   position: fixed;
+  left: 20px;
+  top: auto;
   bottom: 20px;
-  right: 20px;
   width: 60px;
   height: 60px;
   border-radius: 50%;
-  background: transparent; /* ✅ bỏ nền xanh */
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: none; /* ✅ bỏ bóng nền */
   cursor: grab;
   z-index: 9999;
+  transition: transform 0.3s ease;
 }
+
 .chat-bubble img {
   width: 60px;
   height: 60px;
