@@ -12,6 +12,8 @@ import Dictionary from '../views/Dictionary.vue';
 import Profile from '../views/Profile.vue';
 import EditProfile from "../views/EditProfile.vue";
 import ForgotPassword from "../views/ForgotPassword.vue";
+import Saved from '../views/Saved.vue';
+
 
 const routes = [
   { path: "/", name: "Login", component: Login },
@@ -78,6 +80,12 @@ const routes = [
     component: ForgotPassword,
     meta: { requiresAuth: false },
   },
+  {
+    path: "/saved",
+    name: "Saved",
+    component: Saved,
+    meta: { requiresAuth: true },
+  }
 ];
 
 const router = createRouter({

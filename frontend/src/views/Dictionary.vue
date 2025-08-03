@@ -14,7 +14,28 @@
     <div v-if="loading" class="loading">Đang tra cứu...</div>
     <div v-if="error" class="error">{{ error }}</div>
     <div v-if="result" class="result-block">
-      <h2 @click="speakWord" style="cursor:pointer" title="Click để nghe phát âm">{{ result.word }}</h2>
+      <div class="word-row">
+        <h2
+          @click="speakWord"
+          style="cursor:pointer"
+          title="Click để nghe phát âm"
+        >
+          {{ result.word }}
+        </h2>
+        <button
+          class="heart-btn"
+          :class="{ saved: isSaved }"
+          @click="toggleSaveWord"
+          :title="isSaved ? 'Đã lưu' : 'Lưu từ này'"
+        >
+          <svg viewBox="0 0 24 24" width="38" height="38">
+            <path
+              :fill="isSaved ? '#ef476f' : '#232323'"
+              d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41 0.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"
+            />
+          </svg>
+        </button>
+      </div>
       <div v-if="result.phonetic" class="phonetic">/ {{ result.phonetic }} /</div>
       <div v-if="quickVi" class="vi-meaning">
         <span style="color:#ffd166;font-weight:bold;">Nghĩa: </span>
@@ -45,6 +66,7 @@ export default {
       quickVi: "", // từ gốc tiếng Việt để hiển thị nghĩa nhanh
       translatedSynonyms: [],
       translatedAntonyms: [],
+      isSaved: false,
     };
   },
   methods: {
@@ -101,7 +123,7 @@ export default {
               const vi = await this.translateToVietnamese(def.definition);
               const arr = [...this.viMeanings[idx]];
               arr[i] = vi;
-              this.$set(this.viMeanings, idx, arr);
+              this.viMeanings[idx] = arr;
             }
           });
         });
@@ -145,7 +167,75 @@ export default {
       };
       return map[pos?.toLowerCase()] || pos;
     },
+    async toggleSaveWord() {
+      const userId = Number(localStorage.getItem("user_id"));
+      if (!userId || !this.result?.word) return;
+
+      if (this.isSaved) {
+        // Tìm id của từ đã lưu để xoá
+        try {
+          const res = await fetch(`http://localhost:8000/api/saved_words?user_id=${userId}`);
+          if (!res.ok) return;
+          const words = await res.json();
+          const saved = words.find(w => w.word?.toLowerCase() === this.result.word.toLowerCase());
+          if (saved) {
+            await fetch(`http://localhost:8000/api/saved_word/${saved.id}`, { method: "DELETE" });
+            this.isSaved = false;
+          }
+        } catch (e) {
+          alert("Huỷ lưu thất bại!");
+        }
+        return;
+      }
+      await this.saveWord();
+      this.isSaved = true;
+    },
+    async saveWord() {
+      if (!this.result || !this.result.word) return;
+      const userId = Number(localStorage.getItem("user_id"));
+      if (!userId) {
+        alert("Bạn cần đăng nhập lại!");
+        return;
+      }
+      try {
+        await fetch("http://localhost:8000/api/save_word", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            user_id: userId,
+            word: this.result.word,
+            meaning: this.quickVi,
+            phonetic: this.result.phonetic || "",
+            note: "",
+          }),
+        });
+        // alert("Đã lưu từ!"); // Không cần alert nữa
+      } catch (e) {
+        alert(e.message);
+      }
+    },
+    async checkSaved() {
+      // Gọi API lấy danh sách từ đã lưu của user, kiểm tra từ hiện tại đã lưu chưa
+      const userId = Number(localStorage.getItem("user_id"));
+      if (!userId || !this.result?.word) {
+        this.isSaved = false;
+        return;
+      }
+      try {
+        const res = await fetch(`http://localhost:8000/api/saved_words?user_id=${userId}`);
+        if (!res.ok) return;
+        const words = await res.json();
+        this.isSaved = words.some(w => w.word?.toLowerCase() === this.result.word.toLowerCase());
+      } catch {
+        this.isSaved = false;
+      }
+    },
   },
+  watch: {
+    result() {
+      this.checkSaved();
+    }
+  }
 };
 </script>
 
@@ -299,5 +389,58 @@ h1 {
 .vi-meaning {
   margin: 12px 0 18px 0;
   font-size: 17px;
+}
+
+.word-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 8px;
+}
+.save-btn {
+  margin-left: 18px;
+  white-space: nowrap;
+}
+
+.heart-btn {
+  background: none;
+  border: 2.5px solid #ffd166;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 6px;
+  margin-left: 18px;
+  transition: border-color 0.2s, box-shadow 0.2s;
+  outline: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 54px;
+  width: 54px;
+  box-sizing: border-box;
+}
+.heart-btn.saved {
+  border-color: #ef476f;
+  box-shadow: 0 0 6px #ef476f55;
+}
+.heart-btn svg {
+  display: block;
+  margin: auto;
+}
+.heart-btn svg {
+  transition: fill 0.2s;
+}
+.heart-btn.saved svg path {
+  fill: #ef476f !important;
+}
+.heart-btn:not(.saved):hover svg path {
+  fill: #888 !important;
+  transition: fill 0.2s;
+}
+
+.word-row h2 {
+  margin: 0;
+  line-height: 1;
+  display: flex;
+  align-items: center;
 }
 </style>

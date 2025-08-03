@@ -112,6 +112,7 @@ export default {
           localStorage.setItem("password", data.password); // Lưu mật khẩu (nếu cần)
           sessionStorage.setItem("sessionUser", data.username);
           localStorage.setItem("token", data.token || "dummy-token");
+          localStorage.setItem("user_id", data.id); // hoặc data.user_id, tuỳ backend trả về
         }
 
         // ✅ Hiển thị thông báo thành công

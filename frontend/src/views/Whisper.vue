@@ -189,13 +189,17 @@ export default {
             this.transcriptResult = `
               <div class="result-block">
                 <div><strong>Câu mẫu đã tô màu:</strong></div>
-                <div><code>${highlightedSentence}</code></div>
-                <div><strong>🎯 Điểm chính xác:</strong>
-                  <span style="color:${this.getColor(data.ipa_score)}">${
-              data.ipa_score
-            }%</span>
+                <div class="big-sentence"><code>${highlightedSentence}</code></div>
+                <div style="margin:8px 0 0 0;">
+                  <strong>IPA bạn vừa nói:</strong>
                 </div>
-                <div id="feedback" style="margin-top:10px;color:#007bff;font-weight:bold;">⏳ Đang phân tích...</div>
+                <div class="big-sentence">
+                  <code>${data.user_ipa_raw || "(không có)"}</code>
+                </div>
+                <div><strong>🎯 Điểm chính xác:</strong>
+                  <span class="score-text" style="color:${this.getColor(data.ipa_score)}">${data.ipa_score}%</span>
+                </div>
+                <div id="feedback" style="margin-top:10px;font-weight:bold;">⏳ Đang phân tích...</div>
               </div>
             `;
             this.status = "✅ Hoàn tất.";
@@ -520,5 +524,20 @@ export default {
   margin-top: 16px;
   font-style: italic;
   color: #4fc3f7;
+}
+
+.big-sentence {
+  font-size: 22px;
+  color: #4fc3f7;
+  margin: 8px 0 12px 0;
+  font-weight: 600;
+  word-break: break-word;
+}
+
+.score-text {
+  font-size: 22px;
+  font-weight: 700;
+  color: #06d6a0; /* hoặc #ffd166 nếu bạn thích tông vàng */
+  text-shadow: 0 2px 8px #16213e;
 }
 </style>

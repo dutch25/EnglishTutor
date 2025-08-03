@@ -78,6 +78,7 @@ export default {
           icon: "favorite.png",
           title: "Từ vựng yêu thích",
           description: "Danh sách từ vựng yêu thích mà bạn đã lưu",
+          route: "/saved",
         },
         {
           icon: "verb.png",
