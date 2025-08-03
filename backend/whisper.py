@@ -1,7 +1,6 @@
 from fastapi import APIRouter, File, UploadFile, Form
 import shutil, os, json, subprocess, re, difflib, wave, json as js, requests
 from pydub import AudioSegment, effects
-from vosk import Model, KaldiRecognizer
 from dotenv import load_dotenv
 
 # ====== 🔧 Cấu hình ======
@@ -14,11 +13,6 @@ ESPEAK_PATH = r"C:\Program Files\eSpeak NG\espeak-ng.exe"
 # ====== 🔑 Load API Key GPT ======
 load_dotenv()
 OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
-
-# ====== 🚀 Load model Vosk ======
-if not os.path.exists(MODEL_PATH):
-    raise RuntimeError("❌ Không tìm thấy model Vosk! Giải nén model vào ./models/vosk-en")
-vosk_model = Model(MODEL_PATH)
 
 # ====== 🔤 Xử lý IPA ======
 def get_ipa(text: str) -> str:
@@ -56,6 +50,21 @@ def compare_text_colored(original, spoken):
         res += f'<span style="color:{"green" if o == s else "red"}">{o}</span>'
     return res
 
+def compare_text_colored_by_word(original, spoken):
+    from difflib import SequenceMatcher
+    orig_words = original.split()
+    spoken_words = spoken.split()
+    matcher = SequenceMatcher(None, orig_words, spoken_words)
+    html = ""
+    for tag, i1, i2, j1, j2 in matcher.get_opcodes():
+        if tag == "equal":
+            html += " ".join(f'<span style="color:green">{w}</span>' for w in spoken_words[j1:j2]) + " "
+        elif tag in ("replace", "insert"):
+            html += " ".join(f'<span style="color:red;text-decoration:underline">{w}</span>' for w in spoken_words[j1:j2]) + " "
+        elif tag == "delete":
+            html += " ".join(f'<span style="background:yellow">{w}</span>' for w in orig_words[i1:i2]) + " "
+    return html.strip()
+
 # ====== 🎧 Xử lý âm thanh ======
 def preprocess_audio(input_path, output_path):
     try:
@@ -74,29 +83,12 @@ def transcribe_audio(file_path):
         print("⚠️ File WAV trống hoặc quá nhỏ!")
         return ""
 
-    print(f"🎧 Bắt đầu nhận dạng với Vosk: {clean_path}")
-    wf = wave.open(clean_path, "rb")
-    rec = KaldiRecognizer(vosk_model, wf.getframerate())
-    rec.SetWords(True)
+    print(f"🎧 Nhận dạng với ElevenLabs: {clean_path}")
+    text = elevenlabs_transcribe(clean_path)
 
-    text = ""
-    while True:
-        data = wf.readframes(4000)
-        if len(data) == 0:
-            break
-        if rec.AcceptWaveform(data):
-            res = js.loads(rec.Result())
-            print("👉 Partial:", res.get("text", ""))
-            text += " " + res.get("text", "")
-    res = js.loads(rec.FinalResult())
-    print("👉 Final:", res.get("text", ""))
-    text += " " + res.get("text", "")
-    wf.close()
-
-    text = text.strip()
     if not text:
         print("⚠️ Không nhận dạng được giọng nói!")
-    return text
+    return text.strip()
 
 # ====== 📥 API Upload ======
 @router.post("/api/upload/")
@@ -135,7 +127,7 @@ async def upload_audio(file: UploadFile = File(...), original_text: str = Form(.
         "original_ipa": original_ipa,
         "user_ipa_raw": user_ipa,
         "user_ipa_colored": ipa_html,
-        "sentence_colored": compare_text_colored(original_text, transcript),
+        "sentence_colored": compare_text_colored_by_word(original_text, transcript),  # So sánh theo từ
         "ipa_score": ipa_score
     }
 
@@ -212,3 +204,28 @@ Trả lời ngắn gọn, rõ ràng, dễ hiểu và không thêm các dấu ** 
     except Exception as e:
         print("❌ Lỗi gọi GPT API:", e)
         return {"feedback": "⚠️ Không kết nối được AI."}
+
+# ====== 🤖 API Nhận diện giọng nói ElevenLabs ======
+load_dotenv()
+ELEVENLABS_API_KEY = os.getenv("ELEVENLABS_API_KEY")
+
+def elevenlabs_transcribe(file_path):
+    url = "https://api.elevenlabs.io/v1/speech-to-text"
+    headers = {
+        "xi-api-key": ELEVENLABS_API_KEY,
+        "Accept": "application/json"
+    }
+    with open(file_path, "rb") as f:
+        files = {
+            "file": (os.path.basename(file_path), f, "audio/wav")
+        }
+        data = {
+            "model_id": "scribe_v1"
+        }
+        response = requests.post(url, headers=headers, files=files, data=data, timeout=30)
+    if response.status_code == 200:
+        # ElevenLabs trả về {'text': ...}
+        return response.json().get("text", "")
+    else:
+        print("❌ ElevenLabs API lỗi:", response.text)
+        return ""
