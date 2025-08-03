@@ -9,13 +9,16 @@ import Sentence from "../views/SentenceTest.vue";
 import Conversation from "../views/ConversationPractice.vue";
 import Whisper from "../views/Whisper.vue";
 import Dictionary from '../views/Dictionary.vue';
+import Profile from '../views/Profile.vue';
+import EditProfile from "../views/EditProfile.vue";
+import ForgotPassword from "../views/ForgotPassword.vue";
 import Saved from '../views/Saved.vue';
+
 
 const routes = [
   { path: "/", name: "Login", component: Login },
   { path: "/register", name: "Register", component: Register },
 
-  // ✅ Các route cần login
   {
     path: "/home",
     name: "Home",
@@ -60,6 +63,24 @@ const routes = [
     meta: { requiresAuth: true },
   },
   {
+    path: "/profile",
+    name: "Profile",
+    component: Profile,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/edit-profile",
+    name: "EditProfile",
+    component: EditProfile,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/forgot-password",
+    name: "ForgotPassword",
+    component: ForgotPassword,
+    meta: { requiresAuth: false },
+  },
+  {
     path: "/saved",
     name: "Saved",
     component: Saved,
@@ -72,14 +93,13 @@ const router = createRouter({
   routes,
 });
 
-// ✅ Navigation Guard
 router.beforeEach((to, from, next) => {
-  const isLoggedIn = !!localStorage.getItem("token"); // kiểm tra token
+  const isLoggedIn = !!localStorage.getItem("token"); 
 
   if (to.meta.requiresAuth && !isLoggedIn) {
-    next("/"); // nếu chưa login → quay về Login
+    next("/"); 
   } else if (to.path === "/" && isLoggedIn) {
-    next("/home"); // nếu đã login mà vào "/" → redirect sang Home
+    next("/home");
   } else {
     next();
   }

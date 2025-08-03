@@ -5,14 +5,13 @@ from models import User
 from schemas import UserRegister, UserLogin
 from datetime import datetime
 import bcrypt, re, dns.resolver
+import random
 
 router = APIRouter()
 
-# ✅ Check email hợp lệ
 def is_valid_email(email: str) -> bool:
     return re.match(r"^[\w\.-]+@[\w\.-]+\.\w+$", email)
 
-# ✅ Check domain email có MX record
 def check_email_exists(email: str) -> bool:
     domain = email.split('@')[-1]
     try:
@@ -20,6 +19,9 @@ def check_email_exists(email: str) -> bool:
         return True
     except:
         return False
+
+def is_valid_phone(phone: str) -> bool:
+    return re.match(r"^(0[3|5|7|8|9])+([0-9]{8})$", phone)
 
 # ✅ API Đăng ký
 @router.post("/register")
@@ -30,6 +32,8 @@ async def register(user: UserRegister, db: Session = Depends(get_db)):
         raise HTTPException(status_code=400, detail="Email không tồn tại.")
     if db.query(User).filter(User.email == user.email).first():
         raise HTTPException(status_code=400, detail="Email đã được sử dụng.")
+    if not is_valid_phone(user.phone):
+        raise HTTPException(status_code=400, detail="Số điện thoại không hợp lệ.")
     if db.query(User).filter(User.username == user.username).first():
         raise HTTPException(status_code=400, detail="Tên đăng nhập đã tồn tại.")
     if user.password != user.confirm_password:
@@ -39,6 +43,7 @@ async def register(user: UserRegister, db: Session = Depends(get_db)):
     new_user = User(
         username=user.username,
         email=user.email,
+        phone=user.phone,
         password=hashed_password,
         created_at=datetime.now().strftime("%Y-%m-%d %H:%M:%S"),
         updated_at=None
@@ -60,6 +65,7 @@ async def login(user: UserLogin, db: Session = Depends(get_db)):
     if not bcrypt.checkpw(user.password.encode(), existing_user.password.encode()):
         raise HTTPException(status_code=401, detail="Mật khẩu không chính xác")
 
+    # return {"message": "Đăng nhập thành công", "username": existing_user.username}
     # Sau khi xác thực thành công:
     return {
         "message": "Đăng nhập thành công",

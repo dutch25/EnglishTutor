@@ -9,7 +9,11 @@ from google import genai
 from google.genai import types
 from whisper import router as whisper_router   # ✅ router của whisper
 from auth_routes import router as auth_router  # ✅ router login/register
+<<<<<<< HEAD
+from profile_router import router as profile_router  # ✅ router quản lý tài khoản người dùng
+=======
 from save import router as save_router
+>>>>>>> 503a20a8e437630db00054cc397d49564e159488
 
 # ✅ Khởi tạo FastAPI
 app = FastAPI()
@@ -30,8 +34,13 @@ VOICE_ID = "tnSpp4vdxKPjI9w0GnoV"  # Replace with your voice ID
 
 # ✅ Import router whisper & auth
 app.include_router(whisper_router)  # API liên quan đến Whisper
+<<<<<<< HEAD
+app.include_router(auth_router)     # API đăng nhập & đăng ký
+app.include_router(profile_router)  # API quản lý tài khoản người dùng
+=======
 app.include_router(auth_router)      # API đăng nhập & đăng ký
 app.include_router(save_router)      # API lưu từ
+>>>>>>> 503a20a8e437630db00054cc397d49564e159488
 
 # ✅ API Root
 @app.get("/")
@@ -96,3 +105,7 @@ db = mysql.connector.connect(
     database="english_tutor",
 )
 cursor = db.cursor()
+
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)
