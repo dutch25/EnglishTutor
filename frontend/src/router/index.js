@@ -9,6 +9,8 @@ import Sentence from "../views/SentenceTest.vue";
 import Conversation from "../views/ConversationPractice.vue";
 import Whisper from "../views/Whisper.vue";
 import Dictionary from '../views/Dictionary.vue';
+import Profile from '../views/Profile.vue';
+import EditProfile from "@/views/EditProfile.vue";
 
 const routes = [
   { path: "/", name: "Login", component: Login },
@@ -56,6 +58,18 @@ const routes = [
     path: "/dictionary",
     name: "Dictionary",
     component: Dictionary,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/profile",
+    name: "Profile",
+    component: Profile,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/edit-profile",
+    name: "EditProfile",
+    component: EditProfile,
     meta: { requiresAuth: true },
   },
 ];

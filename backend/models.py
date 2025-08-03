@@ -12,3 +12,5 @@ class User(Base):
     password = Column(String(100), nullable=False)
     created_at = Column(String(50), nullable=True)
     updated_at = Column(String(50), nullable=True)
+    phone = Column(String(20), nullable=True)
+    description = Column(String(255), nullable=True)

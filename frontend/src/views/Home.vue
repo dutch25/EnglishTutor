@@ -1,19 +1,26 @@
 <template>
   <div class="app-wrapper">
-    <!-- 🔹 Header -->
     <div class="header-section">
       <div class="title-container">
-        <img :src="logoUrl" alt="English Tutor" class="logo" />
-        <div class="text-title">
+        <div class="logo-title">
+          <img :src="logoUrl" alt="English Tutor" class="logo" />
           <h1 class="title">English Tutor</h1>
         </div>
-      </div>
-
-      <!-- ✅ Góc phải: Username + Avatar -->
-      <div class="user-info">
-        <img :src="avatarUrl" alt="User Avatar" class="user-avatar" />
-        <span class="user-name">{{ username }}</span>
-        <button @click="logout" class="logout-btn">⏏ Logout</button>
+        <!-- ✅ Góc phải: User Section (Avatar + Name + Menu) -->
+        <div class="user-section">
+          <div class="user-info">
+            <img :src="avatarUrl" alt="User Avatar" class="user-avatar" />
+            <span class="user-name">{{ username }}</span>
+          </div>
+          <div class="account-menu-wrapper" @click="toggleMenu">
+            <img src="../assets/icons/triangle_down.png" alt="Menu" class="menu-icon" :class="{ rotated: showMenu }"/>
+            <div v-if="showMenu" class="account-menu">
+              <div class="menu-item" @click="goToProfile">Thông tin tài khoản</div>
+              <div class="menu-item" @click="logout">Logout</div>
+            </div>
+          </div>
+        </div>
+        <!-- END user-section -->
       </div>
     </div>
 
@@ -45,7 +52,8 @@ export default {
   data() {
     return {
       logoUrl,
-      avatarUrl: new URL("@/assets/logo.png", import.meta.url).href,
+      showMenu: false,
+      avatarUrl: new URL("../assets/logo.png", import.meta.url).href,
       username: "",
       features: [
         {
@@ -110,6 +118,9 @@ export default {
     };
   },
   methods: {
+    toggleMenu() {
+      this.showMenu = !this.showMenu;
+    },
     getIconPath(filename) {
       return new URL(`../assets/icons/${filename}`, import.meta.url).href;
     },
@@ -117,11 +128,17 @@ export default {
       if (item.route) this.$router.push(item.route);
       else alert(`Tính năng "${item.title}" đang phát triển!`);
     },
+    goToProfile() {
+      this.$router.push("/profile");
+    },
     logout() {
       localStorage.removeItem("username");
       localStorage.removeItem("token"); // ✅ xóa token luôn
       sessionStorage.removeItem("sessionUser");
       this.$router.push("/");
+    },
+    toggleMenu() {
+      this.showMenu = !this.showMenu;
     },
     checkAuth() {
       const user =
@@ -138,6 +155,10 @@ export default {
     },
   },
   mounted() {
+    const user = localStorage.getItem("username");
+    if (user) {
+      this.username = user;
+    }
     this.checkAuth(); // ✅ kiểm tra auth ngay khi load trang
   },
 };
@@ -156,18 +177,23 @@ export default {
   align-items: center;
 }
 
-/* 🔹 Header */
 .header-section {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   align-items: center;
-  width: 100%;
-  max-width: 1100px;
   margin-bottom: 48px;
-  position: relative;
+  width: 100%;
 }
 
 .title-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  width: 100%;
+  max-width: 1100px;
+}
+
+.logo-title {
   display: flex;
   align-items: center;
 }
@@ -177,54 +203,84 @@ export default {
   margin-right: 16px;
 }
 
-.text-title {
-  display: flex;
-  align-items: center;
-}
-
 .title {
   font-size: 32px;
   font-weight: bold;
-  margin: 0;
   color: #ffffff;
+  margin: 0;
 }
 
-/* ✅ Góc phải Username */
+.user-section {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
 .user-info {
   display: flex;
   align-items: center;
-  gap: 10px;
-  position: absolute;
-  right: 10px;
-  top: 10px;
 }
 
 .user-avatar {
-  width: 38px;
-  height: 38px;
+  width: 40px;
+  height: 40px;
   border-radius: 50%;
-  border: 2px solid #fff;
+  margin-right: 8px;
 }
 
 .user-name {
   font-size: 16px;
-  font-weight: 600;
+  color: #ffffff;
+  margin-right: 12px;
 }
 
-.logout-btn {
-  background: #ff5252;
-  color: white;
-  border: none;
-  padding: 6px 12px;
-  border-radius: 6px;
+.user-section {
+  display: flex;
+  align-items: center;
+}
+
+.account-menu-wrapper {
+  position: relative;
   cursor: pointer;
-  font-size: 14px;
-}
-.logout-btn:hover {
-  background: #ff3030;
+  display: flex;
+  align-items: center;
 }
 
-/* 🔹 Feature Grid */
+.menu-icon {
+  width: 18px;
+  height: 18px;
+  transition: transform 0.3s ease;
+  transform: rotate(-90deg); /* Mặc định nằm ngang */
+}
+
+.menu-icon.rotated {
+  transform: rotate(0deg); /* Khi mở menu thì quay xuống dưới */
+}
+
+.account-menu {
+  position: absolute;
+  right: 0;
+  top: 120%;
+  background-color: #2a2a3d;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  margin-top: 8px;
+  z-index: 999;
+  min-width: 160px;
+}
+
+.menu-item {
+  padding: 10px 16px;
+  color: #ffffff;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.menu-item:hover {
+  background-color: #40405a;
+}
+
 .feature-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
@@ -242,6 +298,7 @@ export default {
   box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
   cursor: pointer;
 }
+
 .feature-card:hover {
   transform: translateY(-6px);
   box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);

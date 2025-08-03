@@ -65,7 +65,6 @@ export default {
   },
   methods: {
     async login() {
-      console.clear();
       console.log("🔹 [DEBUG] Bắt đầu login...");
 
       // ✅ Validate input
@@ -92,7 +91,12 @@ export default {
         console.log("🔹 [DEBUG] Response từ server:", data);
 
         if (!res.ok) {
-          let msg = data?.detail || data?.msg || "Sai tài khoản hoặc mật khẩu!";
+          let msg = "";
+          if (res.status === 422) {
+            msg = data?.detail || data?.msg || "Dữ liệu không hợp lệ, vui lòng kiểm tra lại!";
+          } else {
+            msg = data?.detail || data?.msg || "Sai tài khoản hoặc mật khẩu!";
+          }
           this.showToast(msg, "error");
           return;
         }
@@ -100,8 +104,9 @@ export default {
         // ✅ Lưu session, username và token
         if (data.username) {
           localStorage.setItem("username", data.username);
+          localStorage.setItem("email", data.email); // Lưu email từ API
+          localStorage.setItem("password", data.password); // Lưu mật khẩu (nếu cần)
           sessionStorage.setItem("sessionUser", data.username);
-          // 🔥 Lưu token để router guard nhận diện
           localStorage.setItem("token", data.token || "dummy-token");
         }
 
