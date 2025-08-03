@@ -14,7 +14,7 @@ export default {
   computed: {
     showChatBot() {
       // Ẩn ChatBot ở /login và /register
-      return !["/login", "/register"].includes(this.$route.path);
+      return !["Login", "Register"].includes(this.$route.name);
     }
   }
 };
