@@ -1,9 +1,12 @@
 <template>
   <div class="listening-page">
-    <button v-if="selectedTheme" @click="goHome" class="back-btn">⬅️ Back to Homepage</button>
+    <div class="back-btn-row">
+      <button @click="goHome" class="main-btn back-btn">⬅️ Về trang chủ</button>
+      <button @click="chooseRandomTheme" class="main-btn random-btn">🎲 Chọn ngẫu nhiên</button>
+    </div>
     <h1>🎧 Listening Practice</h1>
     <template v-if="!selectedTheme">
-      <p class="theme-title">Select a theme to begin the Word Listening Test:</p>
+      <p class="theme-title">Chọn chủ đề để bắt đầu luyện nghe từ vựng:</p>
       <div class="theme-grid">
         <div
           v-for="(words, theme) in themes"
@@ -18,12 +21,12 @@
     </template>
     <template v-else>
       <div class="test-card">
-        <p class="theme-title">Theme: {{ themeTitle(selectedTheme) }}</p>
-        <button @click="playAudio" class="main-btn">▶️ Play Word</button>
-        <input v-model="userInput" placeholder="Type what you hear" class="input-box" />
+        <p class="theme-title">Chủ đề: {{ themeTitle(selectedTheme) }}</p>
+        <button @click="playAudio" class="main-btn play-btn">▶️ Nghe từ</button>
+        <input v-model="userInput" placeholder="Nhập từ bạn nghe được" class="input-box" />
         <div class="btn-group">
-          <button @click="checkAnswer" class="main-btn">Check</button>
-          <button @click="resetTheme" class="main-btn">🔄 Choose another theme</button>
+          <button @click="checkAnswer" class="main-btn check-btn">Kiểm tra</button>
+          <button @click="resetTheme" class="main-btn reset-btn">🔄 Chủ đề khác</button>
         </div>
         <p class="result" v-html="result"></p>
       </div>
@@ -146,6 +149,12 @@ export default {
     },
     goHome() {
       this.$router.push("/home");
+    },
+    chooseRandomTheme() {
+      const keys = Object.keys(this.themes);
+      if (keys.length === 0) return;
+      const randomKey = keys[Math.floor(Math.random() * keys.length)];
+      this.chooseTheme(randomKey);
     }
   }
 };
@@ -179,11 +188,32 @@ export default {
   background-color: #ef476f;
   color: #fff;
 }
-.theme-title {
-  font-size: 24px;
-  font-weight: bold;
+.back-btn-row {
+  width: 100%;
+  max-width: 900px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+.back-btn,
+.random-btn {
+  min-width: 160px;
+  margin-bottom: 0;
+}
+h1 {
+  font-size: 32px;
+  color: #ffd166;
   margin-bottom: 32px;
+  text-align: center;
+  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+}
+.theme-title {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 28px;
   color: #fff;
+  text-align: center;
 }
 .theme-grid {
   display: grid;
@@ -222,7 +252,7 @@ export default {
   background: #23234b;
   border-radius: 18px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.18);
-  padding: 36px 32px 32px 32px;
+  padding: 44px 32px 36px 32px;
   max-width: 420px;
   width: 100%;
   display: flex;
@@ -230,7 +260,7 @@ export default {
   align-items: center;
 }
 .main-btn {
-  padding: 10px 24px;
+  padding: 12px 28px;
   border-radius: 10px;
   border: none;
   background: linear-gradient(90deg, #06d6a0 0%, #4fc3f7 100%);
@@ -240,7 +270,12 @@ export default {
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(76,195,247,0.08);
   transition: background 0.2s, transform 0.2s;
-  margin: 10px 8px;
+  margin: 0 8px;
+  min-width: 130px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .main-btn:hover {
   background: linear-gradient(90deg, #4fc3f7 0%, #06d6a0 100%);
@@ -248,9 +283,14 @@ export default {
 }
 .btn-group {
   display: flex;
-  gap: 12px;
-  margin: 10px 0 0 0;
+  gap: 16px;
+  margin: 18px 0 0 0;
   justify-content: center;
+  width: 100%;
+}
+.play-btn {
+  margin-bottom: 18px;
+  width: 100%;
 }
 .input-box {
   padding: 12px;
@@ -263,6 +303,7 @@ export default {
   color: #fff;
   outline: none;
   transition: border 0.2s;
+  box-sizing: border-box;
 }
 .input-box:focus {
   border: 2px solid #ffd166;
@@ -270,7 +311,7 @@ export default {
 .result {
   font-weight: bold;
   font-size: 18px;
-  margin-top: 18px;
+  margin-top: 22px;
   min-height: 32px;
   text-align: center;
 }
