@@ -157,10 +157,10 @@ export default {
   },
   mounted() {
     const user = localStorage.getItem("username");
+    this.checkAuth();
     if (user) {
       this.username = user;
     }
-    this.checkAuth(); // ✅ kiểm tra auth ngay khi load trang
   },
 };
 </script>

@@ -66,9 +66,11 @@ async def login(user: UserLogin, db: Session = Depends(get_db)):
         raise HTTPException(status_code=401, detail="Mật khẩu không chính xác")
 
     # return {"message": "Đăng nhập thành công", "username": existing_user.username}
+
+
     # Sau khi xác thực thành công:
     return {
         "message": "Đăng nhập thành công",
         "username": existing_user.username,
-        "id": existing_user.id  # hoặc "user_id": existing_user.id
+        "id": existing_user.id,
     }
