@@ -66,13 +66,13 @@ export default {
           icon: "communicate.png",
           title: "Học câu giao tiếp",
           description: "Luyện nghe, nói câu tiếng Anh giao tiếp hằng ngày",
-          route: "/conversation",
+          route: "/whisper",
         },
         {
-          icon: "flashcard.png",
-          title: "Từ vựng với Flashcard",
-          description:
-            "Phương pháp học từ vựng nổi tiếng, miễn phí trên Dynonary",
+          icon: "dictionary.png",
+          title: "Từ điển",
+          description: "Tra cứu nghĩa từ tiếng Anh nhanh chóng",
+          route: "/dictionary",
         },
         {
           icon: "favorite.png",
@@ -104,16 +104,10 @@ export default {
           route: "/sentence",
         },
         {
-          icon: "grammar.png",
-          title: "Đánh giá phát âm",
-          description: "Thử tính năng Whisper đánh giá phát âm",
-          route: "/Whisper",
-        },
-        {
-          icon: "dictionary.png",
-          title: "Từ điển",
-          description: "Tra cứu nghĩa từ tiếng Anh nhanh chóng",
-          route: "/dictionary",
+          icon: "feedback.png",
+          title: "Góp ý & Phản hồi",
+          description: "Gửi góp ý, phản hồi để cải thiện ứng dụng",
+          route: "/feedback",
         },
       ],
     };
