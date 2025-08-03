@@ -4,6 +4,7 @@ import mysql.connector
 import bcrypt
 import re
 
+
 router = APIRouter()
 
 class UserUpdate(BaseModel):
@@ -12,6 +13,11 @@ class UserUpdate(BaseModel):
     email: str
     phone: str
     description: str    
+
+class PasswordUpdate(BaseModel):
+    username: str
+    old_password: str
+    new_password: str
 
 def get_db_connection():
     return mysql.connector.connect(
@@ -85,6 +91,40 @@ async def update_profile(data: UserUpdate):
 
     except mysql.connector.Error as e:
         print(f"Error updating profile: {e}")
+        raise HTTPException(status_code=500, detail="Database error")
+    finally:
+        cursor.close()
+        connection.close()
+
+@router.put("/api/user/change-password")
+async def change_password(data: PasswordUpdate):
+    connection = get_db_connection()
+    try:
+        cursor = connection.cursor(dictionary=True)
+        cursor.execute("SELECT password FROM users WHERE username = %s", (data.username,))
+        user = cursor.fetchone()
+        if not user:
+            raise HTTPException(status_code=404, detail="User not found")
+
+        # Kiểm tra mật khẩu cũ
+        stored_password = user['password'].encode()
+        if not bcrypt.checkpw(data.old_password.encode(), stored_password):
+            raise HTTPException(status_code=400, detail="Mật khẩu cũ không chính xác.")
+
+        # Kiểm tra độ mạnh mật khẩu mới (tùy chọn, giống đăng ký)
+        if len(data.new_password) < 8 or not re.search(r"[A-Z]", data.new_password) or not re.search(r"[!@#$%^&*(),.?\":{}|<>]", data.new_password):
+            raise HTTPException(status_code=400, detail="Mật khẩu mới phải có ít nhất 8 ký tự, 1 chữ in hoa và 1 ký tự đặc biệt.")
+
+        # Hash mật khẩu mới và cập nhật
+        hashed_new_password = bcrypt.hashpw(data.new_password.encode(), bcrypt.gensalt()).decode()
+        cursor.execute("UPDATE users SET password = %s WHERE username = %s", (hashed_new_password, data.username))
+        connection.commit()
+        print("Password updated for:", data.username)
+
+        return {"message": "Đổi mật khẩu thành công"}
+
+    except mysql.connector.Error as e:
+        print(f"Error changing password: {e}")
         raise HTTPException(status_code=500, detail="Database error")
     finally:
         cursor.close()

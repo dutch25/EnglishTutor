@@ -1,3 +1,4 @@
+```html
 <template>
   <div class="profile-wrapper">
     <h1 class="profile-title">Thông tin cá nhân</h1>
@@ -52,6 +53,11 @@
         <button @click="editProfile" class="action-btn">Sửa hồ sơ</button>
       </div>
     </div>
+
+    <!-- 🔥 Toast Notification -->
+    <div v-if="toast.show" :class="['toast', toast.type]">
+      {{ toast.message }}
+    </div>
   </div>
 </template>
 
@@ -71,27 +77,32 @@ export default {
       showOldPassword: false,
       showNewPassword: false,
       showConfirmPassword: false,
+      toast: {
+        show: false,
+        message: "",
+        type: "success",
+      },
     };
   },
   methods: {
-    fetchUserInfo(){
+    fetchUserInfo() {
       const user = localStorage.getItem("username");
-    if (!user) {
-      console.warn("⚠️ Chưa đăng nhập, quay lại trang Login");
-      this.$router.push("/");
-    } else {
-      this.username = user;
-      fetch(`http://localhost:8000/api/user/${user}`)
-        .then((response) => response.json())
-        .then((data) => {
-          this.email = data.email || "Chưa có email";
-          this.phone = data.phone || "Chưa có số điện thoại";
-          this.description = data.description || "Chưa có mô tả";
-        })
-        .catch((error) => {
-          console.error("Lỗi khi lấy thông tin:", error);
-        });
-    }
+      if (!user) {
+        console.warn("⚠️ Chưa đăng nhập, quay lại trang Login");
+        this.$router.push("/");
+      } else {
+        this.username = user;
+        fetch(`http://localhost:8000/api/user/${user}`)
+          .then((response) => response.json())
+          .then((data) => {
+            this.email = data.email || "Chưa có email";
+            this.phone = data.phone || "Chưa có số điện thoại";
+            this.description = data.description || "Chưa có mô tả";
+          })
+          .catch((error) => {
+            console.error("Lỗi khi lấy thông tin:", error);
+          });
+      }
     },
 
     toggleChangePasswordForm() {
@@ -105,16 +116,16 @@ export default {
     },
     submitChangePassword() {
       if (!this.oldPassword || !this.newPassword || !this.confirmPassword) {
-        alert("Vui lòng nhập đầy đủ các trường!");
+        this.showToast("Vui lòng nhập đầy đủ các trường!", "error");
         return;
       }
       if (this.newPassword !== this.confirmPassword) {
-        alert("Mật khẩu mới và xác nhận không khớp!");
+        this.showToast("Mật khẩu mới và xác nhận không khớp!", "error");
         return;
       }
 
       fetch("http://localhost:8000/api/user/change-password", {
-        method: "POST",
+        method: "PUT", // Đồng bộ với backend
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
           username: this.username,
@@ -122,19 +133,26 @@ export default {
           new_password: this.newPassword,
         }),
       })
-        .then((res) => res.json())
+        .then((res) => {
+          if (!res.ok) {
+            throw new Error(`HTTP error! status: ${res.status}`);
+          }
+          return res.json();
+        })
         .then((data) => {
           if (data.detail) {
-            alert(data.detail);
+            this.showToast(data.detail, "error");
           } else {
-            alert("Đổi mật khẩu thành công! Vui lòng đăng nhập lại.");
+            this.showToast("Đổi mật khẩu thành công! Vui lòng đăng nhập lại.", "success");
             localStorage.removeItem("username");
-            this.$router.push("/");
+            setTimeout(() => {
+              this.$router.push("/");
+            }, 2000);
           }
         })
         .catch((error) => {
           console.error("Lỗi:", error);
-          alert("Lỗi kết nối tới server!");
+          this.showToast(`Lỗi kết nối tới server! (${error.message})`, "error");
         });
     },
     goHome() {
@@ -142,6 +160,12 @@ export default {
     },
     editProfile() {
       this.$router.push("/edit-profile"); // Tạo 1 trang EditProfile.vue nếu muốn
+    },
+    showToast(message, type = "success") {
+      this.toast.message = message;
+      this.toast.type = type;
+      this.toast.show = true;
+      setTimeout(() => (this.toast.show = false), 3000); // Hiển thị toast trong 3 giây
     },
   },
   mounted() {
@@ -152,16 +176,16 @@ export default {
       if (currentUsername !== this.syncUsername) {
         this.syncUsername = currentUsername;
         this.username = currentUsername;
-        this.fetchUserInfo();  // Refetch khi username thay đổi
+        this.fetchUserInfo(); // Refetch khi username thay đổi
       }
     }, 1000);
   },
   activated() {
-    this.fetchUserInfo(); 
+    this.fetchUserInfo();
   },
   beforeUnmount() {
     clearInterval(this.checkUsernameInterval);
-  }
+  },
 };
 </script>
 
@@ -325,5 +349,38 @@ export default {
 
 .action-btn:hover {
   background-color: #50506e;
+}
+
+/* 🔹 Toast Notification */
+.toast {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background: #333;
+  color: #fff;
+  padding: 12px 20px;
+  border-radius: 8px;
+  font-size: 15px;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+  animation: fadeIn 0.3s ease;
+}
+
+.toast.success {
+  background: #4caf50;
+}
+
+.toast.error {
+  background: #e53935;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 </style>

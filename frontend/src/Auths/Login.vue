@@ -1,3 +1,4 @@
+
 <template>
   <div>
     <!-- Header -->
@@ -20,18 +21,18 @@
             required
           />
 
-          <div class="password-wrapper">
+          <div class="password-field">
             <input
               :type="showPassword ? 'text' : 'password'"
               v-model="password"
               placeholder="Mật khẩu"
               required
             />
-            <span class="toggle-password" @click="showPassword = !showPassword">
-              {{ showPassword ? "Ẩn" : "Hiện" }}
+            <span class="toggle-password" @click="togglePassword">
+              <i :class="['fas', showPassword ? 'fa-eye-slash' : 'fa-eye']"></i>
             </span>
           </div>
-
+          <a class="forgot-password-link" @click="goToForgotPassword">Quên mật khẩu?</a>
           <button type="submit">Đăng nhập</button>
         </form>
 
@@ -64,9 +65,12 @@ export default {
     };
   },
   methods: {
+    togglePassword() {
+      this.showPassword = !this.showPassword;
+    },
     async login() {
       console.log("🔹 [DEBUG] Bắt đầu login...");
-
+      
       // ✅ Validate input
       if (this.username.length < 5) {
         this.showToast("Email phải có ít nhất 5 ký tự!", "error");
@@ -110,6 +114,7 @@ export default {
           localStorage.setItem("token", data.token || "dummy-token");
         }
 
+        // ✅ Hiển thị thông báo thành công
         this.showToast("✅ Đăng nhập thành công!", "success");
 
         // ✅ Chuyển sang Home sau 1s
@@ -122,11 +127,15 @@ export default {
       }
     },
 
+    goToForgotPassword() {
+      this.$router.push("/forgot-password");
+    },
+
     showToast(message, type = "success") {
       this.toast.message = message;
       this.toast.type = type;
       this.toast.show = true;
-      setTimeout(() => (this.toast.show = false), 3000);
+      setTimeout(() => (this.toast.show = false), 3000); // Hiển thị toast trong 3 giây
     },
   },
 };
@@ -135,7 +144,7 @@ export default {
 <style scoped>
 /* 🔹 Header */
 .top-header {
-  background-color: #62676b;
+  background: linear-gradient(135deg, #606468, #6A6D71);
   padding: 16px 24px;
   display: flex;
   align-items: center;
@@ -148,8 +157,6 @@ export default {
 .header-logo {
   width: 40px;
   height: 40px;
-  border-radius: 8px;
-  margin-right: 12px;
 }
 .title-text {
   font-size: 22px;
@@ -163,53 +170,118 @@ export default {
   justify-content: center;
   align-items: center;
   background: linear-gradient(135deg, #62676b, #707275);
-  height: calc(100vh - 72px);
+  height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
 }
+
 .auth-box {
-  background: #e6e6e6;
+  background-color: #e6e6e6;
   padding: 36px;
   border-radius: 16px;
-  width: 360px;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  width: 360px;
+  animation: fadeIn 0.5s ease;
 }
+
 .auth-box h2 {
   text-align: center;
   color: #3c80d1;
   margin-bottom: 24px;
+  font-weight: 600;
 }
+
 input {
   width: 100%;
   padding: 12px 16px;
   margin: 12px 0;
   border: 1px solid #ccd5db;
   border-radius: 12px;
+  font-size: 15.5px;
+  background-color: #fff;
+  box-sizing: border-box;
+  transition: border-color 0.2s, box-shadow 0.2s;
 }
-.password-wrapper {
+
+input:focus {
+  border-color: #4f9ec4;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(79, 158, 196, 0.15);
+}
+
+.password-field {
   position: relative;
 }
+
 .toggle-password {
   position: absolute;
-  right: 16px;
+  right: 14px;
   top: 50%;
   transform: translateY(-50%);
   cursor: pointer;
-  color: #007acc;
+  font-size: 16px;
+  user-select: none;
+  color: #007acc; /* Màu icon tương tự màu chữ "Quên mật khẩu?" */
 }
+
+.toggle-password:hover {
+  color: #3b8ab0; /* Hiệu ứng hover giống nút */
+}
+
+.forgot-password-link {
+  display: block;
+  text-decoration: underline;
+  color: #007acc;
+  cursor: pointer;
+  margin: 6px 0 6px 0;
+  text-align: right;
+  padding-right: 20px;
+  font-size: 14px;
+}
+
 button {
   width: 100%;
   padding: 12px;
-  background: #4f9ec4;
-  color: #fff;
+  background-color: #4f9ec4;
   border: none;
   border-radius: 10px;
+  color: white;
+  font-size: 16px;
+  font-weight: 500;
   cursor: pointer;
+  transition: background-color 0.3s;
+  margin-top: 6px;
 }
+
 button:hover {
-  background: #3b8ab0;
+  background-color: #3b8ab0;
 }
+
 .switch-link {
   text-align: center;
   margin-top: 16px;
+  font-size: 14px;
+  color: #666;
+}
+
+.switch-link a {
+  color: #4f9ec4;
+  text-decoration: none;
+  font-weight: 500;
+}
+
+.switch-link a:hover {
+  text-decoration: underline;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: none;
+  }
 }
 
 /* 🔹 Toast Notification */
@@ -225,20 +297,23 @@ button:hover {
   box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
   animation: fadeIn 0.3s ease;
 }
+
 .toast.success {
   background: #4caf50;
 }
+
 .toast.error {
   background: #e53935;
 }
+
 @keyframes fadeIn {
   from {
     opacity: 0;
-    transform: translateY(10px);
+    transform: translateY(20px);
   }
   to {
     opacity: 1;
-    transform: translateY(0);
+    transform: none;
   }
 }
 </style>
