@@ -45,8 +45,7 @@ export default {
 
 <style scoped>
 .feedback-listening-page {
-  background-color: #1a1a2e;
-  min-height: 100vh;
+  background: linear-gradient(135deg, #393953 0%, #293453 100%);  min-height: 100vh;
   padding: 40px 0;
   font-family: "Segoe UI", sans-serif;
   display: flex;

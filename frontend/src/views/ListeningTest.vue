@@ -4,7 +4,7 @@
       <button @click="goHome" class="main-btn back-btn">⬅️ Về trang chủ</button>
       <button @click="chooseRandomTheme" class="main-btn random-btn">🎲 Chọn ngẫu nhiên</button>
     </div>
-    <h1>🎧 Listening Practice</h1>
+    <h1>🎧 Luyện Nghe</h1>
     <template v-if="!selectedTheme">
       <p class="theme-title">Chọn chủ đề để bắt đầu luyện nghe từ vựng:</p>
       <div class="theme-grid">
@@ -23,7 +23,12 @@
       <div class="test-card">
         <p class="theme-title">Chủ đề: {{ themeTitle(selectedTheme) }}</p>
         <button @click="playAudio" class="main-btn play-btn">▶️ Nghe từ</button>
-        <input v-model="userInput" placeholder="Nhập từ bạn nghe được" class="input-box" />
+        <input
+          v-model="userInput"
+          placeholder="Nhập từ bạn nghe được"
+          class="input-box"
+          @keydown.enter.prevent="checkAnswer"
+        />
         <div class="btn-group">
           <button @click="checkAnswer" class="main-btn check-btn">Kiểm tra</button>
           <button @click="resetTheme" class="main-btn reset-btn">🔄 Chủ đề khác</button>
@@ -139,7 +144,8 @@ export default {
       this.userInput = "";
       setTimeout(() => {
         this.setWord();
-        this.result += "<br><span style='color:#ffd166'>🔁 New word loaded. Click Play again.</span>";
+        this.result += "<br><span style='color:#ffd166'>Đã tải từ mới. Bấm nút Nghe để nghe lại</span>";
+        this.playAudio();
       }, 1000);
     },
     resetTheme() {
@@ -162,7 +168,7 @@ export default {
 
 <style scoped>
 .listening-page {
-  background-color: #1a1a2e;
+  background: linear-gradient(13135deg, #393953 0%, #293453 100%);
   color: #fff;
   min-height: 100vh;
   padding: 40px 20px;
@@ -270,7 +276,6 @@ h1 {
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(76,195,247,0.08);
   transition: background 0.2s, transform 0.2s;
-  margin: 0 8px;
   min-width: 130px;
   min-height: 44px;
   display: inline-flex;
@@ -285,8 +290,9 @@ h1 {
   display: flex;
   gap: 16px;
   margin: 18px 0 0 0;
-  justify-content: center;
+  justify-content: space-between;
   width: 100%;
+  box-sizing: border-box;
 }
 .play-btn {
   margin-bottom: 18px;
