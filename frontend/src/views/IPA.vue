@@ -481,21 +481,19 @@ export default {
 </script>
 
 <style scoped>
-/* ✅ Bọc component bằng ipa-page */
 .ipa-page {
   min-height: 100vh;
-  background: #1a1a2e; /* nền tĩnh, tối giản */
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* Gradient như Home */
   overflow-x: hidden;
   overflow-y: auto;
   position: relative;
 }
 
-/* 📦 Nội dung IPA */
 .ipa-wrapper {
   max-width: 1200px;
   margin: 0 auto;
   padding: 2rem 1rem;
-  color: #fff;
+  color: #ffffff;
   font-family: "Segoe UI", sans-serif;
   position: relative;
   z-index: 1;
@@ -505,10 +503,12 @@ export default {
   text-align: center;
   font-size: 2rem;
   margin-bottom: 2rem;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
 }
 
-/* Group */
 .ipa-group {
   margin-bottom: 2.5rem;
 }
@@ -523,20 +523,40 @@ export default {
 
 /* Danh sách âm */
 .ipa-list {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  gap: 1.2rem;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr); /* 4 ô 1 hàng */
+  gap: 1.5rem;
+  justify-items: center;
 }
 
-/* Box IPA */
+/* Responsive: Xuống 3 ô, 2 ô, 1 ô nếu màn nhỏ */
+@media (max-width: 1024px) {
+  .ipa-list {
+    grid-template-columns: repeat(3, 1fr);
+  }
+}
+
+@media (max-width: 768px) {
+  .ipa-list {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+@media (max-width: 480px) {
+  .ipa-list {
+    grid-template-columns: repeat(1, 1fr);
+  }
+}
+
+/* Box IPA Item */
 .ipa-item {
-  background: rgba(42, 42, 61, 0.7);
-  backdrop-filter: blur(4px);
-  border-radius: 16px;
+  background: rgba(30, 30, 45, 0.9); /* Tối hơn */
+  backdrop-filter: blur(6px);
+  border-radius: 20px;
   padding: 1rem;
-  width: 240px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  width: 100%;
+  max-width: 240px;
+  box-shadow: 0 6px 18px rgba(0, 0, 0, 0.4);
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -545,11 +565,10 @@ export default {
 }
 
 .ipa-item:hover {
-  transform: translateY(-5px);
-  box-shadow: 0 0 18px rgba(255, 211, 105, 0.4);
+  transform: translateY(-6px);
+  box-shadow: 0 0 20px rgba(255, 211, 105, 0.5);
 }
 
-/* Nội dung trong box */
 .ipa-phonetic {
   font-size: 1.6rem;
   font-weight: bold;
@@ -570,8 +589,13 @@ export default {
   color: #e0e0e0;
 }
 
+.ipa-examples li {
+  margin-bottom: 0.2rem;
+}
+
 .audio-player {
   width: 100%;
   margin-top: 0.5rem;
+  filter: brightness(0.9);
 }
 </style>
