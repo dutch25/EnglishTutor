@@ -6,14 +6,13 @@ import Register from "@/Auths/Register.vue";
 import Login from "@/Auths/Login.vue";
 import Listening from "../views/ListeningTest.vue";
 import Sentence from "../views/SentenceTest.vue";
-import Conversation from "../views/ConversationPractice.vue";
 import Whisper from "../views/Whisper.vue";
 import Dictionary from '../views/Dictionary.vue';
 import Profile from '../views/Profile.vue';
 import EditProfile from "../views/EditProfile.vue";
 import ForgotPassword from "../views/ForgotPassword.vue";
 import Saved from '../views/Saved.vue';
-
+import Feedback from '../views/Feedback.vue';
 
 const routes = [
   { path: "/", name: "Login", component: Login },
@@ -42,12 +41,6 @@ const routes = [
     path: "/sentence",
     name: "Sentence",
     component: Sentence,
-    meta: { requiresAuth: true },
-  },
-  {
-    path: "/conversation",
-    name: "Conversation",
-    component: Conversation,
     meta: { requiresAuth: true },
   },
   {
@@ -84,6 +77,12 @@ const routes = [
     path: "/saved",
     name: "Saved",
     component: Saved,
+    meta: { requiresAuth: true },
+  },
+  {
+    path: "/feedback",
+    name: "Feedback",
+    component: Feedback,
     meta: { requiresAuth: true },
   }
 ];

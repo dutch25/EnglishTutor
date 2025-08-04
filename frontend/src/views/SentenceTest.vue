@@ -1,32 +1,61 @@
 <template>
   <div class="sentence-listening-page">
-    <button @click="goHome" class="back-btn">⬅️ Back to Homepage</button>
-    <div class="card">
-      <h1 class="title">📝 Sentence Listening Test</h1>
-      <div class="btn-group">
-        <button @click="playSentence" :disabled="!currentSentence" class="main-btn">▶️ Play Again</button>
-        <button @click="getNewSentence" class="main-btn">🔄 New Sentence</button>
+    <div class="content-wrapper">
+      <!-- Modal luôn nằm trên card -->
+      <div v-if="showReadyBox" class="ready-modal">
+        <div class="ready-modal-content">
+          <button class="close-btn" @click="showReadyBox = false" title="Đóng">&times;</button>
+          <p>Bạn đã sẵn sàng luyện nghe câu chưa?</p>
+          <button class="main-btn" @click="startTest">Bắt đầu</button>
+        </div>
       </div>
-      <div class="volume-row">
-        <label for="volumeControl">🔊 Volume:</label>
-        <input type="range" id="volumeControl" min="0" max="1" step="0.01" v-model="volume" @input="setVolume" />
+      <!-- Card luôn hiển thị phía dưới -->
+      <div>
+        <div class="back-btn-row">
+          <button @click="goHome" class="main-btn back-btn">⬅️ Về trang chủ</button>
+        </div>
+        <div class="card">
+          <div class="card-header new-btn-row">
+            <button @click="getNewSentence" class="main-btn new-btn">🔄 Câu mới</button>
+          </div>
+          <h1 class="title">📝 Sentence Listening Test</h1>
+          <div class="volume-row">
+            <label for="volumeControl">🔊 Âm lượng:</label>
+            <input type="range" id="volumeControl" min="0" max="1" step="0.01" v-model="volume" @input="setVolume" />
+          </div>
+          <div class="input-row">
+            <label for="userInput" class="input-label">Bạn nghe được gì?</label>
+            <div class="input-with-icon">
+              <input
+                type="text"
+                id="userInput"
+                v-model="userInput"
+                placeholder="Nhập câu bạn nghe được..."
+                @keydown.enter.prevent="checkAnswer"
+                class="input-box"
+              />
+              <button
+                class="icon-btn"
+                @click="playSentence"
+                :disabled="!currentSentence"
+                title="Nghe lại"
+                type="button"
+              >
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
+                  <circle cx="12" cy="12" r="12" fill="#4fc3f7"/>
+                  <path d="M16.5 12a4.5 4.5 0 1 1-2.7-4.09" stroke="#fff" stroke-width="2" fill="none"/>
+                  <polygon points="15,7 15,11 11,9" fill="#fff"/>
+                </svg>
+              </button>
+            </div>
+          </div>
+          <div class="btn-group bottom-group">
+            <button @click="checkAnswer" class="main-btn">Kiểm tra</button>
+            <button @click="showAnswer" class="main-btn">Hiện đáp án</button>
+          </div>
+          <div id="result" class="result" v-html="result"></div>
+        </div>
       </div>
-      <div class="input-row">
-        <label for="userInput" class="input-label">What did you hear?</label>
-        <input
-          type="text"
-          id="userInput"
-          v-model="userInput"
-          placeholder="Type the sentence here..."
-          @keydown.enter.prevent="checkAnswer"
-          class="input-box"
-        />
-      </div>
-      <div class="btn-group">
-        <button @click="checkAnswer" class="main-btn">Check</button>
-        <button @click="showAnswer" class="main-btn">Show Answer</button>
-      </div>
-      <div id="result" class="result" v-html="result"></div>
     </div>
   </div>
 </template>
@@ -42,12 +71,14 @@ export default {
       userInput: "",
       result: "",
       volume: 1,
-      audio: null
+      audio: null,
+      showReadyBox: true // Thêm biến này
     };
   },
   mounted() {
     this.audio = new Audio();
     this.audio.volume = this.volume;
+    // Không gọi getNewSentence ở đây nữa
   },
   methods: {
     goHome() {
@@ -84,14 +115,16 @@ export default {
     },
     checkAnswer() {
       if (!this.currentSentence) {
-        this.result = "<span style='color:#ef476f'>Please play a sentence first.</span>";
+        this.result = "<span style='color:#ef476f'>Hãy bấm chọn Câu mới trước</span>";
         return;
       }
       const cleanedInput = this.userInput.trim().toLowerCase().replace(/[.,!?]/g, "");
       const cleanedSentence = this.currentSentence.toLowerCase().replace(/[.,!?]/g, "");
       if (cleanedInput === cleanedSentence) {
         this.result = `<span style='color:#06d6a0'>✅ Correct!</span><br> <span style='color:#ffd166'>The sentence was: <strong>${this.currentSentence}</strong></span>`;
-        this.currentSentence = "";
+        setTimeout(() => {
+          this.getNewSentence();
+        }, 3000); // Đợi 3 giây rồi chuyển câu mới
       } else {
         this.result = "<span style='color:#ef476f'>❌ Incorrect. Try again.</span>";
       }
@@ -102,6 +135,10 @@ export default {
         return;
       }
       this.result = `<span style='color:#ffd166'>The correct sentence was:<br><strong>${this.currentSentence}</strong></span>`;
+    },
+    startTest() {
+      this.showReadyBox = false;
+      this.getNewSentence();
     }
   }
 };
@@ -112,12 +149,33 @@ export default {
   background-color: #1a1a2e;
   min-height: 100vh;
   padding: 40px 0;
-  box-sizing: border-box;
   font-family: "Segoe UI", sans-serif;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; /* Đảm bảo căn giữa mọi thứ theo chiều ngang */
 }
+
+.content-wrapper {
+  width: 100%;
+  max-width: 480px;
+  margin: 0 auto;
+  position: relative; /* Thêm dòng này để modal phủ lên card */
+  min-height: 600px;  /* Đảm bảo đủ cao cho modal căn giữa */
+}
+
+.back-btn-row {
+  width: 100%;
+  max-width: 480px;
+  display: flex;
+  justify-content: flex-start;
+  margin: 0 auto 32px auto;
+}
+
+
+.back-btn {
+  min-width: 160px;
+}
+
 .card {
   background: #23234b;
   border-radius: 18px;
@@ -129,35 +187,63 @@ export default {
   flex-direction: column;
   align-items: center;
 }
+
+.card-header {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
 .title {
   font-size: 32px;
   font-weight: bold;
   color: #ffd166;
-  margin-bottom: 24px;
-  text-align: center;
+  margin: 0 0 32px 0;    /* tăng margin-bottom từ 24px lên 32px */
+  text-align: center;     /* Căn giữa tiêu đề */
 }
-.back-btn {
-  background-color: #ffd166;
-  color: #23234b;
-  font-size: 14px;
-  padding: 8px 16px;
-  margin-bottom: 24px;
+
+.new-btn {
+  min-width: 120px;
+  padding: 8px 18px;
+  font-size: 15px;
+  border-radius: 10px;
   border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  font-weight: bold;
-  transition: background 0.2s;
-}
-.back-btn:hover {
-  background-color: #ef476f;
+  background: linear-gradient(90deg, #06d6a0 0%, #4fc3f7 100%);
   color: #fff;
+  font-weight: bold;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(76,195,247,0.08);
+  transition: background 0.2s, transform 0.2s;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
+.new-btn:hover {
+  background: linear-gradient(90deg, #4fc3f7 0%, #06d6a0 100%);
+  transform: translateY(-2px) scale(1.04);
+}
+
 .btn-group {
   display: flex;
   gap: 16px;
-  margin: 18px 0;
+  margin: 18px 0 0 0;
   justify-content: center;
+  width: 100%;
 }
+.top-group {
+  margin-bottom: 12px;
+}
+.bottom-group {
+  margin-top: 8px;
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  width: 100%;
+}
+
 .main-btn {
   padding: 10px 24px;
   border-radius: 10px;
@@ -169,6 +255,11 @@ export default {
   cursor: pointer;
   box-shadow: 0 2px 8px rgba(76,195,247,0.08);
   transition: background 0.2s, transform 0.2s;
+  min-width: 130px;
+  min-height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
 }
 .main-btn:disabled {
   background: #888;
@@ -178,9 +269,10 @@ export default {
   background: linear-gradient(90deg, #4fc3f7 0%, #06d6a0 100%);
   transform: translateY(-2px) scale(1.04);
 }
+
 .volume-row {
   width: 100%;
-  margin-bottom: 18px;
+  margin-bottom: 24px;    /* Tăng khoảng cách với phần dưới */
   display: flex;
   align-items: center;
   gap: 12px;
@@ -196,6 +288,7 @@ input[type="range"] {
   flex: 1;
   margin-top: 0;
 }
+
 .input-row {
   width: 100%;
   margin-bottom: 18px;
@@ -212,6 +305,7 @@ input[type="range"] {
 .input-box {
   width: 100%;
   padding: 12px;
+  padding-right: 44px; /* chừa chỗ cho icon */
   border-radius: 10px;
   border: 1px solid #4fc3f7;
   background: #23234b;
@@ -220,6 +314,7 @@ input[type="range"] {
   outline: none;
   margin-bottom: 4px;
   transition: border 0.2s;
+  box-sizing: border-box; /* Thêm dòng này */
 }
 .input-box:focus {
   border: 2px solid #ffd166;
@@ -230,5 +325,93 @@ input[type="range"] {
   font-size: 19px;
   text-align: center;
   min-height: 32px;
+}
+.input-with-icon {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.icon-btn {
+  position: absolute;
+  right: 9px;           /* giảm khoảng cách với viền phải */
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  padding: 0;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  height: 32px;         /* bằng với svg */
+  width: 32px;
+  transition: transform 0.15s;
+  margin-top: -2px; /* Căn giữa với input */
+}
+.icon-btn:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
+.icon-btn:hover:not(:disabled) {
+  background: rgba(79,195,247,0.08); /* Thêm hiệu ứng nền nhẹ nếu muốn */
+  border-radius: 50%;
+}
+
+.new-btn-row {
+  width: 100%;
+  display: flex;
+  justify-content: flex-end;
+  margin-bottom: 20px; /* tăng từ 8px lên 20px */
+}
+
+.ready-modal {
+  position: absolute; /* Đổi từ fixed sang absolute */
+  top: 0; left: 0; right: 0; bottom: 0;
+  background: transparent; /* hoặc bỏ hẳn thuộc tính background */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 10;
+  /* Xoá border-radius ở đây */
+  pointer-events: auto;
+}
+
+.ready-modal-content {
+  position: relative;
+  z-index: 2;
+  background: rgba(35,35,75,0.55); /* alpha thấp hơn để trong suốt hơn */
+  backdrop-filter: blur(8px);      /* hiệu ứng mờ nền phía sau */
+  padding: 36px 32px 32px 32px;
+  border-radius: 16px;
+  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  text-align: center;
+  color: #ffd166;
+  font-size: 20px;
+  min-width: 320px;
+  max-width: 90vw;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+.close-btn {
+  position: absolute;
+  top: 12px;
+  right: 16px;
+  background: none;
+  border: none;
+  color: #ffd166;
+  font-size: 28px;
+  font-weight: bold;
+  cursor: pointer;
+  z-index: 3;
+  transition: color 0.2s;
+}
+.close-btn:hover {
+  color: #ef476f;
 }
 </style>

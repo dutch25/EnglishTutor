@@ -2,7 +2,7 @@
   <div id="app">
     <router-view />
     <!-- 🔥 Render nội dung các trang -->
-    <ChatBot />
+    <ChatBot v-if="showChatBot" />
     <!-- ✅ ChatBot luôn tồn tại -->
   </div>
 </template>
@@ -11,5 +11,11 @@
 import ChatBot from "@/views/ChatBot.vue";
 export default {
   components: { ChatBot },
+  computed: {
+    showChatBot() {
+      // Ẩn ChatBot ở /login và /register
+      return !["Login", "Register"].includes(this.$route.name);
+    }
+  }
 };
 </script>
