@@ -161,7 +161,7 @@ export default {
 
 <style scoped>
 .app-wrapper {
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+  background: linear-gradient(135deg, #393953 0%, #293453 100%);
   color: #ffffff;
   min-height: 100vh;
   padding: 40px 20px;
@@ -201,7 +201,7 @@ export default {
 .title {
   font-size: 32px;
   font-weight: bold;
-  background: linear-gradient(90deg, #00c6ff, #ffffff, #00c6ff);
+  background: linear-gradient(90deg, #c7c7c7, #ffffff, #c7c7c7);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;

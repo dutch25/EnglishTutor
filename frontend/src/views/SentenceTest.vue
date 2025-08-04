@@ -4,7 +4,7 @@
       <!-- Modal luôn nằm trên card -->
       <div v-if="showReadyBox" class="ready-modal">
         <div class="ready-modal-content">
-          <button class="close-btn" @click="showReadyBox = false" title="Đóng">&times;</button>
+          <button class="close-btn" @click="closeAndgoHome" title="Đóng">&times;</button>
           <p>Bạn đã sẵn sàng luyện nghe câu chưa?</p>
           <button class="main-btn" @click="startTest">Bắt đầu</button>
         </div>
@@ -84,6 +84,10 @@ export default {
     goHome() {
       this.$router.push("/home");
     },
+    closeAndgoHome() {
+      this.showReadyBox = false;
+      this.$router.push("/home");
+    },
     getNewSentence() {
       const randomIndex = Math.floor(Math.random() * this.sentences.length);
       this.currentSentence = this.sentences[randomIndex];
@@ -146,7 +150,7 @@ export default {
 
 <style scoped>
 .sentence-listening-page {
-  background-color: #1a1a2e;
+  background: linear-gradient(135deg, #393953 0%, #293453 100%);
   min-height: 100vh;
   padding: 40px 0;
   font-family: "Segoe UI", sans-serif;
@@ -177,7 +181,7 @@ export default {
 }
 
 .card {
-  background: #23234b;
+  background: #2b2b38;
   border-radius: 18px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.18);
   padding: 36px 32px 32px 32px;

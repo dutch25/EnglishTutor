@@ -168,7 +168,7 @@ export default {
 
 <style scoped>
 .listening-page {
-  background-color: #1a1a2e;
+  background: linear-gradient(13135deg, #393953 0%, #293453 100%);
   color: #fff;
   min-height: 100vh;
   padding: 40px 20px;

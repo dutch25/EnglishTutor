@@ -33,6 +33,12 @@
           :class="['chat-msg', msg.sender]"
           v-html="msg.html"
         ></div>
+        <div
+        v-for="(msg, i) in messages2"
+        :key="i"
+        :class="['chat-msg', msg.sender]"
+        v-html="msg.html"
+        ></div>
 
         <!-- ⌛ Typing -->
         <div v-if="typing" class="typing-indicator bot">
@@ -89,9 +95,6 @@ export default {
   mounted() {
     this.showChat = localStorage.getItem("chat_open") === "true";
     this.bubblePos = { x: 0, y: 0 };  // Khởi đầu không cần set toạ độ tuyệt đối.
-    if (this.showChat && this.messages2.length > 0) {
-    this.messages.push(...this.messages2);
-  }
   },
   methods: {
     closeChat() {

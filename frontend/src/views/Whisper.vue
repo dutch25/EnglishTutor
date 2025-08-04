@@ -294,7 +294,7 @@ export default {
 
 <style scoped>
 .whisper-page {
-  background: linear-gradient(135deg, #1a1a2e 0%, #16213e 100%);
+  background: linear-gradient(135deg, #393953 0%, #293453 100%);
   color: #fff;
   min-height: 100vh;
   padding: 40px 20px;

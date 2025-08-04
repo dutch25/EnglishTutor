@@ -492,7 +492,7 @@ export default {
 <style scoped>
 .ipa-page {
   min-height: 100vh;
-  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364); /* Gradient như Home */
+  background: linear-gradient(135deg, #393953 0%, #293453 100%); /* Gradient như Home */
   overflow-x: hidden;
   overflow-y: auto;
   position: relative;
