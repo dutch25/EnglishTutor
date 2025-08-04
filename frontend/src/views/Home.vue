@@ -161,7 +161,7 @@ export default {
 
 <style scoped>
 .app-wrapper {
-  background: linear-gradient(135deg, #0a0a14, #0f1e2d, #162538);
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
   color: #ffffff;
   min-height: 100vh;
   padding: 40px 20px;
@@ -201,7 +201,7 @@ export default {
 .title {
   font-size: 32px;
   font-weight: bold;
-  background: linear-gradient(90deg,#00c6ff, #ffffff, #00c6ff);
+  background: linear-gradient(90deg, #00c6ff, #ffffff, #00c6ff);
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin: 0;
@@ -216,8 +216,8 @@ export default {
 .user-info {
   display: flex;
   align-items: center;
-  background: transparent; /* Bỏ nền mờ */
-  padding: 0; /* Bỏ padding để gọn lại */
+  background: transparent; /* Bỏ border */
+  padding: 0;
 }
 
 .user-avatar {
@@ -255,7 +255,8 @@ export default {
   position: absolute;
   right: 0;
   top: 120%;
-  background: rgba(20, 20, 30, 0.95); /* Đậm và ít trong suốt */
+
+  background: rgba(20, 20, 30, 0.95); /* Đậm hơn */
   border-radius: 12px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
   margin-top: 8px;
@@ -284,7 +285,7 @@ export default {
 }
 
 .feature-card {
-  background: rgba(30, 30, 45, 0.9); /* Đậm hơn, ít mờ hơn */
+  background: rgba(30, 30, 45, 0.9); /* Tối hơn, đậm hơn */
   backdrop-filter: blur(5px);
   border-radius: 20px;
   padding: 24px;
