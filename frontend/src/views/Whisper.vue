@@ -89,11 +89,7 @@ export default {
         all.forEach((s) => {
           if (!topicMap[s.topic]) {
             topicMap[s.topic] = {
-              title: s.icon
-                ? `${s.icon} ${
-                    s.topic.charAt(0).toUpperCase() + s.topic.slice(1)
-                  }`
-                : s.topic.charAt(0).toUpperCase() + s.topic.slice(1),
+              title: s.topic.charAt(0).toUpperCase() + s.topic.slice(1),
               icon: s.icon || "🔤",
             };
           }
@@ -326,7 +322,7 @@ export default {
 
 .topic-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(4, minmax(200px, 1fr));
   gap: 24px;
   width: 100%;
   max-width: 1200px;

@@ -93,14 +93,14 @@ export default {
         },
         {
           icon: "listeningtest.png",
-          title: "Listening Test",
-          description: "Kiểm tra khả năng nghe của bạn",
+          title: "Luyện nghe từ vựng",
+          description: "Kiểm tra khả năng nghe của bạn với nhiều chủ đề khác nhau",
           route: "/listening",
         },
         {
           icon: "sentencetest.png",
-          title: "Sentence Test",
-          description: "Luyện tập câu tiếng Anh",
+          title: "Học câu tiếng Anh",
+          description: "Luyện nghe các câu tiếng Anh",
           route: "/sentence",
         },
         {

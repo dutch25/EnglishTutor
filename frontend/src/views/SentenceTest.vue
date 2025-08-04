@@ -18,7 +18,7 @@
           <div class="card-header new-btn-row">
             <button @click="getNewSentence" class="main-btn new-btn">🔄 Câu mới</button>
           </div>
-          <h1 class="title">📝 Sentence Listening Test</h1>
+          <h1 class="title">📝 Học theo câu tiếng Anh</h1>
           <div class="volume-row">
             <label for="volumeControl">🔊 Âm lượng:</label>
             <input type="range" id="volumeControl" min="0" max="1" step="0.01" v-model="volume" @input="setVolume" />
@@ -88,7 +88,7 @@ export default {
       const randomIndex = Math.floor(Math.random() * this.sentences.length);
       this.currentSentence = this.sentences[randomIndex];
       this.userInput = "";
-      this.result = "<span style='color:#ffd166'>Sentence loaded. Click Play to play again.</span>";
+      this.result = "<span style='color:#ffd166'>Đã tải câu mới, nhấn nút Nghe để phát lại.</span>";
       this.playSentence();
     },
     playSentence() {
@@ -121,7 +121,7 @@ export default {
       const cleanedInput = this.userInput.trim().toLowerCase().replace(/[.,!?]/g, "");
       const cleanedSentence = this.currentSentence.toLowerCase().replace(/[.,!?]/g, "");
       if (cleanedInput === cleanedSentence) {
-        this.result = `<span style='color:#06d6a0'>✅ Correct!</span><br> <span style='color:#ffd166'>The sentence was: <strong>${this.currentSentence}</strong></span>`;
+        this.result = `<span style='color:#06d6a0'>✅ Correct!</span><br> <span style='color:#ffd166'>Câu chính xác là: <strong>${this.currentSentence}</strong></span>`;
         setTimeout(() => {
           this.getNewSentence();
         }, 3000); // Đợi 3 giây rồi chuyển câu mới
@@ -134,7 +134,7 @@ export default {
         this.result = "<span style='color:#ef476f'>Please play a sentence first.</span>";
         return;
       }
-      this.result = `<span style='color:#ffd166'>The correct sentence was:<br><strong>${this.currentSentence}</strong></span>`;
+      this.result = `<span style='color:#ffd166'>Câu chính xác là:<br><strong>${this.currentSentence}</strong></span>`;
     },
     startTest() {
       this.showReadyBox = false;
