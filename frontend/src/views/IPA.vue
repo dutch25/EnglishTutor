@@ -513,6 +513,7 @@ export default {
   font-size: 2rem;
   margin-bottom: 2rem;
   background: linear-gradient(90deg, #00c6ff, #0072ff);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   text-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
@@ -608,17 +609,20 @@ export default {
   filter: brightness(0.9);
 }
 
-.back-button { 
-  background-color: transparent; 
-  border: 1px solid #ffd369; color: #ffd369; 
-  font-size: 0.95rem; padding: 8px 14px; border-radius: 8px; 
-  cursor: pointer; 
-  margin-bottom: 1.5rem; 
-  transition: all 0.3s ease; 
-} 
-.back-button:hover { 
-  background-color: rgba(255, 211, 105, 0.1); 
-  transform: translateY(-1px); 
-  box-shadow: 0 2px 8px rgba(255, 211, 105, 0.3); 
+.back-button {
+  background-color: #ffd166;
+  color: #23234b;
+  font-size: 14px;
+  padding: 8px 16px;
+  margin-bottom: 24px;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+.back-button:hover {
+  background-color: #ef476f;
+  color: #fff;
 }
 </style>

@@ -202,6 +202,7 @@ export default {
   font-size: 32px;
   font-weight: bold;
   background: linear-gradient(90deg, #00c6ff, #ffffff, #00c6ff);
+  background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
   margin: 0;
