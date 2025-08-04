@@ -354,7 +354,8 @@ input[type="range"] {
   cursor: not-allowed;
 }
 .icon-btn:hover:not(:disabled) {
-  transform: scale(1.15);
+  background: rgba(79,195,247,0.08); /* Thêm hiệu ứng nền nhẹ nếu muốn */
+  border-radius: 50%;
 }
 
 .new-btn-row {

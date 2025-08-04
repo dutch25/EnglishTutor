@@ -87,18 +87,18 @@ export default {
           route: "/verb",
         },
         {
-          icon: "grammar.png",
+          icon: "grammaricon.png",
           title: "Ngữ pháp",
           description: "Danh sách tổng hợp những cấu trúc câu trong tiếng Anh",
         },
         {
-          icon: "grammar.png",
+          icon: "listeningtest.png",
           title: "Listening Test",
           description: "Kiểm tra khả năng nghe của bạn",
           route: "/listening",
         },
         {
-          icon: "grammar.png",
+          icon: "sentencetest.png",
           title: "Sentence Test",
           description: "Luyện tập câu tiếng Anh",
           route: "/sentence",
