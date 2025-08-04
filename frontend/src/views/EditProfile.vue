@@ -1,7 +1,7 @@
 <template>
   <div class="edit-profile-wrapper">
-    <h1>Sửa Hồ Sơ</h1>
-    <div class="form-container"> <!-- Thêm container này -->
+    <h1 class="profile-title">Sửa Hồ Sơ</h1>
+    <div class="edit-profile-content">
       <div class="form-group">
         <label>Tên tài khoản:</label>
         <input v-model="username" type="text" />
@@ -20,13 +20,13 @@
       </div>
 
       <div class="button-group">
-        <button @click="updateProfile" class="save-btn">Lưu Thay Đổi</button>
-        <button @click="goBack" class="cancel-btn">Hủy</button>
+        <button @click="updateProfile" class="action-btn save-btn">💾 Lưu Thay Đổi</button>
+        <button @click="goBack" class="action-btn cancel-btn">❌ Hủy</button>
       </div>
 
-      <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
-      <div v-if="successMessage" class="success-message">{{ successMessage }}</div>
-    </div> <!-- Kết thúc .form-container -->
+      <div v-if="errorMessage" class="toast error">{{ errorMessage }}</div>
+      <div v-if="successMessage" class="toast success">{{ successMessage }}</div>
+    </div>
   </div>
 </template>
 
@@ -114,46 +114,56 @@ export default {
 
 <style scoped>
 .edit-profile-wrapper {
-  background-color: #1a1a2e;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
   color: #ffffff;
   min-height: 100vh;
   padding: 40px 20px;
-  font-family: "Segoe UI", sans-serif;
+  font-family: 'Poppins', sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
-.form-container {
-  background-color: #2a2a3d;
+.profile-title {
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.edit-profile-content {
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
   padding: 30px;
-  border-radius: 16px;
-  border: 2px solid #2a2a3d; /* Border trắng */
-  max-width: 500px;
+  border-radius: 20px;
   width: 100%;
+  max-width: 500px;
   box-sizing: border-box;
 }
 
 .form-group {
-  width: 100%;
-  max-width: 500px;
-  margin-bottom: 20px;
   display: flex;
   flex-direction: column;
+  margin-bottom: 20px;
 }
 
 .form-group label {
-  font-weight: bold;
+  font-weight: 600;
   margin-bottom: 6px;
 }
 
 .form-group input,
 .form-group textarea {
   padding: 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  background-color: #2a2a3d;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.1);
   color: #fff;
+  box-sizing: border-box;
 }
 
 textarea {
@@ -164,36 +174,48 @@ textarea {
 .button-group {
   display: flex;
   justify-content: space-between;
-  width: 100%;
-  max-width: 500px;
   margin-top: 20px;
 }
 
-.save-btn,
-.cancel-btn {
-  padding: 10px 20px;
-  border-radius: 6px;
-  border: none;
+.action-btn {
+  width: 48%;
+  padding: 12px 0;
+  border-radius: 8px;
+  font-weight: 600;
   cursor: pointer;
+  background: linear-gradient(135deg, #12c2e9, #c471ed);
+  color: white;
+  border: none;
+  transition: all 0.3s ease;
+}
+
+.action-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(196, 113, 237, 0.4);
 }
 
 .save-btn {
-  background-color: #3b82f6;
-  color: white;
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
 }
 
 .cancel-btn {
-  background-color: #6c6c6c;
-  color: white;
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
 }
 
-.error-message {
-  color: #ff4d4f;
+.toast {
   margin-top: 20px;
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-weight: 600;
+  color: #fff;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 }
 
-.success-message {
-  color: #52c41a;
-  margin-top: 20px;
+.toast.success {
+  background: linear-gradient(135deg, #00c853, #b2ff59);
+}
+
+.toast.error {
+  background: linear-gradient(135deg, #d50000, #ff8a80);
 }
 </style>

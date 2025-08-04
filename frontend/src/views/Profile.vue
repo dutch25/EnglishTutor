@@ -1,4 +1,3 @@
-```html
 <template>
   <div class="profile-wrapper">
     <h1 class="profile-title">Thông tin cá nhân</h1>
@@ -28,36 +27,47 @@
         </div>
       </div>
 
-      <!-- FORM ĐỔI MẬT KHẨU -->
-      <div v-if="showChangePassword" class="password-change-section">
-        <div class="form-row">
-          <label>Mật khẩu cũ:</label>
-          <input :type="showOldPassword ? 'text' : 'password'" v-model="oldPassword" />
+      <transition name="fade">
+        <div v-if="showChangePassword" class="password-change-section">
+          <div class="form-row">
+            <label>Mật khẩu cũ:</label>
+            <div class="password-input">
+              <input :type="showOldPassword ? 'text' : 'password'" v-model="oldPassword" />
+              <i :class="showOldPassword ? 'fas fa-eye-slash' : 'fas fa-eye'" class="toggle-eye" @click="showOldPassword = !showOldPassword"></i>
+            </div>
+          </div>
+          <div class="form-row">
+            <label>Mật khẩu mới:</label>
+            <div class="password-input">
+              <input :type="showNewPassword ? 'text' : 'password'" v-model="newPassword" />
+              <i :class="showNewPassword ? 'fas fa-eye-slash' : 'fas fa-eye'" class="toggle-eye" @click="showNewPassword = !showNewPassword"></i>
+            </div>
+          </div>
+          <div class="form-row">
+            <label>Xác nhận mật khẩu:</label>
+            <div class="password-input">
+              <input :type="showConfirmPassword ? 'text' : 'password'" v-model="confirmPassword" />
+              <i :class="showConfirmPassword ? 'fas fa-eye-slash' : 'fas fa-eye'" class="toggle-eye" @click="showConfirmPassword = !showConfirmPassword"></i>
+            </div>
+          </div>
+          <div class="button-row">
+            <button @click="cancelChangePassword" class="cancel-btn">Hủy</button>
+            <button @click="submitChangePassword" class="save-btn">Lưu</button>
+          </div>
         </div>
-        <div class="form-row">
-          <label>Mật khẩu mới:</label>
-          <input :type="showNewPassword ? 'text' : 'password'" v-model="newPassword" />
-        </div>
-        <div class="form-row">
-          <label>Xác nhận mật khẩu:</label>
-          <input :type="showConfirmPassword ? 'text' : 'password'" v-model="confirmPassword" />
-        </div>
-        <div class="button-row">
-          <button @click="cancelChangePassword" class="cancel-btn">Hủy bỏ</button>
-          <button @click="submitChangePassword" class="save-btn">Lưu thay đổi</button>
-        </div>
-      </div>
+      </transition>
 
       <div class="button-group">
-        <button @click="goHome" class="action-btn">Quay lại Trang chủ</button>
-        <button @click="editProfile" class="action-btn">Sửa hồ sơ</button>
+        <button @click="goHome" class="action-btn">🏠 Trang chủ</button>
+        <button @click="editProfile" class="action-btn edit-btn">✏️ Sửa hồ sơ</button>
       </div>
     </div>
 
-    <!-- 🔥 Toast Notification -->
-    <div v-if="toast.show" :class="['toast', toast.type]">
-      {{ toast.message }}
-    </div>
+    <transition name="slide-fade">
+      <div v-if="toast.show" :class="['toast', toast.type]">
+        {{ toast.message }}
+      </div>
+    </transition>
   </div>
 </template>
 
@@ -191,31 +201,34 @@ export default {
 </script>
 
 <style scoped>
+/* Background Gradient */
 .profile-wrapper {
-  background-color: #1a1a2e;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
   color: #ffffff;
   min-height: 100vh;
   padding: 40px 20px;
-  box-sizing: border-box;
-  font-family: "Segoe UI", sans-serif;
+  font-family: 'Poppins', sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
 }
 
 .profile-title {
-  font-size: 32px;
-  font-weight: bold;
-  margin-bottom: 24px;
+  font-size: 36px;
+  font-weight: 700;
+  margin-bottom: 30px;
+  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
 }
 
 .profile-content {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background-color: #2a2a3d;
-  padding: 24px;
-  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.05);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+  padding: 30px;
+  border-radius: 20px;
   width: 100%;
   max-width: 500px;
 }
@@ -224,164 +237,196 @@ export default {
   width: 100%;
 }
 
-.info-item {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  margin-bottom: 21px;
-}
-
-.info-item-description {
+.info-item, .info-item-description {
   display: flex;
   align-items: flex-start;
-  margin-bottom: 21px;
+  margin-bottom: 20px;
 }
 
-.info-item-description label {
-  width: 150px;
-  font-weight: bold;
-}
-
-.info-item label {
-  width: 150px;
-  font-weight: bold;
+.info-item label, .info-item-description label {
+  width: 140px;
+  font-weight: 600;
 }
 
 .info-item span {
   flex: 1;
-  text-align: left;
-}
-
-.toggle-btn {
-  background-color: #3b3b50;
-  color: #ffffff;
-  border: none;
-  padding: 6px 14px;
-  border-radius: 6px;
-  cursor: pointer;
-}
-.toggle-btn:hover {
-  background-color: #50506e;
+  word-break: break-word;
 }
 
 .description-box {
   flex: 1;
-  padding: 10px;
-  background-color: #2a2a3d;
-  color: #ffffff;
-  border: 1px solid #ffffff;
-  border-radius: 6px;
-  min-height: 100px; /* Gấp 3 lần các dòng thông tin khác */
+  background: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 10px;
+  padding: 12px;
+  min-height: 100px;
+}
+
+/* Buttons */
+.toggle-btn {
+  background: linear-gradient(135deg, #ff416c, #ff4b2b);
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.3s ease;
+}
+.toggle-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(255, 65, 108, 0.4);
+}
+
+/* Change Password Form */
+.password-change-section {
+  margin-top: 25px;
+  padding: 20px;
+  background: rgba(0, 0, 0, 0.3);
+  border-radius: 16px;
+}
+
+.password-input {
+  position: relative;
+  flex: 1;
+  display: flex;
+  align-items: center;
+}
+
+.password-input input {
+  width: 100%;
+  padding-right: 40px; /* Chừa chỗ cho icon */
+  padding-left: 10px;
+  height: 38px;
+  line-height: 38px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.1);
+  color: #fff;
   box-sizing: border-box;
 }
 
-/* FORM ĐỔI MẬT KHẨU */
-.password-change-section {
-  margin-top: 20px;
-  padding: 16px;
-  background-color: #1e1e2e;
-  border-radius: 10px;
-  width: 100%;
+.toggle-eye {
+  position: absolute;
+  right: 12px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #ccc;
+  font-size: 18px;
+  transition: all 0.2s ease;
+}
+
+.toggle-eye:hover {
+  color: #00c6ff;
+  transform: translateY(-50%) scale(1.2);
 }
 
 .form-row {
   display: flex;
   align-items: center;
-  margin-bottom: 12px;
+  margin-bottom: 15px;
 }
 
 .form-row label {
-  width: 150px;
-  font-weight: bold;
+  width: 140px;
+  font-weight: 600;
+  flex-shrink: 0;
 }
 
 .form-row input {
   flex: 1;
-  padding: 6px 10px;
-  border-radius: 6px;
-  border: 1px solid #ccc;
-  background-color: #2a2a3d;
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+  background-color: rgba(255, 255, 255, 0.1);
   color: #fff;
 }
 
-/* Nút Hủy & Lưu */
+/* Action Buttons */
 .button-row {
   display: flex;
   justify-content: flex-end;
-  gap: 10px;
+  gap: 15px;
   margin-top: 10px;
 }
 
-.cancel-btn,
-.save-btn {
-  padding: 6px 14px;
-  border-radius: 6px;
+.cancel-btn, .save-btn {
+  padding: 10px 20px;
+  border-radius: 8px;
   border: none;
   cursor: pointer;
+  font-weight: 600;
 }
 
 .cancel-btn {
-  background-color: #6c6c6c;
+  background-color: #6c757d;
   color: white;
 }
-
 .save-btn {
-  background-color: #3b82f6;
+  background: linear-gradient(135deg, #00c6ff, #0072ff);
   color: white;
 }
 
-/* Nút Quay lại & Sửa hồ sơ */
 .button-group {
   display: flex;
   justify-content: space-between;
   margin-top: 30px;
-  width: 100%;
 }
 
 .action-btn {
-  background-color: #3b3b50;
-  color: #ffffff;
-  border: none;
-  padding: 10px 20px;
-  border-radius: 6px;
-  cursor: pointer;
   width: 48%;
+  padding: 12px 0;
+  border-radius: 8px;
+  font-weight: 600;
+  cursor: pointer;
+  background: linear-gradient(135deg, #12c2e9, #c471ed);
+  color: white;
+  border: none;
+  transition: all 0.3s ease;
 }
 
 .action-btn:hover {
-  background-color: #50506e;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 12px rgba(196, 113, 237, 0.4);
 }
 
-/* 🔹 Toast Notification */
+.edit-btn {
+  background: linear-gradient(135deg, #f7971e, #ffd200);
+}
+
+/* Toast Notification */
 .toast {
   position: fixed;
   top: 20px;
   right: 20px;
-  background: #333;
+  padding: 14px 24px;
+  border-radius: 12px;
+  font-weight: 600;
   color: #fff;
-  padding: 12px 20px;
-  border-radius: 8px;
-  font-size: 15px;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-  animation: fadeIn 0.3s ease;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.2);
 }
 
 .toast.success {
-  background: #4caf50;
+  background: linear-gradient(135deg, #00c853, #b2ff59);
 }
 
 .toast.error {
-  background: #e53935;
+  background: linear-gradient(135deg, #d50000, #ff8a80);
 }
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(20px);
-  }
-  to {
-    opacity: 1;
-    transform: none;
-  }
+/* Transitions */
+.fade-enter-active, .fade-leave-active {
+  transition: opacity 0.4s ease;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
+}
+
+.slide-fade-enter-active {
+  transition: all 0.5s ease;
+}
+.slide-fade-enter, .slide-fade-leave-to {
+  opacity: 0;
+  transform: translateY(-20px);
 }
 </style>
