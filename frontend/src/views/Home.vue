@@ -93,14 +93,14 @@ export default {
         },
         {
           icon: "listeningtest.png",
-          title: "Listening Test",
-          description: "Kiểm tra khả năng nghe của bạn",
+          title: "Luyện nghe từ vựng",
+          description: "Kiểm tra khả năng nghe của bạn với nhiều chủ đề khác nhau",
           route: "/listening",
         },
         {
           icon: "sentencetest.png",
-          title: "Sentence Test",
-          description: "Luyện tập câu tiếng Anh",
+          title: "Học câu tiếng Anh",
+          description: "Luyện nghe các câu tiếng Anh",
           route: "/sentence",
         },
         {
@@ -255,6 +255,7 @@ export default {
   position: absolute;
   right: 0;
   top: 120%;
+
   background: rgba(20, 20, 30, 0.95); /* Đậm hơn */
   border-radius: 12px;
   box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
@@ -317,4 +318,5 @@ export default {
   color: #a0a0b5;
   margin-top: 10px;
 }
+
 </style>
