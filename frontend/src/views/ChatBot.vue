@@ -21,7 +21,7 @@
       }"
     >
       <div class="chat-header" @mousedown="startWindowDrag">
-        <span>DynoBot Chat 🤖</span>
+        <span>EngAI Bot</span>
         <button @click.stop="closeChat">✖</button>
       </div>
 
@@ -75,7 +75,10 @@ export default {
       isAnimating: false,
       userMessage: "",
       messages: [
-        { sender: "bot", html: "Xin chào! Hãy chat với DynoBot nhé 🚀" },
+        { sender: "bot", html: "Chào mừng bạn đến với nền tảng học English trực tuyến EngAI!" },
+      ],
+      messages2:[
+        { sender: "bot", html: "Tôi có thể giúp gì cho bạn!" },
       ],
       typing: false,
       drag: { target: null, offsetX: 0, offsetY: 0 },
@@ -86,6 +89,9 @@ export default {
   mounted() {
     this.showChat = localStorage.getItem("chat_open") === "true";
     this.bubblePos = { x: 0, y: 0 };  // Khởi đầu không cần set toạ độ tuyệt đối.
+    if (this.showChat && this.messages2.length > 0) {
+    this.messages.push(...this.messages2);
+  }
   },
   methods: {
     closeChat() {

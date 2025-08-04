@@ -161,12 +161,12 @@ export default {
 
 <style scoped>
 .app-wrapper {
-  background-color: #1a1a2e;
+  background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
   color: #ffffff;
   min-height: 100vh;
   padding: 40px 20px;
   box-sizing: border-box;
-  font-family: "Segoe UI", sans-serif;
+  font-family: 'Poppins', sans-serif;
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -201,7 +201,9 @@ export default {
 .title {
   font-size: 32px;
   font-weight: bold;
-  color: #ffffff;
+  background: linear-gradient(90deg, #00c6ff, #ffffff, #00c6ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   margin: 0;
 }
 
@@ -214,6 +216,8 @@ export default {
 .user-info {
   display: flex;
   align-items: center;
+  background: transparent; /* Bỏ border */
+  padding: 0;
 }
 
 .user-avatar {
@@ -229,11 +233,6 @@ export default {
   margin-right: 12px;
 }
 
-.user-section {
-  display: flex;
-  align-items: center;
-}
-
 .account-menu-wrapper {
   position: relative;
   cursor: pointer;
@@ -245,35 +244,35 @@ export default {
   width: 18px;
   height: 18px;
   transition: transform 0.3s ease;
-  transform: rotate(-90deg); /* Mặc định nằm ngang */
+  transform: rotate(-90deg);
 }
 
 .menu-icon.rotated {
-  transform: rotate(0deg); /* Khi mở menu thì quay xuống dưới */
+  transform: rotate(0deg);
 }
 
 .account-menu {
   position: absolute;
   right: 0;
   top: 120%;
-  background-color: #2a2a3d;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  background: rgba(20, 20, 30, 0.95); /* Đậm hơn */
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.4);
   margin-top: 8px;
   z-index: 999;
   min-width: 160px;
 }
 
 .menu-item {
-  padding: 10px 16px;
+  padding: 12px 16px;
   color: #ffffff;
   font-size: 14px;
   cursor: pointer;
-  transition: background-color 0.3s;
+  transition: background 0.3s;
 }
 
 .menu-item:hover {
-  background-color: #40405a;
+  background: rgba(255, 255, 255, 0.1);
 }
 
 .feature-grid {
@@ -285,18 +284,19 @@ export default {
 }
 
 .feature-card {
-  background-color: #2a2a3d;
-  border-radius: 16px;
+  background: rgba(30, 30, 45, 0.9); /* Tối hơn, đậm hơn */
+  backdrop-filter: blur(5px);
+  border-radius: 20px;
   padding: 24px;
   text-align: center;
   transition: all 0.3s ease;
-  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
+  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
   cursor: pointer;
 }
 
 .feature-card:hover {
   transform: translateY(-6px);
-  box-shadow: 0 8px 20px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
 }
 
 .feature-icon {
@@ -314,7 +314,7 @@ export default {
 
 .feature-description {
   font-size: 14px;
-  color: #b0b0c3;
+  color: #a0a0b5;
   margin-top: 10px;
 }
 </style>
