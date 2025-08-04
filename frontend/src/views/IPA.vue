@@ -1,6 +1,9 @@
 <template>
   <div class="ipa-page">
     <div class="ipa-wrapper">
+    <button class="back-button" @click="goHome">
+    ← Quay về trang chủ
+    </button>
       <h1 class="ipa-title">Bảng Phiên Âm IPA (44 âm)</h1>
 
       <div v-for="(group, gIdx) in ipaGroups" :key="gIdx" class="ipa-group">
@@ -477,7 +480,13 @@ export default {
       ],
     };
   },
-};
+  methods: {
+  goHome() {
+  this.$router.push("/home");
+  },
+  },
+  };
+
 </script>
 
 <style scoped>
@@ -597,5 +606,19 @@ export default {
   width: 100%;
   margin-top: 0.5rem;
   filter: brightness(0.9);
+}
+
+.back-button { 
+  background-color: transparent; 
+  border: 1px solid #ffd369; color: #ffd369; 
+  font-size: 0.95rem; padding: 8px 14px; border-radius: 8px; 
+  cursor: pointer; 
+  margin-bottom: 1.5rem; 
+  transition: all 0.3s ease; 
+} 
+.back-button:hover { 
+  background-color: rgba(255, 211, 105, 0.1); 
+  transform: translateY(-1px); 
+  box-shadow: 0 2px 8px rgba(255, 211, 105, 0.3); 
 }
 </style>

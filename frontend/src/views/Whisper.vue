@@ -1,5 +1,8 @@
 <template>
   <div class="whisper-page">
+    <button class="back-button" @click="goHome">
+    ← Quay về trang chủ
+    </button>
     <template v-if="!selectedTopic">
       <h2 class="whisper-title">🎤 Luyện phát âm IPA</h2>
       <div class="topic-grid">
@@ -147,6 +150,9 @@ export default {
     getTopicTitle(topicKey) {
       const found = this.topics.find((t) => t.key === topicKey);
       return found ? found.title : topicKey;
+    },
+    goHome() {
+      this.$router.push("/home");
     },
     async startRecording() {
       this.status = "🎙️ Đang ghi âm...";
@@ -535,5 +541,19 @@ export default {
   font-weight: 700;
   color: #06d6a0; /* hoặc #ffd166 nếu bạn thích tông vàng */
   text-shadow: 0 2px 8px #16213e;
+}
+
+.back-button { 
+  background-color: transparent; 
+  border: 1px solid #ffd369; color: #ffd369; 
+  font-size: 0.95rem; padding: 8px 14px; border-radius: 8px; 
+  cursor: pointer; 
+  margin-bottom: 1.5rem; 
+  transition: all 0.3s ease; 
+} 
+.back-button:hover { 
+  background-color: rgba(255, 211, 105, 0.1); 
+  transform: translateY(-1px); 
+  box-shadow: 0 2px 8px rgba(255, 211, 105, 0.3); 
 }
 </style>
