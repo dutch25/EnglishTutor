@@ -11,6 +11,8 @@ from whisper import router as whisper_router   # ✅ router của whisper
 from auth_routes import router as auth_router  # ✅ router login/register
 from profile_router import router as profile_router  # ✅ router quản lý tài khoản người dùng
 from save import router as save_router
+from feedback import router as feedback_router
+
 
 # ✅ Khởi tạo FastAPI
 app = FastAPI()
@@ -34,6 +36,7 @@ app.include_router(whisper_router)  # API liên quan đến Whisper
 app.include_router(auth_router)     # API đăng nhập & đăng ký
 app.include_router(profile_router)  # API quản lý tài khoản người dùng
 app.include_router(save_router)      # API lưu từ
+app.include_router(feedback_router)
 
 # ✅ API Root
 @app.get("/")
