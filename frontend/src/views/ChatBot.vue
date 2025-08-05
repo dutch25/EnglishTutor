@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- 🔵 Bubble Chat -->
     <div
       class="chat-bubble"
       :style="{ transform: `translate(${bubblePos.x}px, ${bubblePos.y}px)` }"
@@ -10,7 +9,6 @@
       <img :src="messengerIcon" alt="Chat" />
     </div>
 
-    <!-- 💬 Chat Window -->
     <div
       v-if="showChat"
       class="chat-window"
@@ -25,7 +23,6 @@
         <button @click.stop="closeChat">✖</button>
       </div>
 
-      <!-- 💬 Nội dung chat -->
       <div class="chat-body">
         <div
           v-for="(msg, i) in messages"
@@ -40,13 +37,11 @@
         v-html="msg.html"
         ></div>
 
-        <!-- ⌛ Typing -->
         <div v-if="typing" class="typing-indicator bot">
           <span></span><span></span><span></span>
         </div>
       </div>
 
-      <!-- ✍️ Input -->
       <div class="chat-footer">
         <input
           v-model="userMessage"
@@ -65,7 +60,6 @@
 <script>
 import axios from "axios";
 import { marked } from "marked";
-// 🔥 Đổi icon mới (PNG/SVG trong assets)
 import chatbotIcon from "@/assets/Chatbot.png";
 
 export default {
@@ -245,10 +239,10 @@ export default {
 }
 
 .chat-bubble img {
-  width: 60px;
-  height: 60px;
+  width: 100px;
+  height: 100px;
   border-radius: 50%;
-  background: white; /* ✅ tạo nền trắng nếu icon trong suốt */
+  background: transparent; /* ✅ tạo nền trắng nếu icon trong suốt */
   padding: 5px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
   transition: transform 0.2s;
@@ -271,7 +265,7 @@ export default {
   overflow: hidden;
 }
 .chat-header {
-  background: #0084ff;
+  background: #db89eb;
   padding: 10px;
   color: white;
   display: flex;
