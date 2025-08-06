@@ -23,7 +23,7 @@ Dành cho mọi đối tượng muốn nâng cao kỹ năng tiếng Anh một c�
 
 - **Frontend:** Vue 3, Vue Router, Vite, SCSS
 - **Backend:** FastAPI, SQLAlchemy, MySQL, ElevenLabs API (Text-to-Speech and Speech-to-text), Google Gemini (GenAI), ChatGPT
-- **Khác:** JWT Auth, dotenv, CORS, RESTful API
+- **Khác:** dotenv, CORS, RESTful API
 
 ---
 

@@ -10,7 +10,7 @@
         <p>Chúng tôi có thể giúp bạn học tiếng Anh một cách hiệu quả.<br/>
           Cải thiện kỹ năng ngôn ngữ của bạn với chúng tôi. <br/>
           Học tiếng Anh không khó, đã có EngAI</p>
-        <button class="learn-more-btn">Learn More</button>
+        <a href="https://github.com/dutch25/EnglishTutor" target="_blank" class="learn-more-btn">Learn More</a>
       </div>
     </div>
 
@@ -188,7 +188,6 @@ export default {
 .title-text {
   font-size: 80px;
   font-weight: bold;
-
 }
 
 .welcome-text h1 {
@@ -357,7 +356,7 @@ input:focus {
   opacity: 0;
   transform: translateX(50px);
   transition: all 0.8s ease-out;
-}
+} 
 
 .slide-in-active {
   opacity: 1 !important;
