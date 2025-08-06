@@ -71,12 +71,21 @@ def get_audio(word: str, speed: float = 0.75):
     return StreamingResponse(response.raw, media_type="audio/mpeg")
 
 # ✅ API Chat với Gemini
-# ✅ API Chat với Gemini
 @app.post("/chat")
 async def chat(data: dict):
+    # data["history"] là list các dict: [{"role": "user", "content": "..."}, {"role": "assistant", "content": "..."}]
+    history = data.get("history", [])
     user_message = data.get("message", "")
 
-    # ✅ Prompt hướng dẫn thêm
+    # Tạo prompt từ lịch sử hội thoại
+    conversation = ""
+    for turn in history:
+        if turn["role"] == "user":
+            conversation += f"Người học: {turn['content']}\n"
+        else:
+            conversation += f"Gia sư: {turn['content']}\n"
+    conversation += f"Người học: {user_message}"
+
     system_prompt = (
         "Bạn là một gia sư tiếng Anh chuyên giúp người Việt luyện nghe và nói. "
         "Hãy trả lời ngắn gọn, dễ hiểu, và phù hợp cho mọi trình độ."
@@ -85,7 +94,7 @@ async def chat(data: dict):
     client = genai.Client()
     response = client.models.generate_content(
         model="gemini-2.5-flash",
-        contents=f"{system_prompt}\nNgười học: {user_message}",
+        contents=f"{system_prompt}\n{conversation}",
         config=types.GenerateContentConfig(
             thinking_config=types.ThinkingConfig(thinking_budget=0)
         ),

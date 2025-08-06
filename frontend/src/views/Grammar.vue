@@ -8,7 +8,7 @@
           <button class="back-btn" @click="goHome">← Quay lại Trang Chủ</button>
           <h2 class="dashboard-title">Ứng dụng học 12 thì của EnglishTutor</h2>
         </div>
-        <p class="dashboard-subtitle">Luyện tập 12 thì tiếng Anh, lý thuyết chi tiết và bài tập AI.</p>
+        <p class="dashboard-subtitle">Luyện tập 12 thì tiếng Anh, lý thuyết chi tiết và thực h.</p>
         <div class="dashboard-grid">
           <div class="dashboard-card">
             <h3 class="card-title">Chế độ học theo từng thì</h3>
@@ -101,7 +101,6 @@
             <div class="action-buttons">
               <button class="action-btn" @click="prevQuestion" :disabled="currentQuestionIndex === 0">← Trước</button>
               <button class="action-btn" @click="checkAnswer">Trả lời</button>
-              <button class="action-btn" @click="nextQuestion" :disabled="currentQuestionIndex === questionsToPractice.length - 1">Tiếp →</button>
             </div>
             <div v-if="errorMessage" class="error-message">{{ errorMessage }}</div>
           </div>
@@ -528,7 +527,7 @@ currentTheory.value = theoryData[selectedTense.value] || "Lý thuyết đang c�
     }
   }
   .theory-panel {
-    background: rgba(78, 78, 78, 0.3);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(200, 200, 200, 0.2));
     backdrop-filter: blur(6px);
     border-radius: 16px;
     padding: 24px;
@@ -562,7 +561,7 @@ currentTheory.value = theoryData[selectedTense.value] || "Lý thuyết đang c�
     color: #000000;
   }
   .exercise-panel {
-    background: rgba(72, 72, 72, 0.3);
+    background: linear-gradient(135deg, rgba(255, 255, 255, 0.3), rgba(200, 200, 200, 0.2));
     backdrop-filter: blur(6px);
     border-radius: 16px;
     padding: 24px;
