@@ -2,750 +2,744 @@ export default [
   // Present Simple
   {
     tenseId: "present_simple",
-    question: "She [go] to school every day.",
-    options: ["go", "goes", "going", "gone"],
-    answer: "goes"
+    question: "She rarely [forget] her lines during a performance.",
+    options: ["forgets", "forget", "is forgetting", "forgot"],
+    answer: "forgets"
   },
   {
     tenseId: "present_simple",
-    question: "My father [work] in a hospital.",
-    options: ["work", "works", "working", "worked"],
-    answer: "works"
+    question: "Why [he, avoid] spicy food every time we eat out?",
+    options: ["does he avoid", "he avoids", "is he avoiding", "he avoid"],
+    answer: "does he avoid"
   },
   {
     tenseId: "present_simple",
-    question: "My sister [listen] to music every evening.",
-    options: ["listen", "listens", "listening", "to listen"],
-    answer: "listens"
+    question: "The museum [open] its new exhibit on weekends only.",
+    options: ["open", "opens", "is opening", "opened"],
+    answer: "opens"
   },
   {
     tenseId: "present_simple",
-    question: "We [watch] movies on weekends.",
-    options: ["watch", "watches", "watching", "watched"],
-    answer: "watch"
+    question: "My neighbors never [complain] about the noise.",
+    options: ["complain", "complains", "are complaining", "complained"],
+    answer: "complain"
   },
   {
     tenseId: "present_simple",
-    question: "He [play] soccer with his friends every Saturday.",
-    options: ["play", "plays", "playing", "played"],
-    answer: "plays"
+    question: "How often [you, visit] the library these days?",
+    options: ["do you visit", "you visit", "are you visiting", "you visited"],
+    answer: "do you visit"
   },
   {
     tenseId: "present_simple",
-    question: "They [study] English every evening.",
-    options: ["study", "studies", "studying", "studied"],
-    answer: "study"
+    question: "The team [practice] rigorously every morning.",
+    options: ["practice", "practices", "is practicing", "practiced"],
+    answer: "practices"
   },
   {
     tenseId: "present_simple",
-    question: "The dog [bark] at strangers.",
-    options: ["bark", "barks", "barking", "barked"],
-    answer: "barks"
+    question: "This app always [crash] when I open it.",
+    options: ["crash", "crashes", "is crashing", "crashed"],
+    answer: "crashes"
   },
   {
     tenseId: "present_simple",
-    question: "I [drink] coffee every morning.",
-    options: ["drink", "drinks", "drinking", "drank"],
-    answer: "drink"
+    question: "We [prefer] to work in a quiet environment.",
+    options: ["prefer", "prefers", "are preferring", "preferred"],
+    answer: "prefer"
   },
   {
     tenseId: "present_simple",
-    question: "She [write] emails to her clients daily.",
-    options: ["write", "writes", "writing", "wrote"],
-    answer: "writes"
+    question: "Why [she, seem] so distracted every meeting?",
+    options: ["does she seem", "she seems", "is she seeming", "she seemed"],
+    answer: "does she seem"
   },
   {
     tenseId: "present_simple",
-    question: "The children [run] in the park every afternoon.",
-    options: ["run", "runs", "running", "ran"],
-    answer: "run"
-  },
-  {
-    tenseId: "present_simple",
-    question: "He [read] the news online every day.",
-    options: ["read", "reads", "reading", "readed"],
-    answer: "reads"
+    question: "He [analyze] data for the company daily.",
+    options: ["analyze", "analyzes", "is analyzing", "analyzed"],
+    answer: "analyzes"
   },
 
   // Present Continuous
   {
     tenseId: "present_continuous",
-    question: "I [read] a book now.",
-    options: ["read", "am reading", "reading", "reads"],
-    answer: "am reading"
+    question: "Why [you, behave] so strangely today?",
+    options: ["are you behaving", "you behave", "do you behave", "you are behaving"],
+    answer: "are you behaving"
   },
   {
     tenseId: "present_continuous",
-    question: "They [play] football at the moment.",
-    options: ["play", "are playing", "playing", "played"],
-    answer: "are playing"
+    question: "She [rehearse] for the play this entire week.",
+    options: ["rehearses", "is rehearsing", "has rehearsed", "rehearsed"],
+    answer: "is rehearsing"
   },
   {
     tenseId: "present_continuous",
-    question: "She [dance] in the living room right now.",
-    options: ["dance", "is dancing", "dancing", "dances"],
-    answer: "is dancing"
+    question: "They [not, work] on the project right now.",
+    options: ["aren’t working", "don’t work", "not working", "didn’t work"],
+    answer: "aren’t working"
   },
   {
     tenseId: "present_continuous",
-    question: "We [study] for the exam at the moment.",
-    options: ["study", "are studying", "studying", "studied"],
-    answer: "are studying"
+    question: "The kids [create] a mess in the kitchen at the moment.",
+    options: ["create", "are creating", "have created", "created"],
+    answer: "are creating"
   },
   {
     tenseId: "present_continuous",
-    question: "He [cook] dinner in the kitchen now.",
-    options: ["cook", "is cooking", "cooking", "cooks"],
-    answer: "is cooking"
+    question: "Why [he, shout] so loudly right now?",
+    options: ["is he shouting", "he shouts", "does he shout", "he is shouting"],
+    answer: "is he shouting"
   },
   {
     tenseId: "present_continuous",
-    question: "The kids [draw] pictures in their room.",
-    options: ["draw", "are drawing", "drawing", "drew"],
-    answer: "are drawing"
+    question: "We [organize] the event as we speak.",
+    options: ["organize", "are organizing", "have organized", "organized"],
+    answer: "are organizing"
   },
   {
     tenseId: "present_continuous",
-    question: "I [listen] to a podcast right now.",
-    options: ["listen", "am listening", "listening", "listened"],
-    answer: "am listening"
+    question: "I [not, listen] to music at the moment.",
+    options: ["am not listening", "don’t listen", "not listening", "didn’t listen"],
+    answer: "am not listening"
   },
   {
     tenseId: "present_continuous",
-    question: "They [run] in the park at the moment.",
-    options: ["run", "are running", "running", "ran"],
-    answer: "are running"
+    question: "The team [collaborate] on a new strategy today.",
+    options: ["collaborates", "is collaborating", "has collaborated", "collaborated"],
+    answer: "is collaborating"
   },
   {
     tenseId: "present_continuous",
-    question: "She [write] a letter to her friend now.",
-    options: ["write", "is writing", "writing", "wrote"],
-    answer: "is writing"
+    question: "She [design] a new logo this afternoon.",
+    options: ["designs", "is designing", "has designed", "designed"],
+    answer: "is designing"
   },
   {
     tenseId: "present_continuous",
-    question: "We [watch] a movie on TV right now.",
-    options: ["watch", "are watching", "watching", "watched"],
-    answer: "are watching"
+    question: "They [repair] the car in the garage right now.",
+    options: ["repair", "are repairing", "have repaired", "repaired"],
+    answer: "are repairing"
   },
 
   // Present Perfect
   {
     tenseId: "present_perfect",
-    question: "She [visit] Paris three times.",
-    options: ["visit", "has visited", "visited", "visiting"],
-    answer: "has visited"
+    question: "She [just, complete] the report for the meeting.",
+    options: ["just completed", "has just completed", "just completes", "had completed"],
+    answer: "has just completed"
   },
   {
     tenseId: "present_perfect",
-    question: "I [finish] my homework already.",
-    options: ["finish", "have finished", "finished", "finishing"],
-    answer: "have finished"
+    question: "How many times [you, visit] that museum?",
+    options: ["have you visited", "did you visit", "you visited", "are you visiting"],
+    answer: "have you visited"
   },
   {
     tenseId: "present_perfect",
-    question: "They [travel] to Japan twice.",
-    options: ["travel", "have traveled", "traveled", "traveling"],
-    answer: "have traveled"
+    question: "They [not, finish] the assignment yet.",
+    options: ["didn’t finish", "haven’t finished", "not finished", "aren’t finishing"],
+    answer: "haven’t finished"
   },
   {
     tenseId: "present_perfect",
-    question: "He [eat] sushi before.",
-    options: ["eat", "has eaten", "ate", "eating"],
-    answer: "has eaten"
+    question: "He [lose] his phone twice this year.",
+    options: ["lost", "has lost", "is losing", "had lost"],
+    answer: "has lost"
   },
   {
     tenseId: "present_perfect",
-    question: "We [see] that movie already.",
-    options: ["see", "have seen", "saw", "seeing"],
-    answer: "have seen"
+    question: "We [already, submit] our applications.",
+    options: ["already submitted", "have already submitted", "already submit", "had submitted"],
+    answer: "have already submitted"
   },
   {
     tenseId: "present_perfect",
-    question: "She [write] three books so far.",
-    options: ["write", "has written", "wrote", "writing"],
+    question: "I [never, try] sushi before today.",
+    options: ["never tried", "have never tried", "never try", "had never tried"],
+    answer: "have never tried"
+  },
+  {
+    tenseId: "present_perfect",
+    question: "She [write] three articles this month.",
+    options: ["wrote", "has written", "is writing", "had written"],
     answer: "has written"
   },
   {
     tenseId: "present_perfect",
-    question: "I [lose] my keys somewhere today.",
-    options: ["lose", "have lost", "lost", "losing"],
-    answer: "have lost"
+    question: "They [just, arrive] at the airport.",
+    options: ["just arrived", "have just arrived", "just arrive", "had arrived"],
+    answer: "have just arrived"
   },
   {
     tenseId: "present_perfect",
-    question: "They [play] tennis this morning.",
-    options: ["play", "have played", "played", "playing"],
-    answer: "have played"
-  },
-  {
-    tenseId: "present_perfect",
-    question: "He [work] here since 2020.",
-    options: ["work", "has worked", "worked", "working"],
+    question: "He [work] in this field since 2018.",
+    options: ["worked", "has worked", "is working", "had worked"],
     answer: "has worked"
   },
   {
     tenseId: "present_perfect",
-    question: "We [meet] her several times.",
-    options: ["meet", "have met", "met", "meeting"],
-    answer: "have met"
+    question: "We [not, see] her since last summer.",
+    options: ["didn’t see", "haven’t seen", "not seen", "aren’t seeing"],
+    answer: "haven’t seen"
   },
 
   // Present Perfect Continuous
   {
     tenseId: "present_perfect_continuous",
-    question: "He [study] for two hours.",
-    options: ["studies", "has been studying", "studied", "is studying"],
-    answer: "has been studying"
+    question: "How long [she, work] on that novel?",
+    options: ["has she been working", "is she working", "did she work", "she worked"],
+    answer: "has she been working"
   },
   {
     tenseId: "present_perfect_continuous",
-    question: "We [wait] here since 8 o'clock.",
-    options: ["wait", "have been waiting", "waiting", "waited"],
+    question: "They [train] for the marathon since January.",
+    options: ["trained", "have been training", "are training", "had trained"],
+    answer: "have been training"
+  },
+  {
+    tenseId: "present_perfect_continuous",
+    question: "I [not, study] French for very long.",
+    options: ["didn’t study", "haven’t been studying", "not studying", "hadn’t studied"],
+    answer: "haven’t been studying"
+  },
+  {
+    tenseId: "present_perfect_continuous",
+    question: "He [research] this topic for months.",
+    options: ["researched", "has been researching", "is researching", "had researched"],
+    answer: "has been researching"
+  },
+  {
+    tenseId: "present_perfect_continuous",
+    question: "We [wait] for the bus for over an hour.",
+    options: ["waited", "have been waiting", "are waiting", "had waited"],
     answer: "have been waiting"
   },
   {
     tenseId: "present_perfect_continuous",
-    question: "She [work] on this project for three months.",
-    options: ["works", "has been working", "worked", "is working"],
-    answer: "has been working"
+    question: "She [practice] the piano all morning.",
+    options: ["practiced", "has been practicing", "is practicing", "had practiced"],
+    answer: "has been practicing"
   },
   {
     tenseId: "present_perfect_continuous",
-    question: "They [play] video games since noon.",
-    options: ["play", "have been playing", "played", "are playing"],
-    answer: "have been playing"
+    question: "They [not, develop] the app for very long.",
+    options: ["didn’t develop", "haven’t been developing", "aren’t developing", "hadn’t developed"],
+    answer: "haven’t been developing"
   },
   {
     tenseId: "present_perfect_continuous",
-    question: "I [learn] Spanish for a year.",
-    options: ["learn", "have been learning", "learned", "am learning"],
-    answer: "have been learning"
+    question: "How long [you, learn] to code?",
+    options: ["have you been learning", "did you learn", "are you learning", "you learned"],
+    answer: "have you been learning"
   },
   {
     tenseId: "present_perfect_continuous",
-    question: "He [run] every morning for six months.",
-    options: ["runs", "has been running", "ran", "is running"],
-    answer: "has been running"
+    question: "He [build] that model for weeks now.",
+    options: ["built", "has been building", "is building", "had built"],
+    answer: "has been building"
   },
   {
     tenseId: "present_perfect_continuous",
-    question: "We [clean] the house all day.",
-    options: ["clean", "have been cleaning", "cleaned", "are cleaning"],
-    answer: "have been cleaning"
-  },
-  {
-    tenseId: "present_perfect_continuous",
-    question: "She [paint] the room since yesterday.",
-    options: ["paints", "has been painting", "painted", "is painting"],
-    answer: "has been painting"
-  },
-  {
-    tenseId: "present_perfect_continuous",
-    question: "They [build] that bridge for two years.",
-    options: ["build", "have been building", "built", "are building"],
-    answer: "have been building"
-  },
-  {
-    tenseId: "present_perfect_continuous",
-    question: "I [write] emails all morning.",
-    options: ["write", "have been writing", "wrote", "am writing"],
-    answer: "have been writing"
+    question: "We [renovate] the house since last summer.",
+    options: ["renovated", "have been renovating", "are renovating", "had renovated"],
+    answer: "have been renovating"
   },
 
   // Past Simple
   {
     tenseId: "past_simple",
-    question: "She [visit] her grandmother yesterday.",
-    options: ["visit", "visited", "visiting", "visits"],
+    question: "Why [she, cancel] the meeting yesterday?",
+    options: ["did she cancel", "she canceled", "was she canceling", "she cancels"],
+    answer: "did she cancel"
+  },
+  {
+    tenseId: "past_simple",
+    question: "They [attend] the conference last month.",
+    options: ["attended", "attend", "were attending", "have attended"],
+    answer: "attended"
+  },
+  {
+    tenseId: "past_simple",
+    question: "He [not, reply] to my email last week.",
+    options: ["didn’t reply", "not replied", "wasn’t replying", "hasn’t replied"],
+    answer: "didn’t reply"
+  },
+  {
+    tenseId: "past_simple",
+    question: "We [explore] the ancient ruins last summer.",
+    options: ["explored", "explore", "were exploring", "have explored"],
+    answer: "explored"
+  },
+  {
+    tenseId: "past_simple",
+    question: "She [purchase] a new laptop last Friday.",
+    options: ["purchased", "purchases", "was purchasing", "has purchased"],
+    answer: "purchased"
+  },
+  {
+    tenseId: "past_simple",
+    question: "I [meet] him at the cafe yesterday.",
+    options: ["met", "meet", "was meeting", "have met"],
+    answer: "met"
+  },
+  {
+    tenseId: "past_simple",
+    question: "They [not, finish] the project on time.",
+    options: ["didn’t finish", "not finished", "weren’t finishing", "haven’t finished"],
+    answer: "didn’t finish"
+  },
+  {
+    tenseId: "past_simple",
+    question: "Why [he, leave] the party so early?",
+    options: ["did he leave", "he left", "was he leaving", "he leaves"],
+    answer: "did he leave"
+  },
+  {
+    tenseId: "past_simple",
+    question: "She [paint] the fence last weekend.",
+    options: ["painted", "paints", "was painting", "has painted"],
+    answer: "painted"
+  },
+  {
+    tenseId: "past_simple",
+    question: "We [visit] the zoo last Sunday.",
+    options: ["visited", "visit", "were visiting", "have visited"],
     answer: "visited"
-  },
-  {
-    tenseId: "past_simple",
-    question: "They [play] football last Sunday.",
-    options: ["play", "played", "playing", "plays"],
-    answer: "played"
-  },
-  {
-    tenseId: "past_simple",
-    question: "I [watch] a movie last night.",
-    options: ["watch", "watched", "watching", "watches"],
-    answer: "watched"
-  },
-  {
-    tenseId: "past_simple",
-    question: "He [call] his friend yesterday.",
-    options: ["call", "called", "calling", "calls"],
-    answer: "called"
-  },
-  {
-    tenseId: "past_simple",
-    question: "We [travel] to London last summer.",
-    options: ["travel", "traveled", "traveling", "travels"],
-    answer: "traveled"
-  },
-  {
-    tenseId: "past_simple",
-    question: "She [buy] a new phone last week.",
-    options: ["buy", "bought", "buying", "buys"],
-    answer: "bought"
-  },
-  {
-    tenseId: "past_simple",
-    question: "They [eat] pizza for dinner yesterday.",
-    options: ["eat", "ate", "eating", "eats"],
-    answer: "ate"
-  },
-  {
-    tenseId: "past_simple",
-    question: "I [write] a letter to my cousin last month.",
-    options: ["write", "wrote", "writing", "writes"],
-    answer: "wrote"
-  },
-  {
-    tenseId: "past_simple",
-    question: "He [run] in the race last Saturday.",
-    options: ["run", "ran", "running", "runs"],
-    answer: "ran"
-  },
-  {
-    tenseId: "past_simple",
-    question: "We [see] a concert last weekend.",
-    options: ["see", "saw", "seeing", "sees"],
-    answer: "saw"
   },
 
   // Past Continuous
   {
     tenseId: "past_continuous",
-    question: "I [watch] TV when he called.",
-    options: ["watched", "was watching", "watching", "watches"],
-    answer: "was watching"
+    question: "She [not, listen] when the teacher explained the rules.",
+    options: ["wasn’t listening", "didn’t listen", "not listened", "hasn’t listened"],
+    answer: "wasn’t listening"
   },
   {
     tenseId: "past_continuous",
-    question: "She [cook] dinner at 7 PM yesterday.",
-    options: ["cooked", "was cooking", "cooking", "cooks"],
-    answer: "was cooking"
+    question: "What [they, discuss] when you entered the room?",
+    options: ["were they discussing", "did they discuss", "they discussed", "are they discussing"],
+    answer: "were they discussing"
   },
   {
     tenseId: "past_continuous",
-    question: "They [play] cards when the storm started.",
-    options: ["played", "were playing", "playing", "play"],
-    answer: "were playing"
+    question: "He [repair] the car when it started raining.",
+    options: ["repaired", "was repairing", "has repaired", "is repairing"],
+    answer: "was repairing"
   },
   {
     tenseId: "past_continuous",
-    question: "He [read] a book when I arrived.",
-    options: ["read", "was reading", "reading", "reads"],
-    answer: "was reading"
+    question: "We [plan] the event when the client called.",
+    options: ["planned", "were planning", "have planned", "are planning"],
+    answer: "were planning"
   },
   {
     tenseId: "past_continuous",
-    question: "We [walk] in the park when it started raining.",
-    options: ["walked", "were walking", "walking", "walk"],
-    answer: "were walking"
+    question: "I [not, work] when the power went out.",
+    options: ["wasn’t working", "didn’t work", "not worked", "haven’t worked"],
+    answer: "wasn’t working"
   },
   {
     tenseId: "past_continuous",
-    question: "She [write] a letter when the phone rang.",
-    options: ["wrote", "was writing", "writing", "writes"],
+    question: "They [rehearse] for the play when the director arrived.",
+    options: ["rehearsed", "were rehearsing", "have rehearsed", "are rehearsing"],
+    answer: "were rehearsing"
+  },
+  {
+    tenseId: "past_continuous",
+    question: "She [write] a report when her computer crashed.",
+    options: ["wrote", "was writing", "has written", "is writing"],
     answer: "was writing"
   },
   {
     tenseId: "past_continuous",
-    question: "I [study] in the library when the fire alarm went off.",
-    options: ["studied", "was studying", "studying", "study"],
-    answer: "was studying"
+    question: "What [you, do] at 8 PM last night?",
+    options: ["were you doing", "did you do", "you did", "are you doing"],
+    answer: "were you doing"
   },
   {
     tenseId: "past_continuous",
-    question: "They [run] in the field when the game was canceled.",
-    options: ["ran", "were running", "running", "run"],
-    answer: "were running"
+    question: "They [not, play] football when the coach arrived.",
+    options: ["weren’t playing", "didn’t play", "not played", "haven’t played"],
+    answer: "weren’t playing"
   },
   {
     tenseId: "past_continuous",
-    question: "He [paint] the house when the ladder fell.",
-    options: ["painted", "was painting", "painting", "paints"],
-    answer: "was painting"
-  },
-  {
-    tenseId: "past_continuous",
-    question: "We [listen] to music when the power went out.",
-    options: ["listened", "were listening", "listening", "listen"],
-    answer: "were listening"
+    question: "He [design] the poster when I called him.",
+    options: ["designed", "was designing", "has designed", "is designing"],
+    answer: "was designing"
   },
 
   // Past Perfect
   {
     tenseId: "past_perfect",
-    question: "He [leave] before I arrived.",
-    options: ["left", "had left", "leaving", "leaves"],
-    answer: "had left"
+    question: "She [already, leave] when I got to the station.",
+    options: ["already left", "had already left", "already leaves", "was leaving"],
+    answer: "had already left"
   },
   {
     tenseId: "past_perfect",
-    question: "They [finish] the work before the boss came.",
-    options: ["finished", "had finished", "finishing", "finishes"],
-    answer: "had finished"
+    question: "Why [they, not, finish] the project before the deadline?",
+    options: ["hadn’t they finished", "didn’t they finish", "they didn’t finish", "haven’t they finished"],
+    answer: "hadn’t they finished"
   },
   {
     tenseId: "past_perfect",
-    question: "She [eat] dinner before the movie started.",
-    options: ["ate", "had eaten", "eating", "eats"],
-    answer: "had eaten"
-  },
-  {
-    tenseId: "past_perfect",
-    question: "I [complete] the report before the meeting.",
-    options: ["completed", "had completed", "completing", "complete"],
+    question: "He [complete] the task before the meeting started.",
+    options: ["completed", "had completed", "was completing", "has completed"],
     answer: "had completed"
   },
   {
     tenseId: "past_perfect",
-    question: "We [visit] the museum before it closed.",
-    options: ["visited", "had visited", "visiting", "visit"],
-    answer: "had visited"
+    question: "We [not, visit] the museum before it closed permanently.",
+    options: ["didn’t visit", "hadn’t visited", "weren’t visiting", "haven’t visited"],
+    answer: "hadn’t visited"
   },
   {
     tenseId: "past_perfect",
-    question: "He [write] the email before the deadline passed.",
-    options: ["wrote", "had written", "writing", "writes"],
+    question: "They [submit] the proposal before the client requested changes.",
+    options: ["submitted", "had submitted", "were submitting", "have submitted"],
+    answer: "had submitted"
+  },
+  {
+    tenseId: "past_perfect",
+    question: "I [already, eat] when she offered me dinner.",
+    options: ["already ate", "had already eaten", "already eat", "was eating"],
+    answer: "had already eaten"
+  },
+  {
+    tenseId: "past_perfect",
+    question: "He [write] the report before the boss asked for it.",
+    options: ["wrote", "had written", "was writing", "has written"],
     answer: "had written"
   },
   {
     tenseId: "past_perfect",
-    question: "They [play] the game before the rain started.",
-    options: ["played", "had played", "playing", "play"],
-    answer: "had played"
+    question: "Why [she, not, call] before the event started?",
+    options: ["hadn’t she called", "didn’t she call", "she didn’t call", "hasn’t she called"],
+    answer: "hadn’t she called"
   },
   {
     tenseId: "past_perfect",
-    question: "She [read] the book before the discussion.",
-    options: ["read", "had read", "reading", "reads"],
-    answer: "had read"
+    question: "They [repair] the machine before it broke again.",
+    options: ["repaired", "had repaired", "were repairing", "have repaired"],
+    answer: "had repaired"
   },
   {
     tenseId: "past_perfect",
-    question: "I [clean] the house before the guests arrived.",
-    options: ["cleaned", "had cleaned", "cleaning", "clean"],
-    answer: "had cleaned"
-  },
-  {
-    tenseId: "past_perfect",
-    question: "We [travel] to Paris before the conference began.",
-    options: ["traveled", "had traveled", "traveling", "travel"],
-    answer: "had traveled"
+    question: "We [plan] the trip before the prices increased.",
+    options: ["planned", "had planned", "were planning", "have planned"],
+    answer: "had planned"
   },
 
   // Past Perfect Continuous
   {
     tenseId: "past_perfect_continuous",
-    question: "She [study] for hours before the exam started.",
-    options: ["studied", "had been studying", "studying", "has studied"],
-    answer: "had been studying"
+    question: "How long [she, study] before she passed the exam?",
+    options: ["had she been studying", "was she studying", "did she study", "she studied"],
+    answer: "had she been studying"
   },
   {
     tenseId: "past_perfect_continuous",
-    question: "We [wait] for 30 minutes before the bus arrived.",
-    options: ["waited", "had been waiting", "waiting", "has waited"],
+    question: "They [not, work] on the project for long before it was canceled.",
+    options: ["hadn’t been working", "weren’t working", "didn’t work", "haven’t worked"],
+    answer: "hadn’t been working"
+  },
+  {
+    tenseId: "past_perfect_continuous",
+    question: "He [train] for months before the competition started.",
+    options: ["trained", "had been training", "was training", "has trained"],
+    answer: "had been training"
+  },
+  {
+    tenseId: "past_perfect_continuous",
+    question: "We [wait] for hours before the flight was announced.",
+    options: ["waited", "had been waiting", "were waiting", "have waited"],
     answer: "had been waiting"
   },
   {
     tenseId: "past_perfect_continuous",
-    question: "He [work] on the project for weeks before it was canceled.",
-    options: ["worked", "had been working", "working", "has worked"],
-    answer: "had been working"
+    question: "She [practice] the speech for days before the event.",
+    options: ["practiced", "had been practicing", "was practicing", "has practiced"],
+    answer: "had been practicing"
   },
   {
     tenseId: "past_perfect_continuous",
-    question: "They [play] football for an hour before it started raining.",
-    options: ["played", "had been playing", "playing", "have played"],
-    answer: "had been playing"
+    question: "They [not, develop] the software for long before the company shut down.",
+    options: ["hadn’t been developing", "weren’t developing", "didn’t develop", "haven’t developed"],
+    answer: "hadn’t been developing"
   },
   {
     tenseId: "past_perfect_continuous",
-    question: "I [run] for 20 minutes before I felt tired.",
-    options: ["ran", "had been running", "running", "have run"],
-    answer: "had been running"
+    question: "I [research] the topic for weeks before the presentation.",
+    options: ["researched", "had been researching", "was researching", "have researched"],
+    answer: "had been researching"
   },
   {
     tenseId: "past_perfect_continuous",
-    question: "She [paint] the room for two days before it was finished.",
-    options: ["painted", "had been painting", "painting", "has painted"],
-    answer: "had been painting"
+    question: "How long [you, wait] before the bus finally arrived?",
+    options: ["had you been waiting", "were you waiting", "did you wait", "you waited"],
+    answer: "had you been waiting"
   },
   {
     tenseId: "past_perfect_continuous",
-    question: "We [clean] the garage for hours before we found the keys.",
-    options: ["cleaned", "had been cleaning", "cleaning", "have cleaned"],
-    answer: "had been cleaning"
+    question: "He [build] the model for days before it was complete.",
+    options: ["built", "had been building", "was building", "has built"],
+    answer: "had been building"
   },
   {
     tenseId: "past_perfect_continuous",
-    question: "He [write] code all night before the program worked.",
-    options: ["wrote", "had been writing", "writing", "has written"],
-    answer: "had been writing"
-  },
-  {
-    tenseId: "past_perfect_continuous",
-    question: "They [travel] for days before they reached the city.",
-    options: ["traveled", "had been traveling", "traveling", "have traveled"],
-    answer: "had been traveling"
-  },
-  {
-    tenseId: "past_perfect_continuous",
-    question: "I [read] the book for weeks before I finished it.",
-    options: ["read", "had been reading", "reading", "have read"],
-    answer: "had been reading"
+    question: "We [renovate] the house for months before we moved in.",
+    options: ["renovated", "had been renovating", "were renovating", "have renovated"],
+    answer: "had been renovating"
   },
 
   // Future Simple
   {
     tenseId: "future_simple",
-    question: "I [call] you tomorrow.",
-    options: ["call", "will call", "calling", "called"],
-    answer: "will call"
+    question: "If it rains, we [cancel] the picnic tomorrow.",
+    options: ["cancel", "will cancel", "are canceling", "would cancel"],
+    answer: "will cancel"
   },
   {
     tenseId: "future_simple",
-    question: "She [visit] her parents next week.",
-    options: ["visit", "will visit", "visiting", "visited"],
-    answer: "will visit"
+    question: "She [probably, attend] the conference next month.",
+    options: ["probably attends", "will probably attend", "is attending", "would attend"],
+    answer: "will probably attend"
   },
   {
     tenseId: "future_simple",
-    question: "They [play] basketball next Saturday.",
-    options: ["play", "will play", "playing", "played"],
-    answer: "will play"
+    question: "I [not, join] the team unless they need me.",
+    options: ["don’t join", "won’t join", "am not joining", "wouldn’t join"],
+    answer: "won’t join"
   },
   {
     tenseId: "future_simple",
-    question: "He [buy] a new car next month.",
-    options: ["buy", "will buy", "buying", "bought"],
-    answer: "will buy"
+    question: "He [decide] after reviewing the documents tomorrow.",
+    options: ["decides", "will decide", "is deciding", "would decide"],
+    answer: "will decide"
   },
   {
     tenseId: "future_simple",
-    question: "We [travel] to Italy next summer.",
-    options: ["travel", "will travel", "traveling", "traveled"],
-    answer: "will travel"
-  },
-  {
-    tenseId: "future_simple",
-    question: "I [write] a report tomorrow.",
-    options: ["write", "will write", "writing", "wrote"],
-    answer: "will write"
-  },
-  {
-    tenseId: "future_simple",
-    question: "She [cook] dinner for her friends next weekend.",
-    options: ["cook", "will cook", "cooking", "cooked"],
-    answer: "will cook"
-  },
-  {
-    tenseId: "future_simple",
-    question: "They [watch] the new movie next Friday.",
-    options: ["watch", "will watch", "watching", "watched"],
-    answer: "will watch"
-  },
-  {
-    tenseId: "future_simple",
-    question: "He [run] in the marathon next month.",
-    options: ["run", "will run", "running", "ran"],
-    answer: "will run"
-  },
-  {
-    tenseId: "future_simple",
-    question: "We [meet] our friends tomorrow evening.",
-    options: ["meet", "will meet", "meeting", "met"],
+    question: "We [meet] them at the station if they arrive on time.",
+    options: ["meet", "will meet", "are meeting", "would meet"],
     answer: "will meet"
+  },
+  {
+    tenseId: "future_simple",
+    question: "Why [she, not, call] us tomorrow?",
+    options: ["doesn’t she call", "won’t she call", "isn’t she calling", "wouldn’t she call"],
+    answer: "won’t she call"
+  },
+  {
+    tenseId: "future_simple",
+    question: "They [likely, finish] the project next week.",
+    options: ["likely finish", "will likely finish", "are finishing", "would finish"],
+    answer: "will likely finish"
+  },
+  {
+    tenseId: "future_simple",
+    question: "I [submit] the application before the deadline.",
+    options: ["submit", "will submit", "am submitting", "would submit"],
+    answer: "will submit"
+  },
+  {
+    tenseId: "future_simple",
+    question: "He [not, attend] the meeting unless it’s urgent.",
+    options: ["doesn’t attend", "won’t attend", "is not attending", "wouldn’t attend"],
+    answer: "won’t attend"
+  },
+  {
+    tenseId: "future_simple",
+    question: "We [discuss] the plan tomorrow if everyone agrees.",
+    options: ["discuss", "will discuss", "are discussing", "would discuss"],
+    answer: "will discuss"
   },
 
   // Future Continuous
   {
     tenseId: "future_continuous",
-    question: "At 8 PM, I [watch] TV.",
-    options: ["will be watching", "watch", "watching", "will watch"],
-    answer: "will be watching"
+    question: "This time tomorrow, we [not, work] on the project.",
+    options: ["won’t be working", "aren’t working", "don’t work", "wouldn’t work"],
+    answer: "won’t be working"
   },
   {
     tenseId: "future_continuous",
-    question: "They [travel] to Hanoi at this time tomorrow.",
-    options: ["will be traveling", "travel", "traveling", "will travel"],
+    question: "What [she, do] at 7 PM tomorrow evening?",
+    options: ["will she be doing", "is she doing", "does she do", "would she do"],
+    answer: "will she be doing"
+  },
+  {
+    tenseId: "future_continuous",
+    question: "They [rehearse] for the concert at this time next week.",
+    options: ["rehearse", "will be rehearsing", "are rehearsing", "would rehearse"],
+    answer: "will be rehearsing"
+  },
+  {
+    tenseId: "future_continuous",
+    question: "I [travel] to Paris at this time tomorrow.",
+    options: ["travel", "will be traveling", "am traveling", "would travel"],
     answer: "will be traveling"
   },
   {
     tenseId: "future_continuous",
-    question: "She [study] in the library tomorrow afternoon.",
-    options: ["will be studying", "study", "studying", "will study"],
-    answer: "will be studying"
+    question: "He [not, attend] the seminar at 10 AM tomorrow.",
+    options: ["won’t be attending", "isn’t attending", "doesn’t attend", "wouldn’t attend"],
+    answer: "won’t be attending"
   },
   {
     tenseId: "future_continuous",
-    question: "He [work] on his project at 10 AM tomorrow.",
-    options: ["will be working", "work", "working", "will work"],
-    answer: "will be working"
+    question: "We [collaborate] on the new design tomorrow afternoon.",
+    options: ["collaborate", "will be collaborating", "are collaborating", "would collaborate"],
+    answer: "will be collaborating"
   },
   {
     tenseId: "future_continuous",
-    question: "We [play] soccer at this time next week.",
-    options: ["will be playing", "play", "playing", "will play"],
-    answer: "will be playing"
+    question: "She [present] her research at the conference next Monday.",
+    options: ["presents", "will be presenting", "is presenting", "would present"],
+    answer: "will be presenting"
   },
   {
     tenseId: "future_continuous",
-    question: "I [write] emails tomorrow morning.",
-    options: ["will be writing", "write", "writing", "will write"],
-    answer: "will be writing"
+    question: "What [they, discuss] during the meeting tomorrow?",
+    options: ["will they be discussing", "are they discussing", "do they discuss", "would they discuss"],
+    answer: "will they be discussing"
   },
   {
     tenseId: "future_continuous",
-    question: "They [clean] the house at 3 PM tomorrow.",
-    options: ["will be cleaning", "clean", "cleaning", "will clean"],
-    answer: "will be cleaning"
+    question: "I [not, write] emails at 9 PM tomorrow.",
+    options: ["won’t be writing", "am not writing", "don’t write", "wouldn’t write"],
+    answer: "won’t be writing"
   },
   {
     tenseId: "future_continuous",
-    question: "She [paint] her room next weekend.",
-    options: ["will be painting", "paint", "painting", "will paint"],
-    answer: "will be painting"
-  },
-  {
-    tenseId: "future_continuous",
-    question: "He [run] in the park tomorrow evening.",
-    options: ["will be running", "run", "running", "will run"],
-    answer: "will be running"
-  },
-  {
-    tenseId: "future_continuous",
-    question: "We [listen] to music at this time tomorrow.",
-    options: ["will be listening", "listen", "listening", "will listen"],
-    answer: "will be listening"
+    question: "They [train] for the competition this time next month.",
+    options: ["train", "will be training", "are training", "would train"],
+    answer: "will be training"
   },
 
   // Future Perfect
   {
     tenseId: "future_perfect",
-    question: "By 2025, she [finish] university.",
-    options: ["will have finished", "finish", "finishing", "will finish"],
-    answer: "will have finished"
-  },
-  {
-    tenseId: "future_perfect",
-    question: "By next week, I [complete] the project.",
-    options: ["will have completed", "complete", "completing", "will complete"],
+    question: "By next month, she [complete] the entire course.",
+    options: ["completes", "will have completed", "has completed", "would complete"],
     answer: "will have completed"
   },
   {
     tenseId: "future_perfect",
-    question: "By tomorrow, they [play] all the matches.",
-    options: ["will have played", "play", "playing", "will play"],
-    answer: "will have played"
+    question: "By tomorrow, we [not, finish] the report.",
+    options: ["won’t have finished", "don’t finish", "haven’t finished", "wouldn’t finish"],
+    answer: "won’t have finished"
   },
   {
     tenseId: "future_perfect",
-    question: "By next month, he [write] three reports.",
-    options: ["will have written", "write", "writing", "will write"],
-    answer: "will have written"
+    question: "By the end of the week, he [submit] all the documents.",
+    options: ["submits", "will have submitted", "has submitted", "would submit"],
+    answer: "will have submitted"
   },
   {
     tenseId: "future_perfect",
-    question: "By the weekend, we [clean] the entire house.",
-    options: ["will have cleaned", "clean", "cleaning", "will clean"],
-    answer: "will have cleaned"
-  },
-  {
-    tenseId: "future_perfect",
-    question: "By 2026, she [travel] to five countries.",
-    options: ["will have traveled", "travel", "traveling", "will travel"],
+    question: "By next year, they [travel] to ten countries.",
+    options: ["travel", "will have traveled", "have traveled", "would travel"],
     answer: "will have traveled"
   },
   {
     tenseId: "future_perfect",
-    question: "By tomorrow evening, I [read] the entire book.",
-    options: ["will have read", "read", "reading", "will read"],
+    question: "By 8 PM, I [not, write] the article.",
+    options: ["won’t have written", "don’t write", "haven’t written", "wouldn’t write"],
+    answer: "won’t have written"
+  },
+  {
+    tenseId: "future_perfect",
+    question: "By next Friday, we [finalize] the contract.",
+    options: ["finalize", "will have finalized", "have finalized", "would finalize"],
+    answer: "will have finalized"
+  },
+  {
+    tenseId: "future_perfect",
+    question: "By the time you arrive, she [prepare] dinner.",
+    options: ["prepares", "will have prepared", "has prepared", "would prepare"],
+    answer: "will have prepared"
+  },
+  {
+    tenseId: "future_perfect",
+    question: "By next summer, he [not, complete] the project.",
+    options: ["won’t have completed", "doesn’t complete", "hasn’t completed", "wouldn’t complete"],
+    answer: "won’t have completed"
+  },
+  {
+    tenseId: "future_perfect",
+    question: "By the end of the day, they [review] all the applications.",
+    options: ["review", "will have reviewed", "have reviewed", "would review"],
+    answer: "will have reviewed"
+  },
+  {
+    tenseId: "future_perfect",
+    question: "By tomorrow, I [read] half the book.",
+    options: ["read", "will have read", "have read", "would read"],
     answer: "will have read"
-  },
-  {
-    tenseId: "future_perfect",
-    question: "By next Friday, they [finish] the construction.",
-    options: ["will have finished", "finish", "finishing", "will finish"],
-    answer: "will have finished"
-  },
-  {
-    tenseId: "future_perfect",
-    question: "By the end of the day, he [paint] the room.",
-    options: ["will have painted", "paint", "painting", "will paint"],
-    answer: "will have painted"
-  },
-  {
-    tenseId: "future_perfect",
-    question: "By next year, we [meet] all our goals.",
-    options: ["will have met", "meet", "meeting", "will meet"],
-    answer: "will have met"
   },
 
   // Future Perfect Continuous
   {
     tenseId: "future_perfect_continuous",
-    question: "By 6 PM, he [work] for 8 hours.",
-    options: ["will have been working", "work", "working", "will work"],
-    answer: "will have been working"
+    question: "By next month, she [not, work] on this project for long.",
+    options: ["won’t have been working", "hasn’t been working", "isn’t working", "wouldn’t work"],
+    answer: "won’t have been working"
   },
   {
     tenseId: "future_perfect_continuous",
-    question: "By next month, I [live] here for 2 years.",
-    options: ["will have been living", "live", "living", "will live"],
-    answer: "will have been living"
+    question: "By 2026, he [train] for the marathon for two years.",
+    options: ["trains", "will have been training", "has been training", "would train"],
+    answer: "will have been training"
   },
   {
     tenseId: "future_perfect_continuous",
-    question: "By tomorrow, she [study] for 10 hours.",
-    options: ["will have been studying", "study", "studying", "will study"],
+    question: "By tomorrow evening, we [study] for 10 hours straight.",
+    options: ["study", "will have been studying", "have been studying", "would study"],
     answer: "will have been studying"
   },
   {
     tenseId: "future_perfect_continuous",
-    question: "By next week, they [play] football for 3 days straight.",
-    options: ["will have been playing", "play", "playing", "will play"],
-    answer: "will have been playing"
+    question: "By next week, they [not, develop] the app for long.",
+    options: ["won’t have been developing", "haven’t been developing", "aren’t developing", "wouldn’t develop"],
+    answer: "won’t have been developing"
   },
   {
     tenseId: "future_perfect_continuous",
-    question: "By the weekend, we [clean] the house for 5 hours.",
-    options: ["will have been cleaning", "clean", "cleaning", "will clean"],
-    answer: "will have been cleaning"
-  },
-  {
-    tenseId: "future_perfect_continuous",
-    question: "By next year, he [run] daily for 6 months.",
-    options: ["will have been running", "run", "running", "will run"],
-    answer: "will have been running"
-  },
-  {
-    tenseId: "future_perfect_continuous",
-    question: "By tomorrow evening, I [write] emails for 4 hours.",
-    options: ["will have been writing", "write", "writing", "will write"],
+    question: "By the end of the year, I [write] code for six months.",
+    options: ["write", "will have been writing", "have been writing", "would write"],
     answer: "will have been writing"
   },
   {
     tenseId: "future_perfect_continuous",
-    question: "By next month, she [paint] the house for 2 weeks.",
-    options: ["will have been painting", "paint", "painting", "will paint"],
-    answer: "will have been painting"
+    question: "By next summer, she [practice] yoga for three years.",
+    options: ["practices", "will have been practicing", "has been practicing", "would practice"],
+    answer: "will have been practicing"
   },
   {
     tenseId: "future_perfect_continuous",
-    question: "By the end of the year, they [travel] for 3 months.",
-    options: ["will have been traveling", "travel", "traveling", "will travel"],
-    answer: "will have been traveling"
+    question: "By tomorrow, we [wait] for the results for two days.",
+    options: ["wait", "will have been waiting", "have been waiting", "would wait"],
+    answer: "will have been waiting"
   },
   {
     tenseId: "future_perfect_continuous",
-    question: "By tomorrow, we [listen] to music for 6 hours.",
-    options: ["will have been listening", "listen", "listening", "will listen"],
-    answer: "will have been listening"
+    question: "By next month, he [research] this topic for a year.",
+    options: ["researches", "will have been researching", "has been researching", "would research"],
+    answer: "will have been researching"
+  },
+  {
+    tenseId: "future_perfect_continuous",
+    question: "By the weekend, they [renovate] the house for six weeks.",
+    options: ["renovate", "will have been renovating", "have been renovating", "would renovate"],
+    answer: "will have been renovating"
+  },
+  {
+    tenseId: "future_perfect_continuous",
+    question: "By tomorrow afternoon, I [not, paint] the room for long.",
+    options: ["won’t have been painting", "haven’t been painting", "am not painting", "wouldn’t paint"],
+    answer: "won’t have been painting"
   }
 ];

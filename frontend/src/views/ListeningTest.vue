@@ -137,9 +137,9 @@ export default {
     },
     checkAnswer() {
       if (this.userInput.trim().toLowerCase() === this.currentWord) {
-        this.result = `<span style='color:#06d6a0'>✅ Correct!</span>`;
+        this.result = `<span style='color:#06d6a0'>✅ Chính xác!</span>`;
       } else {
-        this.result = `<span style='color:#ef476f'>❌ Incorrect. The correct word was "<strong>${this.currentWord}</strong>".</span>`;
+        this.result = `<span style='color:#ef476f'>❌ Sai rồi, từ chính xác là "<strong>${this.currentWord}</strong>".</span>`;
       }
       this.userInput = "";
       setTimeout(() => {
