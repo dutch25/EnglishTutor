@@ -2,7 +2,7 @@
   <div class="feedback-listening-page">
     <div class="content-wrapper">
       <div class="back-btn-row">
-        <button @click="$router.push('/home')" class="main-btn back-btn">⬅️ Về trang chủ</button>
+        <button @click="$router.push('/home')" class="main-btn back-btn">⬅ Về trang chủ</button>
       </div>
       <div class="card">
         <h1 class="title">📝 Góp ý & Phản hồi</h1>
@@ -45,7 +45,11 @@ export default {
 
 <style scoped>
 .feedback-listening-page {
-  background: linear-gradient(135deg, #393953 0%, #293453 100%);  min-height: 100vh;
+  background-image: url('../assets/images/background.jpg');
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  min-height: 100vh;  /* 👈 BẮT BUỘC PHẢI CÓ */
   padding: 40px 0;
   font-family: "Segoe UI", sans-serif;
   display: flex;
@@ -70,7 +74,7 @@ export default {
   min-width: 160px;
 }
 .card {
-  background: #23234b;
+  background: #23234bc6;
   border-radius: 18px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.18);
   padding: 36px 32px 32px 32px;
@@ -83,7 +87,7 @@ export default {
 .title {
   font-size: 32px;
   font-weight: bold;
-  color: #ffd166;
+  color: #dedede;
   margin: 0 0 32px 0;
   text-align: center;
 }
@@ -122,7 +126,7 @@ export default {
   padding: 10px 24px;
   border-radius: 10px;
   border: none;
-  background: linear-gradient(90deg, #06d6a0 0%, #4fc3f7 100%);
+  background: linear-gradient(90deg,  #97b368 0%, #95b561 100%);
   color: #fff;
   font-size: 17px;
   font-weight: bold;
@@ -136,8 +140,9 @@ export default {
   transition: background 0.2s, transform 0.2s;
 }
 .main-btn:hover {
-  background: linear-gradient(90deg, #4fc3f7 0%, #06d6a0 100%);
+  background: linear-gradient(90deg,  #a2b87a 0%, #9bb473 100%);
   transform: translateY(-2px) scale(1.04);
+  color: black;
 }
 .result.feedback-message {
   margin-top: 18px;
@@ -145,6 +150,6 @@ export default {
   font-size: 19px;
   text-align: center;
   min-height: 32px;
-  color: #06d6a0;
+  color: #dedede;
 }
 </style>
