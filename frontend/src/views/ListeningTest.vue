@@ -1,7 +1,7 @@
 <template>
   <div class="listening-page">
     <div class="back-btn-row">
-      <button @click="goHome" class="main-btn back-btn">⬅️ Về trang chủ</button>
+      <button @click="goHome" class="main-btn back-btn">⬅ Về trang chủ</button>
       <button @click="chooseRandomTheme" class="main-btn random-btn">🎲 Chọn ngẫu nhiên</button>
     </div>
     <h1>🎧 Luyện Nghe</h1>
@@ -21,7 +21,7 @@
     </template>
     <template v-else>
       <div class="test-card">
-        <p class="theme-title">Chủ đề: {{ themeTitle(selectedTheme) }}</p>
+        <p class="theme-title-selected">Chủ đề: {{ themeTitle(selectedTheme) }}</p>
         <button @click="playAudio" class="main-btn play-btn">▶️ Nghe từ</button>
         <input
           v-model="userInput"
@@ -168,7 +168,9 @@ export default {
 
 <style scoped>
 .listening-page {
-  background: linear-gradient(13135deg, #393953 0%, #293453 100%);
+  background-image: url('../assets/images/background.jpg');
+  background-size: cover;
+  background-position: center;
   color: #fff;
   min-height: 100vh;
   padding: 40px 20px;
@@ -207,9 +209,13 @@ export default {
   min-width: 160px;
   margin-bottom: 0;
 }
+
+.random-btn:hover {
+  color: #fff;
+}
 h1 {
   font-size: 32px;
-  color: #ffd166;
+  color: #454545;
   margin-bottom: 32px;
   text-align: center;
   text-shadow: 0 2px 4px rgba(0,0,0,0.2);
@@ -218,7 +224,15 @@ h1 {
   font-size: 22px;
   font-weight: bold;
   margin-bottom: 28px;
-  color: #fff;
+  color: #5e5e5e;
+  text-align: center;
+}
+
+.theme-title-selected {
+  font-size: 22px;
+  font-weight: bold;
+  margin-bottom: 28px;
+  color: #ffd166;
   text-align: center;
 }
 .theme-grid {
@@ -230,7 +244,7 @@ h1 {
   margin-bottom: 40px;
 }
 .theme-card {
-  background-color: #23234b;
+  background: rgba(56, 37, 58, 0.573);
   border-radius: 16px;
   padding: 32px 0 24px 0;
   display: flex;
@@ -243,7 +257,7 @@ h1 {
 .theme-card:hover {
   box-shadow: 0 8px 24px rgba(255,255,255,0.12);
   transform: translateY(-6px) scale(1.03);
-  background-color: #2a2a3d;
+  background: rgba(35, 34, 34, 0.562); /* Sáng lên nhẹ nhàng */
 }
 .theme-icon {
   font-size: 48px;
@@ -252,7 +266,7 @@ h1 {
 .theme-name {
   font-size: 22px;
   font-weight: bold;
-  color: #4fc3f7;
+  color: #e8e6e6;
 }
 .test-card {
   background: #23234b;
@@ -269,8 +283,8 @@ h1 {
   padding: 12px 28px;
   border-radius: 10px;
   border: none;
-  background: linear-gradient(90deg, #06d6a0 0%, #4fc3f7 100%);
-  color: #fff;
+  background:#97b368;
+  color: #23234b;
   font-size: 17px;
   font-weight: bold;
   cursor: pointer;
@@ -283,7 +297,7 @@ h1 {
   justify-content: center;
 }
 .main-btn:hover {
-  background: linear-gradient(90deg, #4fc3f7 0%, #06d6a0 100%);
+  background: #b6cf75;
   transform: translateY(-2px) scale(1.04);
 }
 .btn-group {

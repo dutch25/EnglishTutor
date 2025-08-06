@@ -1,7 +1,7 @@
 <template>
   <div class="dictionary-page">
-    <button @click="goHome" class="back-btn">⬅️ Back to Homepage</button>
-    <h1>📖 Tra cứu từ điển</h1>
+    <button @click="goHome" class="back-btn">⬅ Back to Homepage</button>
+    <h1>Tra cứu từ điển</h1>
     <div class="search-row">
       <input
         v-model="searchWord"
@@ -241,7 +241,9 @@ export default {
 
 <style scoped>
 .dictionary-page {
-  background: linear-gradient(135deg, #393953 0%, #293453 100%);
+  background-image: url('../assets/images/background.jpg');
+  background-size: cover;
+  background-position: center;
   color: #fff;
   min-height: 100vh;
   padding: 40px 20px;
@@ -253,7 +255,7 @@ export default {
 }
 
 .back-btn {
-  background-color: #ffd166;
+  background:#97b368;
   color: #23234b;
   font-size: 14px;
   padding: 8px 16px;
@@ -265,13 +267,13 @@ export default {
   transition: background 0.2s;
 }
 .back-btn:hover {
-  background-color: #ef476f;
+  background-color: #b6cf75;
   color: #fff;
 }
 
 h1 {
   margin-bottom: 28px;
-  color: #ffd166;
+  color: #454545;
   font-size: 28px;
   text-align: center;
   font-weight: bold;
@@ -298,15 +300,15 @@ h1 {
   transition: border 0.2s;
 }
 .input-box:focus {
-  border: 2px solid #ffd166;
+  border: 2px solid #454545;
 }
 
 .main-btn {
   padding: 10px 24px;
   border-radius: 10px;
   border: none;
-  background: linear-gradient(90deg, #06d6a0 0%, #4fc3f7 100%);
-  color: #fff;
+  background:linear-gradient(90deg, #97b368, #b6cf75);
+  color: #363636;
   font-weight: bold;
   cursor: pointer;
   transition: background 0.2s, transform 0.2s;
@@ -314,11 +316,11 @@ h1 {
 }
 .main-btn:hover {
   transform: translateY(-2px);
-  background: linear-gradient(90deg, #4fc3f7 0%, #06d6a0 100%);
+  background:linear-gradient(90deg, #adc682, #cce295);
 }
 
 .loading {
-  color: #ffd166;
+  color: #454545;
   margin-bottom: 12px;
   font-weight: bold;
   font-size: 16px;

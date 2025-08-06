@@ -1,7 +1,7 @@
 <template>
   <div class="saved-page">
-    <button @click="$router.push('/')" class="back-btn">⬅️ Trang chủ</button>
-    <h1>📚 Từ đã lưu</h1>
+    <button @click="$router.push('/')" class="back-btn">⬅ Quay về Trang chủ</button>
+    <h1>Từ đã lưu</h1>
     <div v-if="loading" class="loading">Đang tải...</div>
     <div v-if="error" class="error">{{ error }}</div>
     <div v-if="!loading && savedWords.length === 0" class="empty">Chưa có từ nào được lưu.</div>
@@ -78,7 +78,9 @@ export default {
 
 <style scoped>
 .saved-page {
-  background: linear-gradient(135deg, #393953 0%, #293453 100%);
+  background-image: url('../assets/images/background.jpg');
+  background-size: cover;
+  background-position: center;
   min-height: 100vh;
   color: #fff;
   padding: 40px 20px;
@@ -87,7 +89,7 @@ export default {
   align-items: center;
 }
 .back-btn {
-  background: #ffd166;
+  background: #97b368;
   color: #23234b;
   border: none;
   border-radius: 8px;
@@ -96,8 +98,14 @@ export default {
   margin-bottom: 24px;
   cursor: pointer;
 }
+
+.back-btn:hover {
+  background-color: #b6cf75;
+  color: #fff;
+}
+
 h1 {
-  color: #ffd166;
+  color: #454545;
   margin-bottom: 24px;
 }
 .saved-card {

@@ -188,6 +188,7 @@ export default {
 .title-text {
   font-size: 80px;
   font-weight: bold;
+
 }
 
 .welcome-text h1 {
@@ -356,7 +357,7 @@ input:focus {
   opacity: 0;
   transform: translateX(50px);
   transition: all 0.8s ease-out;
-} 
+}
 
 .slide-in-active {
   opacity: 1 !important;

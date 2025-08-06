@@ -491,11 +491,9 @@ export default {
 
 <style scoped>
 .ipa-page {
-  min-height: 100vh;
-  background: linear-gradient(135deg, #393953 0%, #293453 100%); /* Gradient như Home */
-  overflow-x: hidden;
-  overflow-y: auto;
-  position: relative;
+  background-image: url('../assets/images/background.jpg');
+  background-size: cover;
+  background-position: center;
 }
 
 .ipa-wrapper {
@@ -512,7 +510,7 @@ export default {
   text-align: center;
   font-size: 2rem;
   margin-bottom: 2rem;
-  background: linear-gradient(90deg, #00c6ff, #0072ff);
+  background: linear-gradient(90deg, #3b3b3b, #19191a);
   background-clip: text;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
@@ -527,7 +525,7 @@ export default {
   text-align: center;
   font-size: 1.5rem;
   margin-bottom: 1rem;
-  color: #ffd369;
+  color: #616503;
   text-shadow: 0 1px 3px rgba(0, 0, 0, 0.4);
 }
 
@@ -610,7 +608,7 @@ export default {
 }
 
 .back-button {
-  background-color: #ffd166;
+  background:linear-gradient(90deg, #97b368, #b6cf75);
   color: #23234b;
   font-size: 14px;
   padding: 8px 16px;

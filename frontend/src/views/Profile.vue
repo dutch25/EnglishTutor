@@ -27,7 +27,7 @@
         </div>
       </div>
 
-      <transition name="fade">
+      <transition name="expand-fade">
         <div v-if="showChangePassword" class="password-change-section">
           <div class="form-row">
             <label>Mật khẩu cũ:</label>
@@ -428,5 +428,23 @@ export default {
 .slide-fade-enter, .slide-fade-leave-to {
   opacity: 0;
   transform: translateY(-20px);
+}
+
+.expand-fade-enter-active,
+.expand-fade-leave-active {
+  transition: all 0.4s ease;
+}
+
+.expand-fade-enter-from,
+.expand-fade-leave-to {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+}
+
+.expand-fade-enter-to,
+.expand-fade-leave-from {
+  max-height: 500px; /* Đủ lớn để chứa form */
+  opacity: 1;
 }
 </style>
