@@ -14,10 +14,15 @@
     <div v-if="loading" class="loading">Đang tra cứu...</div>
     <div v-if="error" class="error">{{ error }}</div>
     <div v-if="result" class="result-block">
+      <div v-if="successMessage" class="success-msg">
+        {{ successMessage }},
+        <span class="go_saved" @click="goSaved">Nhấn để xem</span>
+      </div>
+
       <div class="word-row">
         <h2
           @click="speakWord"
-          style="cursor:pointer"
+          style="cursor: pointer"
           title="Click để nghe phát âm"
         >
           {{ result.word }}
@@ -36,17 +41,27 @@
           </svg>
         </button>
       </div>
-      <div v-if="result.phonetic" class="phonetic">/ {{ result.phonetic }} /</div>
-      <div v-if="quickVi" class="vi-meaning">
-        <span style="color:#ffd166;font-weight:bold;">Nghĩa: </span>
-        <span style="color:#fff;">{{ quickVi }}</span>
+      <div v-if="result.phonetic" class="phonetic">
+        / {{ result.phonetic }} /
       </div>
-      <div v-for="(meaning, idx) in result.meanings" :key="idx" class="meaning-block">
-        <div class="part-of-speech">{{ getPartOfSpeechVi(meaning.partOfSpeech) }}</div>
+      <div v-if="quickVi" class="vi-meaning">
+        <span style="color: #ffd166; font-weight: bold">Nghĩa: </span>
+        <span style="color: #fff">{{ quickVi }}</span>
+      </div>
+      <div
+        v-for="(meaning, idx) in result.meanings"
+        :key="idx"
+        class="meaning-block"
+      >
+        <div class="part-of-speech">
+          {{ getPartOfSpeechVi(meaning.partOfSpeech) }}
+        </div>
         <ul>
           <li v-for="(def, i) in meaning.definitions" :key="i">
-            <span style="color:#ffd166">{{ viMeanings[idx]?.[i] }}</span>
-            <span v-if="def.example" class="example">VD: "{{ def.example }}"</span>
+            <span style="color: #ffd166">{{ viMeanings[idx]?.[i] }}</span>
+            <span v-if="def.example" class="example"
+              >VD: "{{ def.example }}"</span
+            >
           </li>
         </ul>
       </div>
@@ -73,6 +88,9 @@ export default {
     goHome() {
       this.$router.push("/home");
     },
+    goSaved() {
+      this.$router.push("/saved");
+    },
     async lookup() {
       if (!this.searchWord.trim()) return;
       this.loading = true;
@@ -83,22 +101,30 @@ export default {
       try {
         let wordToLookup = this.searchWord.trim();
         // Kiểm tra nếu là tiếng Việt thì dịch sang tiếng Anh
-        const isVietnamese = /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i.test(wordToLookup);
+        const isVietnamese =
+          /[àáạảãâầấậẩẫăằắặẳẵèéẹẻẽêềếệểễìíịỉĩòóọỏõôồốộổỗơờớợởỡùúụủũưừứựửữỳýỵỷỹđ]/i.test(
+            wordToLookup
+          );
         if (isVietnamese) {
           // Dịch sang tiếng Anh bằng Google Translate
           const res = await fetch(
-            `https://translate.googleapis.com/translate_a/single?client=gtx&sl=vi&tl=en&dt=t&q=${encodeURIComponent(wordToLookup)}`
+            `https://translate.googleapis.com/translate_a/single?client=gtx&sl=vi&tl=en&dt=t&q=${encodeURIComponent(
+              wordToLookup
+            )}`
           );
           const data = await res.json();
-          wordToLookup = data[0]?.map(item => item[0]).join('') || wordToLookup;
+          wordToLookup =
+            data[0]?.map((item) => item[0]).join("") || wordToLookup;
           this.quickVi = this.searchWord.trim(); // giữ lại từ gốc tiếng Việt
         } else {
           // Nếu là tiếng Anh, dịch nghĩa nhanh sang tiếng Việt
           const viRes = await fetch(
-            `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=vi&dt=t&q=${encodeURIComponent(wordToLookup)}`
+            `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=vi&dt=t&q=${encodeURIComponent(
+              wordToLookup
+            )}`
           );
           const viData = await viRes.json();
-          this.quickVi = viData[0]?.map(item => item[0]).join('') || "";
+          this.quickVi = viData[0]?.map((item) => item[0]).join("") || "";
         }
 
         // 2. Tra cứu sâu bằng dictionaryapi.dev
@@ -111,8 +137,8 @@ export default {
 
         // 3. Dịch từng nghĩa sâu sang tiếng Việt (giống cũ)
         const meanings = this.result.meanings || [];
-        this.viMeanings = meanings.map(m =>
-          (m.definitions || []).map(def => def.definition || "")
+        this.viMeanings = meanings.map((m) =>
+          (m.definitions || []).map((def) => def.definition || "")
         );
 
         // Luôn dịch từng nghĩa chi tiết sang tiếng Việt (kể cả khi nhập tiếng Việt)
@@ -136,10 +162,12 @@ export default {
     async translateToVietnamese(text) {
       try {
         const res = await fetch(
-          `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=vi&dt=t&q=${encodeURIComponent(text)}`
+          `https://translate.googleapis.com/translate_a/single?client=gtx&sl=en&tl=vi&dt=t&q=${encodeURIComponent(
+            text
+          )}`
         );
         const data = await res.json();
-        return data[0]?.map(item => item[0]).join('') || "";
+        return data[0]?.map((item) => item[0]).join("") || "";
       } catch (e) {
         return "";
       }
@@ -163,7 +191,7 @@ export default {
         determiner: "Từ hạn định",
         exclamation: "Cảm thán",
         article: "Mạo từ",
-        modal: "Động từ khuyết thiếu"
+        modal: "Động từ khuyết thiếu",
       };
       return map[pos?.toLowerCase()] || pos;
     },
@@ -174,12 +202,18 @@ export default {
       if (this.isSaved) {
         // Tìm id của từ đã lưu để xoá
         try {
-          const res = await fetch(`http://localhost:8000/api/saved_words?user_id=${userId}`);
+          const res = await fetch(
+            `http://localhost:8000/api/saved_words?user_id=${userId}`
+          );
           if (!res.ok) return;
           const words = await res.json();
-          const saved = words.find(w => w.word?.toLowerCase() === this.result.word.toLowerCase());
+          const saved = words.find(
+            (w) => w.word?.toLowerCase() === this.result.word.toLowerCase()
+          );
           if (saved) {
-            await fetch(`http://localhost:8000/api/saved_word/${saved.id}`, { method: "DELETE" });
+            await fetch(`http://localhost:8000/api/saved_word/${saved.id}`, {
+              method: "DELETE",
+            });
             this.isSaved = false;
           }
         } catch (e) {
@@ -209,7 +243,10 @@ export default {
             note: "",
           }),
         });
-        // alert("Đã lưu từ!"); // Không cần alert nữa
+        this.successMessage = `✅ Đã lưu từ "${this.result.word}" thành công!`;
+        setTimeout(() => {
+          this.successMessage = "";
+        }, 3000); // Ẩn sau 3s
       } catch (e) {
         alert(e.message);
       }
@@ -222,10 +259,14 @@ export default {
         return;
       }
       try {
-        const res = await fetch(`http://localhost:8000/api/saved_words?user_id=${userId}`);
+        const res = await fetch(
+          `http://localhost:8000/api/saved_words?user_id=${userId}`
+        );
         if (!res.ok) return;
         const words = await res.json();
-        this.isSaved = words.some(w => w.word?.toLowerCase() === this.result.word.toLowerCase());
+        this.isSaved = words.some(
+          (w) => w.word?.toLowerCase() === this.result.word.toLowerCase()
+        );
       } catch {
         this.isSaved = false;
       }
@@ -234,14 +275,14 @@ export default {
   watch: {
     result() {
       this.checkSaved();
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
 .dictionary-page {
-  background-image: url('../assets/images/background.jpg');
+  background-image: url("../assets/images/background.jpg");
   background-size: cover;
   background-position: center;
   color: #fff;
@@ -255,7 +296,7 @@ export default {
 }
 
 .back-btn {
-  background:#97b368;
+  background: #97b368;
   color: #23234b;
   font-size: 14px;
   padding: 8px 16px;
@@ -307,7 +348,7 @@ h1 {
   padding: 10px 24px;
   border-radius: 10px;
   border: none;
-  background:linear-gradient(90deg, #97b368, #b6cf75);
+  background: linear-gradient(90deg, #97b368, #b6cf75);
   color: #363636;
   font-weight: bold;
   cursor: pointer;
@@ -316,7 +357,7 @@ h1 {
 }
 .main-btn:hover {
   transform: translateY(-2px);
-  background:linear-gradient(90deg, #adc682, #cce295);
+  background: linear-gradient(90deg, #adc682, #cce295);
 }
 
 .loading {
@@ -340,7 +381,7 @@ h1 {
   margin-top: 18px;
   width: 100%;
   max-width: 540px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
 }
 
 .result-block h2 {
@@ -444,5 +485,34 @@ h1 {
   line-height: 1;
   display: flex;
   align-items: center;
+}
+
+.success-msg {
+  background: #06d6a0;
+  color: #fff;
+  font-weight: bold;
+  padding: 10px 14px;
+  border-radius: 8px;
+  margin: 10px 0;
+  animation: fadeIn 0.3s ease-in-out;
+}
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-5px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+.go_saved {
+  text-align: right;
+  color: #fffefd;
+}
+.go_saved:hover {
+  text-decoration: underline;
+  cursor: pointer;
+  color:red
 }
 </style>
