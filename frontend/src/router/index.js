@@ -13,6 +13,7 @@ import EditProfile from "../views/EditProfile.vue";
 import ForgotPassword from "../views/ForgotPassword.vue";
 import Saved from '../views/Saved.vue';
 import Feedback from '../views/Feedback.vue';
+import Grammar from '../views/Grammar.vue';
 
 const routes = [
   { path: "/", name: "Login", component: Login },
@@ -84,7 +85,13 @@ const routes = [
     name: "Feedback",
     component: Feedback,
     meta: { requiresAuth: true },
-  }
+  },
+  {
+    path: "/grammar",
+    name: "Grammar",
+    component: Grammar,
+    meta: { requiresAuth: true },
+  },
 ];
 
 const router = createRouter({

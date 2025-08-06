@@ -90,6 +90,7 @@ export default {
           icon: "grammaricon.png",
           title: "Ngữ pháp",
           description: "Danh sách tổng hợp những cấu trúc câu trong tiếng Anh",
+          route: "/grammar",
         },
         {
           icon: "listeningtest.png",
