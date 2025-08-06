@@ -1,16 +1,6 @@
 <template>
   <div class="grammar-app">
     <!-- Header -->
-    <header class="bg-white shadow-md sticky top-0 z-40">
-      <div class="container mx-auto px-4 flex items-center justify-between h-16">
-        <div class="flex items-center">
-          <img src="@/assets/logo.png" alt="Logo" class="h-8 w-8 mr-2 rounded-full" />
-          <h1 class="text-xl font-bold text-slate-800">Học 12 thì cùng EnglishTutor</h1>
-        </div>
-        <button @click="goHome" class="main-btn">Trang chủ</button>
-      </div>
-    </header>
-
     <!-- Main Content -->
     <main class="main-center">
       <!-- Dashboard View -->
@@ -18,6 +8,9 @@
         <div class="dashboard-title text-center mb-10">
           <h2 class="text-3xl font-bold mb-2">Ứng dụng học 12 thì của EnglishTutor</h2>
           <p class="text-slate-600 max-w-2xl mx-auto">Luyện tập 12 thì tiếng Anh, lý thuyết chi tiết và bài tập AI.</p>
+          <p class="text-slate-500 mt-2">Chọn chế độ học hoặc luyện tập bên dưới để bắt đầu!</p>
+          <p class="text-slate-500 mt-2">Sửa lại frontend cho đồng bộ + thêm nút trang chủ bên trên nhé, nút quay về trang chính bên trong 2 tính năng, test đi thấy cái gì cần thêm css thì thêm
+          </p>
         </div>
         <div class="dashboard-grid">
           <!-- Box học từng thì -->
@@ -99,14 +92,13 @@
                   <h4 class="text-red-600 font-bold mt-4">Các lỗi sai cần xem lại:</h4>
                   <ul>
                     <li v-for="(item, idx) in wrongAnswers" :key="idx" style="margin-bottom:12px;">
-                      <div><strong>Câu hỏi:</strong> {{ item.question }}</div>
+                      <div><strong>Câu hỏi:</strong> {{ item.question.replace(/\[[^\]]+\]/g, '_____') }}</div>
                       <div>
                         <strong>Bạn chọn:</strong>
                         <span style="color:#ef4444;font-weight:bold;background:#fee2e2;padding:2px 6px;border-radius:4px;">
                           {{ item.userAnswer }}
                         </span>
-                      </div>
-                      <div>
+                        |
                         <strong>Đáp án đúng:</strong>
                         <span style="color:#22c55e;font-weight:bold;background:#dcfce7;padding:2px 6px;border-radius:4px;">
                           {{ item.correctAnswer }}
@@ -206,9 +198,13 @@ export default {
       this.score = 0;
     },
     getRandom(arr, n) {
-      // Trả về mảng n phần tử random từ arr
-      const shuffled = arr.slice().sort(() => 0.5 - Math.random());
-      return shuffled.slice(0, n);
+      // Trả về mảng n phần tử random từ arr, đồng thời shuffle options
+      const shuffled = arr.slice().sort(() => 0.5 - Math.random()).slice(0, n);
+      // Shuffle options cho từng câu hỏi
+      shuffled.forEach(q => {
+        q.options = q.options.slice().sort(() => 0.5 - Math.random());
+      });
+      return shuffled;
     },
     checkAnswer() {
       const q = this.currentQuestion;
