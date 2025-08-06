@@ -10,7 +10,7 @@
         <p>Chúng tôi có thể giúp bạn học tiếng Anh một cách hiệu quả.<br/>
           Cải thiện kỹ năng ngôn ngữ của bạn với chúng tôi. <br/>
           Học tiếng Anh không khó, đã có EngAI</p>
-        <button class="learn-more-btn">Learn More</button>
+        <a href="https://github.com/dutch25/EnglishTutor" target="_blank" class="learn-more-btn">Learn More</a>
       </div>
     </div>
 
