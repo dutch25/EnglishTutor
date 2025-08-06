@@ -13,6 +13,7 @@
               placeholder="Nhập góp ý hoặc phản hồi của bạn..."
               required
               class="input-box"
+              @keydown.enter.exact.prevent="submitFeedback"
             ></textarea>
           </div>
           <div class="btn-group bottom-group">
@@ -35,9 +36,51 @@ export default {
     };
   },
   methods: {
-    submitFeedback() {
-      this.message = "Cảm ơn bạn đã gửi phản hồi!";
-      this.feedback = "";
+    async submitFeedback() {
+      if (!this.feedback.trim()) return;
+      // Ưu tiên lấy từ Vuex, nếu không có thì lấy từ localStorage
+      let username = this.$store?.state?.user?.username;
+      if (!username) {
+        username =
+          sessionStorage.getItem("sessionUser") ||
+          localStorage.getItem("username") ||
+          "Ẩn danh";
+      }
+      try {
+        await fetch("http://localhost:8000/api/feedback_discord", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            content: this.feedback,
+            user: username
+          })
+        });
+        this.message = "Cảm ơn bạn đã gửi phản hồi!";
+        this.feedback = "";
+      } catch (e) {
+        this.message = "Có lỗi khi gửi phản hồi. Vui lòng thử lại!";
+      }
+    },
+    send_feedback_to_discord(content, user) {
+      console.log("Gửi feedback tới Discord:", content);
+      if (!DISCORD_WEBHOOK_URL) {
+        console.log("Không tìm thấy webhook URL");
+        return;
+      }
+      const message = `**Feedback từ ${user}:**\n${content}`;
+      fetch(DISCORD_WEBHOOK_URL, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ content: message })
+      })
+        .then(resp => console.log("Discord response:", resp.status, resp.statusText))
+        .catch(err => console.error("Error sending to Discord:", err));
+    }
+  },
+  computed: {
+    username() {
+      const user = JSON.parse(localStorage.getItem("user") || "{}");
+      return user.username || "Ẩn danh";
     }
   }
 };

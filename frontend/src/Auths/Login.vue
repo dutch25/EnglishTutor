@@ -188,6 +188,7 @@ export default {
 .title-text {
   font-size: 80px;
   font-weight: bold;
+
 }
 
 .welcome-text h1 {
