@@ -1,10 +1,14 @@
 <template>
   <div class="whisper-page">
-    <button class="back-button" @click="goHome">
-    ← Quay về trang chủ
-    </button>
+    <div class="whisper-header">
+      <button class="back-button" @click="goHome">
+        ← Quay về trang chủ
+      </button>
+      <div class="header-title-container">
+        <h2 class="whisper-title">Luyện phát âm IPA</h2>
+      </div>
+    </div>
     <template v-if="!selectedTopic">
-      <h2 class="whisper-title">🎤 Luyện phát âm IPA</h2>
       <div class="topic-grid">
         <div
           v-for="t in topics"
@@ -294,7 +298,9 @@ export default {
 
 <style scoped>
 .whisper-page {
-  background: linear-gradient(135deg, #393953 0%, #293453 100%);
+  background-image: url('../assets/images/background.jpg');
+  background-size: cover;
+  background-position: center;
   color: #fff;
   min-height: 100vh;
   padding: 40px 20px;
@@ -302,18 +308,37 @@ export default {
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
+  justify-content: flex-start;
   transition: background 0.5s ease;
+  text-align: center;
+}
+
+.whisper-header {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  width: 100%;
+  max-width: 1200px;
+  margin-bottom: 40px;
+}
+
+.header-title-container {
+  flex-grow: 1;
+  margin-left: -200px;
+  text-align: center;
+  align-self: center; /* Căn giữa theo chiều dọc */
+
 }
 
 .whisper-title {
   font-size: 32px;
-  color: #ffd166;
-  margin-bottom: 40px;
+  color: #2a2a2a;
+  margin: 0;
   text-align: center;
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
   animation: fadeIn 1s ease-in;
 }
+
 
 @keyframes fadeIn {
   from {
@@ -328,34 +353,42 @@ export default {
 
 .topic-grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(200px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
   width: 100%;
-  max-width: 1200px;
+  max-width: 900px; /* Giảm max-width để card nhỏ lại và nằm ở giữa */
   margin-bottom: 48px;
+  margin-left: auto;
+  margin-right: auto;
 }
 
+/* SỬA ĐỔI: Chỉnh padding và min-height cho card nhỏ hơn */
 .topic-card {
-  background: #23234b;
+  background: rgba(56, 37, 58, 0.393);
+  backdrop-filter: blur(12px);
+  border: 1px solid rgba(255, 255, 255, 0);
   border-radius: 20px;
-  padding: 32px;
+  padding: 20px; /* Giảm padding */
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
   cursor: pointer;
   transition: all 0.3s ease;
   box-shadow: 0 6px 16px rgba(0, 0, 0, 0.2);
+  min-height: 180px; /* Giảm min-height */
 }
 
 .topic-card:hover {
-  transform: translateY(-8px) scale(1.05);
-  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.3);
-  background: #2a2a5a;
+  transform: translateY(-4px);
+  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.5);
+  background: rgba(255, 255, 255, 0.193); /* Sáng lên nhẹ nhàng */
+  border-color: rgba(255, 255, 255, 0.12);
 }
 
 .topic-icon {
-  font-size: 48px;
-  margin-bottom: 16px;
+  font-size: 40px; /* Giảm kích thước icon */
+  margin-bottom: 12px; /* Giảm khoảng cách */
   transition: transform 0.3s ease;
 }
 
@@ -364,9 +397,19 @@ export default {
 }
 
 .topic-title {
-  font-size: 22px;
+  font-size: 18px; /* Giảm kích thước font */
   font-weight: 600;
-  color: #4fc3f7;
+  color: #121212;
+  text-align: center;
+}
+
+/* Media Query cho màn hình nhỏ hơn vẫn giữ 2 cột */
+@media (max-width: 768px) {
+  .topic-grid {
+    grid-template-columns: repeat(2, 1fr);
+    max-width: 100%;
+    gap: 16px;
+  }
 }
 
 .whisper-card {
@@ -544,17 +587,19 @@ export default {
 }
 
 .back-button {
-  background-color: #ffd166;
+  background:linear-gradient(90deg, #97b368, #b6cf75);
   color: #23234b;
   font-size: 14px;
   padding: 8px 16px;
-  margin-bottom: 24px;
   border: none;
   border-radius: 8px;
   cursor: pointer;
   font-weight: bold;
   transition: background 0.2s;
+  z-index: 10; /* Đặt z-index cao hơn để nút có thể click được */
+  justify-self: start; /* Đẩy nút về phía bên trái */
 }
+
 .back-button:hover {
   background-color: #ef476f;
   color: #fff;

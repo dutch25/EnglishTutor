@@ -12,16 +12,26 @@
       <!-- Card luôn hiển thị phía dưới -->
       <div>
         <div class="back-btn-row">
-          <button @click="goHome" class="main-btn back-btn">⬅️ Về trang chủ</button>
+          <button @click="goHome" class="main-btn back-btn">⬅ Về trang chủ</button>
         </div>
         <div class="card">
           <div class="card-header new-btn-row">
-            <button @click="getNewSentence" class="main-btn new-btn">🔄 Câu mới</button>
+            <button @click="getNewSentence" class="main-btn new-btn">↪ Câu mới</button>
           </div>
           <h1 class="title">📝 Học theo câu tiếng Anh</h1>
           <div class="volume-row">
             <label for="volumeControl">🔊 Âm lượng:</label>
-            <input type="range" id="volumeControl" min="0" max="1" step="0.01" v-model="volume" @input="setVolume" />
+            <input
+              type="range"
+              id="volumeControl"
+              min="0"
+              max="1"
+              step="0.01"
+              v-model="volume"
+              @input="setVolume"
+              @mousedown="dragging = true"
+              @mouseup="dragging = false"
+            />
           </div>
           <div class="input-row">
             <label for="userInput" class="input-label">Bạn nghe được gì?</label>
@@ -72,7 +82,8 @@ export default {
       result: "",
       volume: 1,
       audio: null,
-      showReadyBox: true // Thêm biến này
+      showReadyBox: true,
+      dragging: false
     };
   },
   mounted() {
@@ -81,6 +92,11 @@ export default {
     // Không gọi getNewSentence ở đây nữa
   },
   methods: {
+    setVolume() {
+    if (this.audio) {
+      this.audio.volume = this.volume;
+      }
+    },
     goHome() {
       this.$router.push("/home");
     },
@@ -92,7 +108,7 @@ export default {
       const randomIndex = Math.floor(Math.random() * this.sentences.length);
       this.currentSentence = this.sentences[randomIndex];
       this.userInput = "";
-      this.result = "<span style='color:#ffd166'>Đã tải câu mới, nhấn nút Nghe để phát lại.</span>";
+      this.result = "<span style='color:#3f3f3f'>Đã tải câu mới, nhấn nút Nghe để phát lại.</span>";
       this.playSentence();
     },
     playSentence() {
@@ -144,17 +160,30 @@ export default {
       this.showReadyBox = false;
       this.getNewSentence();
     }
+  },
+  watch: {
+  dragging(newVal) {
+    const slider = this.$el.querySelector('#volumeControl');
+    if (newVal) {
+      slider.classList.add('active');
+    } else {
+      slider.classList.remove('active');
+    }
   }
+}
 };
 </script>
 
 <style scoped>
 .sentence-listening-page {
-  background: linear-gradient(135deg, #393953 0%, #293453 100%);
+  background-image: url('../assets/images/background.jpg');
+  background-size: cover;
+  background-position: center;
   min-height: 100vh;
   padding: 40px 0;
-  font-family: "Segoe UI", sans-serif;
+  font-family: 'Poppins', sans-serif;
   display: flex;
+  color: #ffffff;
   flex-direction: column;
   align-items: center; /* Đảm bảo căn giữa mọi thứ theo chiều ngang */
 }
@@ -181,9 +210,11 @@ export default {
 }
 
 .card {
-  background: #2b2b38;
-  border-radius: 18px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  background: rgba(255, 255, 255, 0.795);
+  border-radius: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.4);
   padding: 36px 32px 32px 32px;
   max-width: 480px;
   width: 100%;
@@ -203,7 +234,7 @@ export default {
 .title {
   font-size: 32px;
   font-weight: bold;
-  color: #ffd166;
+  color: #3f3f3f;
   margin: 0 0 32px 0;    /* tăng margin-bottom từ 24px lên 32px */
   text-align: center;     /* Căn giữa tiêu đề */
 }
@@ -226,7 +257,7 @@ export default {
   justify-content: center;
 }
 .new-btn:hover {
-  background: linear-gradient(90deg, #4fc3f7 0%, #06d6a0 100%);
+  background: linear-gradient(90deg, #b7a1e8 0%, #c387ee 100%);
   transform: translateY(-2px) scale(1.04);
 }
 
@@ -252,7 +283,7 @@ export default {
   padding: 10px 24px;
   border-radius: 10px;
   border: none;
-  background: linear-gradient(90deg, #06d6a0 0%, #4fc3f7 100%);
+  background: linear-gradient(90deg,  #97b368 0%, #95b561 100%);
   color: #fff;
   font-size: 17px;
   font-weight: bold;
@@ -270,8 +301,9 @@ export default {
   cursor: not-allowed;
 }
 .main-btn:hover:not(:disabled) {
-  background: linear-gradient(90deg, #4fc3f7 0%, #06d6a0 100%);
+  background: linear-gradient(90deg,  #a2b87a 0%, #9bb473 100%);
   transform: translateY(-2px) scale(1.04);
+  color: rgb(32, 32, 32);
 }
 
 .volume-row {
@@ -283,7 +315,7 @@ export default {
 }
 .volume-row label {
   font-size: 16px;
-  color: #4fc3f7;
+  color: #2e2e2e;
   font-weight: 500;
   margin-right: 8px;
 }
@@ -302,7 +334,7 @@ input[type="range"] {
 }
 .input-label {
   font-size: 16px;
-  color: #4fc3f7;
+  color: #2e2e2e;
   margin-bottom: 8px;
   font-weight: 500;
 }
@@ -390,7 +422,7 @@ input[type="range"] {
   border-radius: 16px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.18);
   text-align: center;
-  color: #ffd166;
+  color: rgb(255, 255, 255);
   font-size: 20px;
   min-width: 320px;
   max-width: 90vw;
@@ -408,7 +440,7 @@ input[type="range"] {
   right: 16px;
   background: none;
   border: none;
-  color: #ffd166;
+  color: black;
   font-size: 28px;
   font-weight: bold;
   cursor: pointer;
@@ -417,5 +449,80 @@ input[type="range"] {
 }
 .close-btn:hover {
   color: #ef476f;
+}
+
+input[type="range"] {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: linear-gradient(90deg, #4fc3f7, #06d6a0);
+  outline: none;
+  transition: background 0.3s;
+}
+
+input[type="range"] {
+  appearance: none;  
+  -webkit-appearance: none;
+  width: 100%;
+  height: 6px;
+  border-radius: 3px;
+  background: rgb(159, 159, 159); /* Mặc định là màu trắng */
+  transition: background 0.3s;
+  position: relative;
+}
+
+input[type="range"].active {
+  background: linear-gradient(90deg, #5b5a5a, #000000);
+}
+
+input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 3px solid #4fc3f7;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-top: -7px; /* Căn tâm */
+  box-shadow: 0 0 0 3px #2b2b38; /* Để track đi xuyên qua tâm */
+}
+
+input[type="range"]::-webkit-slider-thumb:hover {
+  background: #4fc3f7;
+  border-color: #06d6a0;
+  transform: scale(1.1);
+}
+
+/* Firefox Thumb */
+input[type="range"]::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: #ffffff;
+  border: 3px solid #4fc3f7;
+  cursor: pointer;
+  transition: all 0.2s;
+  box-shadow: 0 0 0 3px #2b2b38; /* Track đi xuyên tâm */
+}
+
+input[type="range"]::-moz-range-thumb:hover {
+  background: #4fc3f7;
+  border-color: #06d6a0;
+  transform: scale(1.1);
+}
+
+/* Firefox Track */
+input[type="range"]::-moz-range-track {
+  height: 6px;
+  border-radius: 3px;
+  background: white;
+}
+
+input[type="range"].active::-moz-range-track {
+  background: linear-gradient(90deg, #4fc3f7, #06d6a0);
 }
 </style>

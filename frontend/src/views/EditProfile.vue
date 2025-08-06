@@ -20,8 +20,8 @@
       </div>
 
       <div class="button-group">
-        <button @click="updateProfile" class="action-btn save-btn">💾 Lưu Thay Đổi</button>
         <button @click="goBack" class="action-btn cancel-btn">❌ Hủy</button>
+        <button @click="updateProfile" class="action-btn save-btn">💾 Lưu Thay Đổi</button>
       </div>
 
       <div v-if="errorMessage" class="toast error">{{ errorMessage }}</div>
