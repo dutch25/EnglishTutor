@@ -203,9 +203,18 @@ export default {
       this.userMessage = "";
       this.typing = true;
 
+      // Tạo history cho backend (chỉ lấy content, không lấy html)
+      const history = this.messages
+        .filter(m => m.sender === "user" || m.sender === "bot")
+        .map(m => ({
+          role: m.sender === "user" ? "user" : "assistant",
+          content: m.html
+        }));
+
       try {
         const res = await axios.post("http://127.0.0.1:8000/chat", {
-          message: msg,
+          history: history,
+          message: msg
         });
         const reply = res.data.reply || "Bot không phản hồi.";
         this.messages.push({ sender: "bot", html: marked(reply) });
