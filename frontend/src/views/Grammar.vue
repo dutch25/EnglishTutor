@@ -1,4 +1,3 @@
-```vue
 <template>
   <div class="grammar-app">
     <main class="main-container">
@@ -6,9 +5,9 @@
       <div v-if="mode === 'dashboard'" class="dashboard-section">
         <div class="dashboard-header">
           <button class="back-btn" @click="goHome">← Quay lại Trang Chủ</button>
-          <h2 class="dashboard-title">Ứng dụng học 12 thì của EnglishTutor</h2>
+          <h2 class="dashboard-title">Ứng dụng học 12 thì của EngAI</h2>
         </div>
-        <p class="dashboard-subtitle">Luyện tập 12 thì tiếng Anh, lý thuyết chi tiết và thực h.</p>
+        <p class="dashboard-subtitle">Luyện tập 12 thì tiếng Anh, lý thuyết chi tiết và thực hành.</p>
         <div class="dashboard-grid">
           <div class="dashboard-card">
             <h3 class="card-title">Chế độ học theo từng thì</h3>
@@ -709,4 +708,3 @@ currentTheory.value = theoryData[selectedTense.value] || "Lý thuyết đang c�
     margin-top: 12px;
   }
 </style>
-```

@@ -3,8 +3,8 @@
     <div class="header-section">
       <div class="title-container">
         <div class="logo-title">
-          <img :src="logoUrl" alt="English Tutor" class="logo" />
-          <h1 class="title">English Tutor</h1>
+          <img :src="logoUrl" alt="EngAI" class="logo" />
+          <h1 class="title">EngAI</h1>
         </div>
         <div class="user-section">
           <div class="user-info">
