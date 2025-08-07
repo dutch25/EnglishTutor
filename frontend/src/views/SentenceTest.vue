@@ -4,7 +4,9 @@
       <!-- Modal luôn nằm trên card -->
       <div v-if="showReadyBox" class="ready-modal">
         <div class="ready-modal-content">
-          <button class="close-btn" @click="closeAndgoHome" title="Đóng">&times;</button>
+          <button class="close-btn" @click="closeAndgoHome" title="Đóng">
+            &times;
+          </button>
           <p>Bạn đã sẵn sàng luyện nghe câu chưa?</p>
           <button class="main-btn" @click="startTest">Bắt đầu</button>
         </div>
@@ -12,11 +14,15 @@
       <!-- Card luôn hiển thị phía dưới -->
       <div>
         <div class="back-btn-row">
-          <button @click="goHome" class="main-btn back-btn">⬅ Về trang chủ</button>
+          <button @click="goHome" class="main-btn back-btn">
+            ⬅ Về trang chủ
+          </button>
         </div>
         <div class="card">
           <div class="card-header new-btn-row">
-            <button @click="getNewSentence" class="main-btn new-btn">↪ Câu mới</button>
+            <button @click="getNewSentence" class="main-btn new-btn">
+              ↪ Câu mới
+            </button>
           </div>
           <h1 class="title">📝 Học theo câu tiếng Anh</h1>
           <div class="volume-row">
@@ -52,9 +58,14 @@
                 type="button"
               >
                 <svg width="32" height="32" viewBox="0 0 24 24" fill="none">
-                  <circle cx="12" cy="12" r="12" fill="#4fc3f7"/>
-                  <path d="M16.5 12a4.5 4.5 0 1 1-2.7-4.09" stroke="#fff" stroke-width="2" fill="none"/>
-                  <polygon points="15,7 15,11 11,9" fill="#fff"/>
+                  <circle cx="12" cy="12" r="12" fill="#4fc3f7" />
+                  <path
+                    d="M16.5 12a4.5 4.5 0 1 1-2.7-4.09"
+                    stroke="#fff"
+                    stroke-width="2"
+                    fill="none"
+                  />
+                  <polygon points="15,7 15,11 11,9" fill="#fff" />
                 </svg>
               </button>
             </div>
@@ -73,6 +84,10 @@
 <script>
 import sentences from "@/assets/data/sentences.json";
 
+// Import âm thanh phản hồi
+import correctSound from "@/assets/audios/correct.mp3";
+import incorrectSound from "@/assets/audios/incorrect.mp3";
+
 export default {
   data() {
     return {
@@ -83,18 +98,23 @@ export default {
       volume: 1,
       audio: null,
       showReadyBox: true,
-      dragging: false
+      dragging: false,
+      correctAudio: null,
+      incorrectAudio: null
     };
   },
   mounted() {
     this.audio = new Audio();
     this.audio.volume = this.volume;
-    // Không gọi getNewSentence ở đây nữa
+
+    // Tạo audio phản hồi đúng/sai
+    this.correctAudio = new Audio(correctSound);
+    this.incorrectAudio = new Audio(incorrectSound);
   },
   methods: {
     setVolume() {
-    if (this.audio) {
-      this.audio.volume = this.volume;
+      if (this.audio) {
+        this.audio.volume = this.volume;
       }
     },
     goHome() {
@@ -128,25 +148,30 @@ export default {
           this.result = "<span style='color:#ef476f'>Failed to load sentence.</span>";
         });
     },
-    setVolume() {
-      if (this.audio) {
-        this.audio.volume = this.volume;
-      }
-    },
     checkAnswer() {
       if (!this.currentSentence) {
         this.result = "<span style='color:#ef476f'>Hãy bấm chọn Câu mới trước</span>";
         return;
       }
+
       const cleanedInput = this.userInput.trim().toLowerCase().replace(/[.,!?]/g, "");
       const cleanedSentence = this.currentSentence.toLowerCase().replace(/[.,!?]/g, "");
+
+      // Reset âm thanh phản hồi
+      this.correctAudio.pause();
+      this.correctAudio.currentTime = 0;
+      this.incorrectAudio.pause();
+      this.incorrectAudio.currentTime = 0;
+
       if (cleanedInput === cleanedSentence) {
         this.result = `<span style='color:#06d6a0'>✅ Correct!</span><br> <span style='color:#ffd166'>Câu chính xác là: <strong>${this.currentSentence}</strong></span>`;
+        this.correctAudio.play();
         setTimeout(() => {
           this.getNewSentence();
-        }, 3000); // Đợi 3 giây rồi chuyển câu mới
+        }, 3000);
       } else {
         this.result = "<span style='color:#ef476f'>❌ Incorrect. Try again.</span>";
+        this.incorrectAudio.play();
       }
     },
     showAnswer() {
@@ -162,26 +187,25 @@ export default {
     }
   },
   watch: {
-  dragging(newVal) {
-    const slider = this.$el.querySelector('#volumeControl');
-    if (newVal) {
-      slider.classList.add('active');
-    } else {
-      slider.classList.remove('active');
+    dragging(newVal) {
+      const slider = this.$el.querySelector('#volumeControl');
+      if (newVal) {
+        slider.classList.add('active');
+      } else {
+        slider.classList.remove('active');
+      }
     }
   }
-}
 };
 </script>
-
 <style scoped>
 .sentence-listening-page {
-  background-image: url('../assets/images/background.jpg');
+  background-image: url("../assets/images/background.jpg");
   background-size: cover;
   background-position: center;
   min-height: 100vh;
   padding: 40px 0;
-  font-family: 'Poppins', sans-serif;
+  font-family: "Poppins", sans-serif;
   display: flex;
   color: #ffffff;
   flex-direction: column;
@@ -193,7 +217,7 @@ export default {
   max-width: 480px;
   margin: 0 auto;
   position: relative; /* Thêm dòng này để modal phủ lên card */
-  min-height: 600px;  /* Đảm bảo đủ cao cho modal căn giữa */
+  min-height: 600px; /* Đảm bảo đủ cao cho modal căn giữa */
 }
 
 .back-btn-row {
@@ -203,7 +227,6 @@ export default {
   justify-content: flex-start;
   margin: 0 auto 32px auto;
 }
-
 
 .back-btn {
   min-width: 160px;
@@ -235,8 +258,8 @@ export default {
   font-size: 32px;
   font-weight: bold;
   color: #3f3f3f;
-  margin: 0 0 32px 0;    /* tăng margin-bottom từ 24px lên 32px */
-  text-align: center;     /* Căn giữa tiêu đề */
+  margin: 0 0 32px 0; /* tăng margin-bottom từ 24px lên 32px */
+  text-align: center; /* Căn giữa tiêu đề */
 }
 
 .new-btn {
@@ -249,7 +272,7 @@ export default {
   color: #fff;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(76,195,247,0.08);
+  box-shadow: 0 2px 8px rgba(76, 195, 247, 0.08);
   transition: background 0.2s, transform 0.2s;
   min-height: 44px;
   display: inline-flex;
@@ -283,12 +306,12 @@ export default {
   padding: 10px 24px;
   border-radius: 10px;
   border: none;
-  background: linear-gradient(90deg,  #97b368 0%, #95b561 100%);
+  background: linear-gradient(90deg, #97b368 0%, #95b561 100%);
   color: #fff;
   font-size: 17px;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(76,195,247,0.08);
+  box-shadow: 0 2px 8px rgba(76, 195, 247, 0.08);
   transition: background 0.2s, transform 0.2s;
   min-width: 130px;
   min-height: 44px;
@@ -301,14 +324,14 @@ export default {
   cursor: not-allowed;
 }
 .main-btn:hover:not(:disabled) {
-  background: linear-gradient(90deg,  #a2b87a 0%, #9bb473 100%);
+  background: linear-gradient(90deg, #a2b87a 0%, #9bb473 100%);
   transform: translateY(-2px) scale(1.04);
   color: rgb(32, 32, 32);
 }
 
 .volume-row {
   width: 100%;
-  margin-bottom: 24px;    /* Tăng khoảng cách với phần dưới */
+  margin-bottom: 24px; /* Tăng khoảng cách với phần dưới */
   display: flex;
   align-items: center;
   gap: 12px;
@@ -371,7 +394,7 @@ input[type="range"] {
 
 .icon-btn {
   position: absolute;
-  right: 9px;           /* giảm khoảng cách với viền phải */
+  right: 9px; /* giảm khoảng cách với viền phải */
   top: 50%;
   transform: translateY(-50%);
   background: none;
@@ -380,7 +403,7 @@ input[type="range"] {
   cursor: pointer;
   display: flex;
   align-items: center;
-  height: 32px;         /* bằng với svg */
+  height: 32px; /* bằng với svg */
   width: 32px;
   transition: transform 0.15s;
   margin-top: -2px; /* Căn giữa với input */
@@ -390,7 +413,7 @@ input[type="range"] {
   cursor: not-allowed;
 }
 .icon-btn:hover:not(:disabled) {
-  background: rgba(79,195,247,0.08); /* Thêm hiệu ứng nền nhẹ nếu muốn */
+  background: rgba(79, 195, 247, 0.08); /* Thêm hiệu ứng nền nhẹ nếu muốn */
   border-radius: 50%;
 }
 
@@ -403,7 +426,10 @@ input[type="range"] {
 
 .ready-modal {
   position: absolute; /* Đổi từ fixed sang absolute */
-  top: 0; left: 0; right: 0; bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
   background: transparent; /* hoặc bỏ hẳn thuộc tính background */
   display: flex;
   align-items: center;
@@ -416,11 +442,11 @@ input[type="range"] {
 .ready-modal-content {
   position: relative;
   z-index: 2;
-  background: rgba(35,35,75,0.55); /* alpha thấp hơn để trong suốt hơn */
-  backdrop-filter: blur(8px);      /* hiệu ứng mờ nền phía sau */
+  background: rgba(35, 35, 75, 0.55); /* alpha thấp hơn để trong suốt hơn */
+  backdrop-filter: blur(8px); /* hiệu ứng mờ nền phía sau */
   padding: 36px 32px 32px 32px;
   border-radius: 16px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
   text-align: center;
   color: rgb(255, 255, 255);
   font-size: 20px;
@@ -463,7 +489,7 @@ input[type="range"] {
 }
 
 input[type="range"] {
-  appearance: none;  
+  appearance: none;
   -webkit-appearance: none;
   width: 100%;
   height: 6px;

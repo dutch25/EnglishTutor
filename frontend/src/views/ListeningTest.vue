@@ -2,7 +2,9 @@
   <div class="listening-page">
     <div class="back-btn-row">
       <button @click="goHome" class="main-btn back-btn">⬅ Về trang chủ</button>
-      <button @click="chooseRandomTheme" class="main-btn random-btn">🎲 Chọn ngẫu nhiên</button>
+      <button @click="chooseRandomTheme" class="main-btn random-btn">
+        🎲 Chọn ngẫu nhiên
+      </button>
     </div>
     <h1>🎧 Luyện Nghe</h1>
     <template v-if="!selectedTheme">
@@ -21,7 +23,9 @@
     </template>
     <template v-else>
       <div class="test-card">
-        <p class="theme-title-selected">Chủ đề: {{ themeTitle(selectedTheme) }}</p>
+        <p class="theme-title-selected">
+          Chủ đề: {{ themeTitle(selectedTheme) }}
+        </p>
         <button @click="playAudio" class="main-btn play-btn">▶️ Nghe từ</button>
         <input
           v-model="userInput"
@@ -30,8 +34,12 @@
           @keydown.enter.prevent="checkAnswer"
         />
         <div class="btn-group">
-          <button @click="checkAnswer" class="main-btn check-btn">Kiểm tra</button>
-          <button @click="resetTheme" class="main-btn reset-btn">🔄 Chủ đề khác</button>
+          <button @click="checkAnswer" class="main-btn check-btn">
+            Kiểm tra
+          </button>
+          <button @click="resetTheme" class="main-btn reset-btn">
+            🔄 Chủ đề khác
+          </button>
         </div>
         <p class="result" v-html="result"></p>
       </div>
@@ -42,6 +50,10 @@
 <script>
 import themes from "@/assets/data/themes.json";
 
+// Nhập file âm thanh đúng và sai
+import correctSound from "@/assets/audios/correct.mp3";
+import incorrectSound from "@/assets/audios/incorrect.mp3";
+
 export default {
   data() {
     return {
@@ -50,8 +62,15 @@ export default {
       currentWord: "",
       currentAudioUrl: "",
       userInput: "",
-      result: ""
+      result: "",
+      correctAudio: null,
+      incorrectAudio: null,
     };
+  },
+  mounted() {
+    // Khởi tạo audio khi component được mount
+    this.correctAudio = new Audio(correctSound);
+    this.incorrectAudio = new Audio(incorrectSound);
   },
   methods: {
     themeTitle(theme) {
@@ -79,7 +98,7 @@ export default {
         technology: "Technology",
         space: "Space",
         holidays: "Holidays",
-        furniture: "Furniture"
+        furniture: "Furniture",
       };
       return titles[theme] || theme;
     },
@@ -108,7 +127,7 @@ export default {
         technology: "💻",
         space: "🚀",
         holidays: "🎉",
-        furniture: "🛋️"
+        furniture: "🛋️",
       };
       return icons[theme] || "";
     },
@@ -131,20 +150,34 @@ export default {
         return;
       }
       const audio = new Audio(this.currentAudioUrl);
-      audio.play().catch(err => {
+      audio.play().catch((err) => {
         console.error("Audio Error:", err);
       });
     },
     checkAnswer() {
-      if (this.userInput.trim().toLowerCase() === this.currentWord) {
+      const isCorrect =
+        this.userInput.trim().toLowerCase() === this.currentWord;
+
+      // Reset âm thanh trước khi phát lại
+      this.correctAudio.pause();
+      this.correctAudio.currentTime = 0;
+      this.incorrectAudio.pause();
+      this.incorrectAudio.currentTime = 0;
+
+      if (isCorrect) {
         this.result = `<span style='color:#06d6a0'>✅ Chính xác!</span>`;
+        this.correctAudio.play();
       } else {
         this.result = `<span style='color:#ef476f'>❌ Sai rồi, từ chính xác là "<strong>${this.currentWord}</strong>".</span>`;
+        this.incorrectAudio.play();
       }
+
       this.userInput = "";
+
       setTimeout(() => {
         this.setWord();
-        this.result += "<br><span style='color:#ffd166'>Đã tải từ mới. Bấm nút Nghe để nghe lại</span>";
+        this.result +=
+          "<br><span style='color:#ffd166'>Đã tải từ mới. Bấm nút Nghe để nghe lại</span>";
         this.playAudio();
       }, 1000);
     },
@@ -161,14 +194,14 @@ export default {
       if (keys.length === 0) return;
       const randomKey = keys[Math.floor(Math.random() * keys.length)];
       this.chooseTheme(randomKey);
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
 .listening-page {
-  background-image: url('../assets/images/background.jpg');
+  background-image: url("../assets/images/background.jpg");
   background-size: cover;
   background-position: center;
   color: #fff;
@@ -218,7 +251,7 @@ h1 {
   color: #454545;
   margin-bottom: 32px;
   text-align: center;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 .theme-title {
   font-size: 22px;
@@ -252,10 +285,10 @@ h1 {
   align-items: center;
   cursor: pointer;
   transition: box-shadow 0.2s, transform 0.2s;
-  box-shadow: 0 4px 12px rgba(255,255,255,0.05);
+  box-shadow: 0 4px 12px rgba(255, 255, 255, 0.05);
 }
 .theme-card:hover {
-  box-shadow: 0 8px 24px rgba(255,255,255,0.12);
+  box-shadow: 0 8px 24px rgba(255, 255, 255, 0.12);
   transform: translateY(-6px) scale(1.03);
   background: rgba(35, 34, 34, 0.562); /* Sáng lên nhẹ nhàng */
 }
@@ -271,7 +304,7 @@ h1 {
 .test-card {
   background: #23234b;
   border-radius: 18px;
-  box-shadow: 0 8px 32px rgba(0,0,0,0.18);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
   padding: 44px 32px 36px 32px;
   max-width: 420px;
   width: 100%;
@@ -283,12 +316,12 @@ h1 {
   padding: 12px 28px;
   border-radius: 10px;
   border: none;
-  background:#97b368;
+  background: #97b368;
   color: #23234b;
   font-size: 17px;
   font-weight: bold;
   cursor: pointer;
-  box-shadow: 0 2px 8px rgba(76,195,247,0.08);
+  box-shadow: 0 2px 8px rgba(76, 195, 247, 0.08);
   transition: background 0.2s, transform 0.2s;
   min-width: 130px;
   min-height: 44px;
