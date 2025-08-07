@@ -41,7 +41,7 @@ app.include_router(feedback_router)
 # ✅ API Root
 @app.get("/")
 def read_root():
-    return {"message": "Welcome to the English Tutor API"}
+    return {"message": "Welcome to the EngAi API"}
 
 # ✅ API lấy audio từ ElevenLabs
 @app.get("/audio/{word}")
