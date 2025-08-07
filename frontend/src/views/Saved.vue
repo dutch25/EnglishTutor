@@ -89,7 +89,7 @@ export default {
   align-items: center;
 }
 .back-btn {
-  background: #97b368;
+  background: rgba(255, 255, 255, 0.1);
   color: #23234b;
   border: none;
   border-radius: 8px;
@@ -100,7 +100,7 @@ export default {
 }
 
 .back-btn:hover {
-  background-color: #b6cf75;
+  background: #97b368;
   color: #fff;
 }
 
@@ -158,7 +158,7 @@ h1 {
   font-size: 17px;
 }
 .error { color: #ef476f; }
-.empty { color: #ffd166; }
+.empty { color: #f4ac03; }
 .speak-btn {
   background: none;
   border: none;

@@ -27,7 +27,7 @@
           <button @click="resetTopic" class="main-btn">
             ⬅️ Chọn chủ đề khác
           </button>
-          <h2>Chủ đề: {{ getTopicTitle(selectedTopic) }}</h2>
+          <h2 style="color: black">Chủ đề: {{ getTopicTitle(selectedTopic) }}</h2>
         </div>
         <div class="sentence-block">
           <div class="sentence-main">
@@ -413,7 +413,7 @@ export default {
 }
 
 .whisper-card {
-  background: #23234b;
+  background: rgba(255, 255, 255, 0.522);
   border-radius: 24px;
   box-shadow: 0 12px 32px rgba(0, 0, 0, 0.25);
   padding: 40px;
@@ -444,7 +444,7 @@ export default {
 .sentence-block {
   margin: 24px 0;
   padding: 20px 0;
-  border-bottom: 2px solid #4fc3f7;
+  border-bottom: 2px solid #2eb7f6;
 }
 
 .sentence-main {
@@ -464,13 +464,13 @@ export default {
 
 .sentence-ipa {
   font-family: "Courier New", monospace;
-  color: #06d6a0;
+  color: #06d68a;
   font-size: 18px;
 }
 
 .sentence-vn {
   margin-top: 10px;
-  color: #ffd166;
+  color: #f6af09;
   font-size: 20px;
 }
 
@@ -587,7 +587,7 @@ export default {
 }
 
 .back-button {
-  background:linear-gradient(90deg, #97b368, #b6cf75);
+  background: rgba(255, 255, 255, 0.1);
   color: #23234b;
   font-size: 14px;
   padding: 8px 16px;
@@ -601,7 +601,7 @@ export default {
 }
 
 .back-button:hover {
-  background-color: #ef476f;
+  background:#97b368;
   color: #fff;
 }
 </style>

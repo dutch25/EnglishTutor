@@ -1,7 +1,7 @@
 <template>
   <div class="listening-page">
     <div class="back-btn-row">
-      <button @click="goHome" class="main-btn back-btn">⬅ Về trang chủ</button>
+      <button @click="goHome" class="back-btn">⬅ Về trang chủ</button>
       <button @click="chooseRandomTheme" class="main-btn random-btn">
         🎲 Chọn ngẫu nhiên
       </button>
@@ -214,7 +214,7 @@ export default {
   align-items: center;
 }
 .back-btn {
-  background-color: #ffd166;
+  background: rgba(255, 255, 255, 0.1);
   color: #23234b;
   font-size: 14px;
   padding: 8px 16px;
@@ -226,7 +226,7 @@ export default {
   transition: background 0.2s;
 }
 .back-btn:hover {
-  background-color: #ef476f;
+  background: #97b368;
   color: #fff;
 }
 .back-btn-row {
@@ -265,7 +265,7 @@ h1 {
   font-size: 22px;
   font-weight: bold;
   margin-bottom: 28px;
-  color: #ffd166;
+  color: rgb(255, 179, 2);
   text-align: center;
 }
 .theme-grid {
@@ -302,7 +302,7 @@ h1 {
   color: #e8e6e6;
 }
 .test-card {
-  background: #23234b;
+background: rgba(255, 255, 255, 0.473);
   border-radius: 18px;
   box-shadow: 0 8px 32px rgba(0, 0, 0, 0.18);
   padding: 44px 32px 36px 32px;

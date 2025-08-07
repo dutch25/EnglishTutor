@@ -2,7 +2,7 @@
   <div class="feedback-listening-page">
     <div class="content-wrapper">
       <div class="back-btn-row">
-        <button @click="$router.push('/home')" class="main-btn back-btn">⬅ Về trang chủ</button>
+        <button @click="$router.push('/home')" class="back-btn">⬅ Về trang chủ</button>
       </div>
       <div class="card">
         <h1 class="title">📝 Góp ý & Phản hồi</h1>
@@ -114,10 +114,22 @@ export default {
   margin: 0 auto 32px auto;
 }
 .back-btn {
-  min-width: 160px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #23234b;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-weight: bold;
+  margin-bottom: 24px;
+  cursor: pointer;
+}
+
+.back-btn:hover {
+  background: #97b368;
+  color: #fff;
 }
 .card {
-  background: #23234bc6;
+  background: rgba(142, 139, 139, 0.473);
   border-radius: 18px;
   box-shadow: 0 8px 32px rgba(0,0,0,0.18);
   padding: 36px 32px 32px 32px;
@@ -130,7 +142,7 @@ export default {
 .title {
   font-size: 32px;
   font-weight: bold;
-  color: #dedede;
+  color: #585858;
   margin: 0 0 32px 0;
   text-align: center;
 }
@@ -146,7 +158,7 @@ export default {
   min-height: 140px;      /* tăng chiều cao tối thiểu */
   border-radius: 10px;
   border: 1.5px solid #4fc3f7;
-  background: #23234b;
+  background: #525277;
   color: #fff;
   font-size: 18px;        /* tăng cỡ chữ */
   padding: 18px 16px;     /* tăng padding */
