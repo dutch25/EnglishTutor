@@ -296,7 +296,7 @@ export default {
 }
 
 .back-btn {
-  background: #97b368;
+  background: rgba(255, 255, 255, 0.1);
   color: #23234b;
   font-size: 14px;
   padding: 8px 16px;
@@ -308,7 +308,7 @@ export default {
   transition: background 0.2s;
 }
 .back-btn:hover {
-  background-color: #b6cf75;
+  background: #97b368;
   color: #fff;
 }
 

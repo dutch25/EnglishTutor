@@ -14,7 +14,7 @@
       <!-- Card luôn hiển thị phía dưới -->
       <div>
         <div class="back-btn-row">
-          <button @click="goHome" class="main-btn back-btn">
+          <button @click="goHome" class="back-btn">
             ⬅ Về trang chủ
           </button>
         </div>
@@ -229,11 +229,23 @@ export default {
 }
 
 .back-btn {
-  min-width: 160px;
+  background: rgba(255, 255, 255, 0.1);
+  color: #23234b;
+  border: none;
+  border-radius: 8px;
+  padding: 8px 16px;
+  font-weight: bold;
+  margin-bottom: 24px;
+  cursor: pointer;
+}
+
+.back-btn:hover {
+  background: #97b368;
+  color: #fff;
 }
 
 .card {
-  background: rgba(255, 255, 255, 0.795);
+  background: rgba(255, 255, 255, 0.473);
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   backdrop-filter: blur(10px);

@@ -111,10 +111,9 @@ export default {
 .back-button {
   position: absolute;
   left: 0;
-  background: rgba(255, 255, 255, 0.05);
   border: 1px solid rgba(255, 255, 255, 0.1);
   backdrop-filter: blur(6px);
-  background:#97b368;
+  background: rgba(255, 255, 255, 0.1);
   font-size: 14px;
   padding: 10px 18px;
   border-radius: 10px;
@@ -123,7 +122,7 @@ export default {
   transition: all 0.3s ease;
 }
 .back-button:hover {
-  background: #9bb56e;
+  background:#97b368;
   transform: translateY(-2px) scale(1.05);
   color: #ffffff;
 }
