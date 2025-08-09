@@ -1,6 +1,5 @@
 <template>
   <div>
-    <!-- 🔵 Bubble Chat -->
     <div
       class="chat-bubble"
       :style="{ transform: `translate(${bubblePos.x}px, ${bubblePos.y}px)` }"
@@ -10,7 +9,6 @@
       <img :src="messengerIcon" alt="Chat" />
     </div>
 
-    <!-- 💬 Chat Window -->
     <div
       v-if="showChat"
       class="chat-window"
@@ -25,7 +23,6 @@
         <button @click.stop="closeChat">✖</button>
       </div>
 
-      <!-- 💬 Nội dung chat -->
       <div class="chat-body">
         <div
           v-for="(msg, i) in messages"
@@ -39,7 +36,6 @@
         </div>
       </div>
 
-      <!-- ✍️ Input -->
       <div class="chat-footer">
         <input
           v-model="userMessage"
@@ -58,7 +54,6 @@
 <script>
 import axios from "axios";
 import { marked } from "marked";
-// 🔥 Đổi icon mới (PNG/SVG trong assets)
 import chatbotIcon from "@/assets/Chatbot.png";
 
 export default {
