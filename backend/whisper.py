@@ -2,19 +2,20 @@ from fastapi import APIRouter, File, UploadFile, Form
 import shutil, os, json, subprocess, re, difflib, wave, json as js, requests
 from pydub import AudioSegment, effects
 from dotenv import load_dotenv
+import google.generativeai as genai
+
 
 # ====== 🔧 Cấu hình ======
 router = APIRouter()
 UPLOAD_FOLDER = "./uploads"
 os.makedirs(UPLOAD_FOLDER, exist_ok=True)
-MODEL_PATH = "./models/vosk-en"
 ESPEAK_PATH = r"C:\Program Files\eSpeak NG\espeak-ng.exe"
 
 # ====== 🔑 Load API Key GPT ======
 load_dotenv()
-OPENAI_API_KEY = os.getenv("OPENAI_API_KEY")
+GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
 
-# ====== 🔤 Xử lý IPA ======
+# ====== 🔤 Xử lý IPA ======    
 def get_ipa(text: str) -> str:
     if not text.strip():
         return ""
@@ -168,8 +169,8 @@ def feedback(body: dict):
     transcript = body.get("transcript", "")
     target = body.get("target", "")
 
-    if not OPENAI_API_KEY:
-        return {"feedback": "⚠️ Không tìm thấy OpenAI API Key."}
+    if not GOOGLE_API_KEY:
+        return {"feedback": "⚠️ Gemini API Key not found."}
 
     prompt = f"""
 Bạn là giáo viên phát âm tiếng Anh cho người Việt. 
@@ -177,33 +178,27 @@ Học viên muốn nói: "{target}"
 AI nghe được: "{transcript}"
 
 Hãy:
-1. ✅ Nêu Điểm mạnh trong phát âm.
-2. ❌ Chỉ ra Điểm yếu cụ thể (âm sai, thiếu nhấn, ngữ điệu).
-3. 💡 Đưa ra mẹo cải thiện chi tiết.
+✅ Nêu Điểm mạnh trong phát âm.
+❌ Chỉ ra Điểm yếu cụ thể (âm sai, thiếu nhấn, ngữ điệu), nhưng KHÔNG liệt kê lại những gì học viên đã đọc sai, chỉ phân tích lỗi và hướng dẫn cải thiện. Không trích dẫn lại các từ/câu sai.
+💡 Đưa ra mẹo cải thiện ngắn gọn, khoảng 2-3 mục nhỏ nêu nên cần cải thiện và gợi ý.
 
-Phải có 3 mục rõ ràng điểm mạnh, điểm yếu và mẹo cải thiện.
+Phải có 3 mục rõ ràng: điểm mạnh, điểm yếu (chỉ phân tích lỗi, không liệt kê lại từ/câu sai), và mẹo cải thiện.
 Trả lời ngắn gọn, rõ ràng, dễ hiểu và không thêm các dấu ** ở đầu câu.
 """
 
-    headers = {"Authorization": f"Bearer {OPENAI_API_KEY}", "Content-Type": "application/json"}
-    payload = {
-        "model": "gpt-4o-mini",
-        "messages": [{"role": "user", "content": prompt}],
-        "temperature": 0.6,
-        "max_tokens": 220
-    }
-
     try:
-        res = requests.post("https://api.openai.com/v1/chat/completions", headers=headers, json=payload, timeout=15)
-        if res.status_code == 200:
-            data = res.json()
-            return {"feedback": data.get("choices", [{}])[0].get("message", {}).get("content", "⚠️ Không có phản hồi.")}
-        else:
-            print("❌ GPT API lỗi:", res.text)
-            return {"feedback": "⚠️ AI không trả lời, thử lại sau."}
+        genai.configure(api_key=GOOGLE_API_KEY)
+        model = genai.GenerativeModel("gemini-1.5-flash")
+        response = model.generate_content(prompt)
+        feedback_text = response.text if hasattr(response, "text") else str(response)
+        # Xóa mọi dấu ** dư thừa trong văn bản
+        feedback_text = feedback_text.replace("**", "")
+        # Loại bỏ * ở đầu dòng và strip khoảng trắng
+        feedback_text = "\n".join(line.lstrip("* ").strip() for line in feedback_text.splitlines() if line.strip())
+        return {"feedback": feedback_text}
     except Exception as e:
-        print("❌ Lỗi gọi GPT API:", e)
-        return {"feedback": "⚠️ Không kết nối được AI."}
+        print("❌ Gemini API error:", e)
+        return {"feedback": "⚠️ Could not connect to Gemini AI."}
 
 # ====== 🤖 API Nhận diện giọng nói ElevenLabs ======
 load_dotenv()
