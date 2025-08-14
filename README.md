@@ -12,7 +12,7 @@ Dành cho mọi đối tượng muốn nâng cao kỹ năng tiếng Anh một c�
 - **Động từ bất quy tắc**: tra cứu, nghe phát âm, luyện tập.
 - **Ngữ pháp tổng hợp**: các cấu trúc câu thông dụng.
 - **Từ điển mini**: tra cứu nhanh.
-- **Góp ý & Phản hồi**: gửi ý kiến trực tiếp cho tác giả.
+- **Góp ý & Phản hồi**: gửi ý kiến trực tiếp cho tác giả. Tác giả sẽ nhận thông báo trực tiếp từ Discord
 - **ChatBot AI**: trợ lý tiếng Anh, hỏi đáp mọi lúc.
 - **Lưu từ vựng yêu thích**.
 - **Đăng ký, đăng nhập, quản lý hồ sơ cá nhân**.
@@ -22,7 +22,7 @@ Dành cho mọi đối tượng muốn nâng cao kỹ năng tiếng Anh một c�
 ## 🖥️ Công nghệ sử dụng
 
 - **Frontend:** Vue 3, Vue Router, Vite, SCSS
-- **Backend:** FastAPI, SQLAlchemy, MySQL, ElevenLabs API (Text-to-Speech and Speech-to-text), Google Gemini (GenAI), ChatGPT
+- **Backend:** FastAPI, SQLAlchemy, MySQL, ElevenLabs API (Text-to-Speech and Speech-to-text), Google Gemini (GenAI)
 - **Khác:** dotenv, CORS, RESTful API
 
 ---
@@ -67,7 +67,7 @@ EnglishTutor/
 │   └── package.json
 ├── backend/
 │   ├── main.py            # FastAPI entrypoint
-│   ├── whisper.py         # API Whisper (speech-to-text)
+│   ├── whisper.py         # API (speech-to-text)
 │   ├── auth_routes.py     # Đăng nhập, đăng ký, xác thực
 │   ├── ...                # Các router và model khác
 │   └── requirements.txt
